@@ -6,6 +6,7 @@
     python -m retrousb --games DOOM,QUAKE,TYRIAN
     python -m retrousb --offline       only use what is already in the downloads folder
     python -m retrousb --linux         also put DOSBox for Linux on the stick
+    python -m retrousb --download-only just download everything to Downloads\\RetroUSB
 """
 
 from __future__ import annotations
@@ -40,6 +41,12 @@ def pick_drive() -> str:
             return sticks[int(a) - 1].path
 
 
+def open_pages(ids) -> None:
+    for g in catalog.GAMES:
+        if g.get("manual") and (not ids or g["id"] in ids) and g.get("page", "").startswith("http"):
+            webbrowser.open(g["page"].split()[0])
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(prog="retrousb", description="Put DOSBox, free DOS classics and strategy guides on a USB stick.")
     ap.add_argument("--target", help="drive or folder to fill (default: choose a USB stick)")
@@ -50,6 +57,8 @@ def main(argv=None) -> int:
     ap.add_argument("--linux", action="store_true", help="also put DOSBox for Linux on the stick")
     ap.add_argument("--open-pages", action="store_true", help="open the download pages of the manual games in your browser")
     ap.add_argument("--list", action="store_true", help="show the catalog and exit")
+    ap.add_argument("--download-only", nargs="?", const="", metavar="FOLDER",
+                    help="only download everything into FOLDER (default: your Downloads\\RetroUSB), no stick needed")
     ap.add_argument("-y", "--yes", action="store_true", help="do not ask for confirmation")
     a = ap.parse_args(argv)
 
@@ -65,6 +74,14 @@ def main(argv=None) -> int:
         if bad:
             print("Unknown game IDs: " + ", ".join(bad) + " (see --list)")
             return 2
+    if a.download_only is not None:
+        dest = a.download_only or os.path.join(os.path.expanduser("~"), "Downloads", "RetroUSB")
+        if a.open_pages:
+            open_pages(ids)
+        res = builder.download_only(os.path.abspath(dest), ids, ["windows"] + (["linux"] if a.linux else []))
+        print(f"\nLater, build the stick from these files:  Build-RetroUSB.cmd --target D:\\ --downloads \"{os.path.abspath(dest)}\"")
+        return 0 if res["got"] else 1
+
     target = a.target or pick_drive()
     target = os.path.abspath(target)
     if not a.yes:
@@ -73,9 +90,7 @@ def main(argv=None) -> int:
         if input("Go ahead? (Y/N) ").strip().lower() not in ("y", "yes"):
             return 0
     if a.open_pages:
-        for g in catalog.GAMES:
-            if g.get("manual") and (not ids or g["id"] in ids) and g.get("page", "").startswith("http"):
-                webbrowser.open(g["page"].split()[0])
+        open_pages(ids)
     os.makedirs(a.mygames, exist_ok=True)
     res = builder.build(target, ids, a.downloads, a.mygames, a.offline, ["windows"] + (["linux"] if a.linux else []))
     return 0 if res["games"] or res["mine"] else 1

@@ -27,6 +27,7 @@ import hashlib
 import html
 import io
 import json
+import fnmatch
 import os
 import re
 import shutil
@@ -173,62 +174,105 @@ def archive_names(name: str, data: bytes) -> List[str]:
         return []
 
 
+def sources(entry: dict) -> List[dict]:
+    """The files a game can come from: {file, size, md5, urls}.  Most games have one."""
+    if entry.get("sources"):
+        return entry["sources"]
+    if not entry.get("file"):
+        return []
+    return [{"file": entry["file"], "size": entry.get("size"), "md5": entry.get("md5"), "urls": entry.get("urls", [])}]
+
+
+def _contains(entry: dict, inside: set) -> List[str]:
+    """Which of the entry's fingerprints (names or *.EXT patterns) are in the archive."""
+    hits = []
+    for c in entry.get("contains", []):
+        c = c.upper()
+        if any(ch in c for ch in "*?"):
+            if any(fnmatch.fnmatchcase(n, c) for n in inside):
+                hits.append(c)
+        elif c in inside:
+            hits.append(c)
+    return hits
+
+
 def check(entry: dict, name: str, data: bytes) -> Tuple[bool, str]:
     """Is this file really the game?  Known size/MD5 first, else its contents."""
-    if entry.get("size") and len(data) == entry["size"] and entry.get("md5") == md5(data):
-        return True, "MD5 verified"
-    if entry.get("md5") and name.lower() == entry["file"].lower():
-        return False, f"MD5 {md5(data)} is not the known {entry['md5']}"
+    known = [src for src in sources(entry) if src.get("md5") and name.lower() == src["file"].lower()]
+    if known:
+        h = md5(data)
+        if any(len(data) == (src.get("size") or len(data)) and src["md5"] == h for src in known):
+            return True, "MD5 verified"
+        return False, f"MD5 {h} is not a known one (" + ", ".join(src["md5"] for src in known) + ")"
     if name.lower().endswith(".iso"):
         return (len(data) > 1024 * 1024, "disc image")
-    inside = set(archive_names(name, data))
-    want = [c.upper() for c in entry.get("contains", [])]
-    if want and any(w in inside for w in want):
-        return True, "contents match (" + ", ".join(w for w in want if w in inside) + ")"
-    return False, "does not contain " + " / ".join(want)
+    hits = _contains(entry, set(archive_names(name, data)))
+    if hits:
+        return True, "contents match (" + ", ".join(hits) + ")"
+    return False, "does not contain " + " / ".join(c.upper() for c in entry.get("contains", []))
 
 
-def find_dropped(entry: dict, downloads: str) -> Optional[str]:
+def find_dropped(entry: dict, downloads: str) -> List[str]:
     if not os.path.isdir(downloads):
-        return None
+        return []
     pats = [re.compile(p, re.I) for p in entry.get("match", [])]
-    names = sorted(os.listdir(downloads))
-    for n in names:
-        if n.lower() == entry["file"].lower() or any(p.search(n) for p in pats):
-            return os.path.join(downloads, n)
-    return None
+    files = {s["file"].lower() for s in sources(entry)}
+    return [os.path.join(downloads, n) for n in sorted(os.listdir(downloads))
+            if os.path.isfile(os.path.join(downloads, n)) and (n.lower() in files or any(p.search(n) for p in pats))]
+
+
+def _listing(url: str, pattern: str, fetcher) -> List[Tuple[str, str]]:
+    """(file name, url) for files in a mirror's directory listing whose name matches pattern."""
+    html_text = fetcher(url.rstrip("/") + "/").decode("latin-1")
+    out, seen = [], set()
+    for href in re.findall(r'href="([^"?#]+)"', html_text, re.I):
+        name = href.rstrip("/").rsplit("/", 1)[-1]
+        if re.search(pattern, name, re.I) and name.lower() not in seen:
+            seen.add(name.lower())
+            out.append((name, href if "://" in href else url.rstrip("/") + "/" + name))
+    return out
 
 
 def obtain(entry: dict, downloads: str, offline: bool, fetcher: Callable[[str], bytes] = fetch) -> Tuple[Optional[str], Optional[bytes], str]:
     """Returns (file name, bytes, how) or (None, None, reason)."""
     os.makedirs(downloads, exist_ok=True)
-    path = find_dropped(entry, downloads)
-    if path:
+    for path in find_dropped(entry, downloads):
         name = os.path.basename(path)
         if os.path.getsize(path) >= MAX_DOWNLOAD:
-            return None, None, f"{name} is too large"
+            say(f"    {name} is too large")
+            continue
         with open(path, "rb") as f:
             data = f.read()
         ok, why = check(entry, name, data)
         if ok:
             return name, data, f"{name} from the downloads folder ({why})"
         say(f"    {name} in the downloads folder is not usable: {why}")
-    if entry.get("manual") or offline or not entry.get("urls"):
+    if entry.get("manual") or offline:
         return None, None, "manual"
-    for url in entry["urls"]:
+    tries: List[Tuple[str, str]] = [(src["file"], u) for src in sources(entry) for u in src.get("urls", [])]
+    for mirror in (entry.get("index") or {}).get("mirrors", []):
+        try:
+            found = _listing(mirror, entry["index"]["pattern"], fetcher)
+            say(f"    {mirror}: " + (", ".join(n for n, _ in found) if found else "nothing matching"))
+            tries += found[:4]
+        except Exception as e:  # noqa: BLE001
+            say(f"    could not list {mirror}: {e}")
+    if not tries:
+        return None, None, "manual"
+    for name, url in tries:
         say(f"    downloading {url}")
         try:
             data = fetcher(url)
         except Exception as e:  # noqa: BLE001 - any network error means "try the next mirror"
             say(f"      failed: {e}")
             continue
-        ok, why = check(entry, entry["file"], data)
+        ok, why = check(entry, name, data)
         if not ok:
             say(f"      rejected: {why}")
             continue
-        with open(os.path.join(downloads, entry["file"]), "wb") as f:
+        with open(os.path.join(downloads, name), "wb") as f:
             f.write(data)
-        return entry["file"], data, f"downloaded ({why})"
+        return name, data, f"downloaded ({why})"
     return None, None, "download failed"
 
 
@@ -255,11 +299,11 @@ def _join_parts(items: List[dict]) -> List[dict]:
     return rest
 
 
-def _is_container(it: dict) -> bool:
+def _is_container(it: dict, also: frozenset = frozenset()) -> bool:
     name = it["path"].rsplit("/", 1)[-1].lower()
     if it.get("container"):
         return True
-    return (name.endswith(CONTAINER_EXT) or name == "resource.1") and archives.detect(it["bytes"]) is not None
+    return (name.endswith(CONTAINER_EXT) or name == "resource.1" or name in also) and archives.detect(it["bytes"]) is not None
 
 
 def _open(it: dict) -> Dict[str, bytes]:
@@ -267,7 +311,7 @@ def _open(it: dict) -> Dict[str, bytes]:
         else archives.unlha_bytes(it["bytes"])
 
 
-def unpack(name: str, data: bytes, depth: int = 5) -> Tuple[List[dict], List[dict], List[str]]:
+def unpack(name: str, data: bytes, depth: int = 5, also: frozenset = frozenset()) -> Tuple[List[dict], List[dict], List[str]]:
     """Returns (leaves, first level, problems).
 
     Leaves are the files left after opening every archive inside (paths
@@ -286,7 +330,7 @@ def unpack(name: str, data: bytes, depth: int = 5) -> Tuple[List[dict], List[dic
     queue = [(it, 0) for it in _join_parts([dict(i) for i in first])]
     while queue:
         it, d = queue.pop(0)
-        if d < depth and _is_container(it):
+        if d < depth and _is_container(it, also):
             try:
                 inner = _open(it)
             except archives.ArchiveError as e:
@@ -354,7 +398,7 @@ def install_game(entry: dict, name: str, data: bytes, w: Writer) -> dict:
     if name.lower().endswith(".iso"):
         w.write(f"GAMES/_SETUP/{gid}/DISC.ISO", data)
         return {"mode": "installer", "cd": "DISC.ISO"}
-    leaves, first, problems = unpack(name, data)
+    leaves, first, problems = unpack(name, data, also=frozenset(n.lower() for n in entry.get("unpack", [])))
     for p in problems[:5]:
         say(f"      note: {p}")
     leaves = dos_paths(_strip_common_folder(leaves))
@@ -875,3 +919,61 @@ def build(target: str, ids: Optional[List[str]] = None, downloads: str = DEFAULT
     if missing:
         say("Missing: " + ", ".join(m["id"] for m in missing) + " (download them into " + downloads + " and run again)")
     return {"games": games, "mine": mine, "missing": missing, "dosbox": dosbox, "guides": guides}
+
+
+# ------------------------------------------------------------------ download only
+def download_only(dest: str, ids: Optional[List[str]] = None, dosbox_platforms: Optional[List[str]] = None,
+                  fetcher=fetch) -> dict:
+    """Fetch every catalog download (and DOSBox) into ``dest`` without touching a stick.
+
+    Run the normal build later with ``--downloads <dest>`` (or copy the files
+    into retrousb/downloads) and nothing is downloaded twice.
+    """
+    os.makedirs(dest, exist_ok=True)
+    say(f"Downloading into {dest}")
+    got, manual, failed = [], [], []
+    for entry in catalog.GAMES:
+        if ids and entry["id"] not in ids:
+            continue
+        say(f"  {entry['title']}")
+        name, data, how = obtain(entry, dest, False, fetcher)
+        if data is not None:
+            say(f"    {how}")
+            got.append((entry, name))
+        elif how == "manual":
+            manual.append(entry)
+            say("    manual download: " + entry.get("page", "?"))
+        else:
+            failed.append(entry)
+            say("    " + how)
+    say("\n  DOSBox")
+    ddir = os.path.join(dest, "dosbox")
+    os.makedirs(ddir, exist_ok=True)
+    try:
+        release = json.loads(fetcher(f"https://api.github.com/repos/{catalog.DOSBOX_REPO}/releases/latest").decode("utf-8"))
+        for plat in dosbox_platforms or ["windows"]:
+            asset = _pick_asset(release.get("assets", []), plat)
+            if not asset:
+                continue
+            target = os.path.join(ddir, asset["name"])
+            if os.path.isfile(target):
+                say(f"    {asset['name']} already here")
+                continue
+            say(f"    downloading {asset['name']}")
+            data = fetcher(asset["browser_download_url"])
+            with open(target, "wb") as f:
+                f.write(data)
+    except Exception as e:  # noqa: BLE001
+        say(f"    failed: {e} - get it from {catalog.DOSBOX_PAGE}")
+    lines = ["RETRO USB DOWNLOADS", "===================", ""]
+    lines += [f"  {e['id']:<9} {n:<28} {e['title']}" for e, n in got]
+    if manual:
+        lines += ["", "Download these yourself and save them in this folder:"]
+        lines += [f"  {e['id']:<9} {e['title']}\n            {e.get('page', '')}" for e in manual]
+    if failed:
+        lines += ["", "Could not be downloaded (mirrors down?) - try again later:"]
+        lines += [f"  {e['id']:<9} {e['title']}" for e in failed]
+    with open(os.path.join(dest, "DOWNLOADS.TXT"), "w", encoding="ascii", errors="replace", newline="\r\n") as f:
+        f.write("\n".join(lines) + "\n")
+    say(f"\nDone: {len(got)} downloaded, {len(manual)} to get by hand, {len(failed)} failed. See DOWNLOADS.TXT in {dest}")
+    return {"got": got, "manual": manual, "failed": failed}

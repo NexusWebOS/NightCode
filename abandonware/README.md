@@ -10,6 +10,7 @@ This builds a USB stick for playing classic DOS games:
 It runs on Windows and needs Python 3.8 or newer.
 
 ```
+Build-RetroUSB.cmd --download-only  download everything to Downloads\RetroUSB
 Build-RetroUSB.cmd --target D:\     fill the USB stick on D:
 Build-RetroUSB.cmd --list           show the catalog
 ```

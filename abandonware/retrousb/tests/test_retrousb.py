@@ -8,6 +8,7 @@ import sys
 import tempfile
 import unittest
 import zipfile
+from unittest import mock
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.insert(0, ROOT)
@@ -49,6 +50,16 @@ class Fake:
         raise IOError("404 " + url)
 
 
+def no_md5(*ids):
+    """Our stand-in archives aren't the real files: switch the known MD5s off for these games."""
+    patches = []
+    for i in ids:
+        e = catalog.BY_ID[i]
+        new = [dict(src, md5=None, size=None) for src in builder.sources(e)]
+        patches.append(mock.patch.dict(e, {"sources": new}))
+    return patches
+
+
 class RetroUSBTest(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.mkdtemp()
@@ -68,7 +79,14 @@ class RetroUSBTest(unittest.TestCase):
             return f.read()
 
     def build(self, ids, **kw):
-        return builder.build(self.stick, ids, self.dl, self.my, fetcher=self.fake, **kw)
+        ps = no_md5(*[i for i in ids if i in ("WOLF3D", "ROTT")])
+        for p in ps:
+            p.start()
+        try:
+            return builder.build(self.stick, ids, self.dl, self.my, fetcher=self.fake, **kw)
+        finally:
+            for p in ps:
+                p.stop()
 
     def test_full_build(self):
         with open(os.path.join(self.dl, "tyrian2000.zip"), "wb") as f:
@@ -126,7 +144,8 @@ class RetroUSBTest(unittest.TestCase):
 
         # second run offline keeps what is there, downloads nothing
         self.fake.calls.clear()
-        res2 = builder.build(self.stick, ["WOLF3D", "ROTT"], os.path.join(self.tmp, "empty"), self.my, offline=True, fetcher=self.fake)
+        self.dl = os.path.join(self.tmp, "empty")
+        res2 = self.build(["WOLF3D", "ROTT"], offline=True)
         self.assertEqual({g["id"] for g in res2["games"]}, {"WOLF3D", "ROTT"})
         self.assertEqual(self.fake.calls, [])
 
@@ -183,7 +202,70 @@ class RetroUSBTest(unittest.TestCase):
         for g in catalog.GAMES:
             self.assertLessEqual(len(g["id"]), 8)
             self.assertTrue(os.path.isfile(os.path.join(builder.GUIDES_SRC, g["guide"])), g["guide"])
-            self.assertTrue(g.get("urls") or g.get("manual") or g.get("page"), g["id"])
+            srcs = builder.sources(g)
+            self.assertTrue(any(x.get("urls") for x in srcs) or g.get("index") or g.get("manual"), g["id"])
+            for x in srcs:
+                if x.get("md5"):
+                    self.assertRegex(x["md5"], r"^[0-9a-f]{32}$")
+                    self.assertIsInstance(x["size"], int)
+
+    def test_two_known_versions(self):
+        """Wolf3D: the Apogee and the 3D Realms zip differ; either MD5 passes, anything else fails."""
+        e = catalog.BY_ID["WOLF3D"]
+        fake = b"x" * 728992
+        with mock.patch.dict(e["sources"][0], {"md5": builder.md5(fake)}):
+            self.assertTrue(builder.check(e, "1wolf14.zip", fake)[0])
+        self.assertFalse(builder.check(e, "1wolf14.zip", fake)[0])
+
+    def test_mirror_listing(self):
+        """Games found by scanning the Apogee mirror's directory listing."""
+        cosmo = mkzip({"CS1SW.SHR": mkzip({"COSMO1.EXE": b"MZ", "COSMO1.VOL": b"v"})})
+        listing = b'<a href="1wolf14.zip">1wolf14.zip</a> <a href="1cosmo10.zip">1cosmo10.zip</a> <a href="cosmodoc.txt">x</a>'
+        fake = Fake({"apogee/": listing, "1cosmo10.zip": cosmo})
+        res = builder.build(self.stick, ["COSMO"], self.dl, self.my, fetcher=fake)
+        self.assertEqual(res["games"][0]["mode"], "ready")
+        self.assertIn("http://ftp.funet.fi/pub/msdos/games/apogee/1cosmo10.zip", fake.calls)
+        self.assertTrue(os.path.isfile(os.path.join(self.dl, "1cosmo10.zip")), "kept for next time")
+
+    def test_self_extracting_exe(self):
+        """SODEMO.EXE is itself an archive: opened because the catalog says so."""
+        inner = mkzip({"SPEAR.EXE": b"MZspear", "VSWAP.SDM": b"v"})
+        with open(os.path.join(self.dl, "sodemo.zip"), "wb") as f:
+            f.write(mkzip({"SODEMO.EXE": inner}))
+        for p in no_md5("SODEMO"):
+            p.start()
+        try:
+            res = self.build(["SODEMO"])
+        finally:
+            mock.patch.stopall()
+        self.assertEqual(res["games"][0]["mode"], "ready")
+        self.assertEqual(self.read("GAMES/SODEMO/SPEAR.EXE"), b"MZspear")
+
+    def test_download_only(self):
+        dest = os.path.join(self.tmp, "Downloads", "RetroUSB")
+        for p in no_md5("WOLF3D"):
+            p.start()
+        try:
+            res = builder.download_only(dest, ["WOLF3D", "ARENA", "HERETIC"], fetcher=self.fake)
+        finally:
+            mock.patch.stopall()
+        self.assertEqual([e["id"] for e, _ in res["got"]], ["WOLF3D"])
+        self.assertEqual([e["id"] for e in res["manual"]], ["ARENA"])
+        self.assertEqual([e["id"] for e in res["failed"]], ["HERETIC"])
+        self.assertTrue(os.path.isfile(os.path.join(dest, "1wolf14.zip")))
+        self.assertTrue(os.path.isfile(os.path.join(dest, "dosbox", "dosbox-staging-windows-x64-v9.zip")))
+        self.assertFalse(os.path.exists(self.stick), "no stick touched")
+        self.assertIn(b"ARENA", open(os.path.join(dest, "DOWNLOADS.TXT"), "rb").read())
+        # and a later build uses those files without downloading again
+        self.fake.calls.clear()
+        for p in no_md5("WOLF3D"):
+            p.start()
+        try:
+            res = builder.build(self.stick, ["WOLF3D"], dest, self.my, fetcher=self.fake)
+        finally:
+            mock.patch.stopall()
+        self.assertEqual(res["games"][0]["mode"], "ready")
+        self.assertEqual(self.fake.calls, [])
 
 
 if __name__ == "__main__":

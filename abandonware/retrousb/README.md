@@ -10,6 +10,7 @@ Fills a USB stick with:
 The stick then plays on any Windows PC, with nothing to install.
 
 ```
+Build-RetroUSB.cmd --download-only  just download everything to Downloads\RetroUSB
 Build-RetroUSB.cmd                  pick the stick from a list
 Build-RetroUSB.cmd --target D:\     fill drive D:
 Build-RetroUSB.cmd --list           what's in the catalog
@@ -22,7 +23,9 @@ It needs Python 3.8 or newer and nothing else.
 
 - **Downloaded automatically**, and checked by MD5 or by the files inside:
   - the shareware episodes of DOOM, Wolfenstein 3D, Heretic, Hexen (demo), Quake, Rise of the Triad, Duke Nukem 3D and Shadow Warrior;
-  - Tyrian 2000, released as freeware;
+  - Apogee's shareware: Duke Nukem 1 and 2, Commander Keen 1 and 4, Cosmo, Blake Stone, Raptor, and the freeware Bio Menace. Games without a known file name are found by scanning the Apogee mirror's file list;
+  - the Spear of Destiny, Theme Hospital and Heroes of Might and Magic II demos, and Jazz Jackrabbit: Holiday Hare '95;
+  - Tyrian 2000, released as freeware (Tyrian 2.1 as the fallback);
   - DOSBox Staging, the latest Windows build from its GitHub releases.
 - **Freeware you download once yourself**, because their official pages have moved over the years:
   - One Must Fall 2097
@@ -34,6 +37,8 @@ It needs Python 3.8 or newer and nothing else.
   - GOG folders work as they are, because their DOSBox settings are read.
   - For any other game, add a `PLAY.TXT` with the DOS commands that start it.
 - **Guides:** original strategy guides for every catalog game, plus a DOSBox survival guide and `BUYLIST.TXT`, a list of the best commercial DOS games that are still sold, cheaply, on GOG and Steam. On the stick they are plain text in `GUIDES\`, readable inside DOSBox as drive D:, with `GUIDES\INDEX.HTM` for a browser.
+
+`--download-only` only saves the zips and ISOs (and DOSBox) into a folder, `Downloads\RetroUSB` by default, and writes a `DOWNLOADS.TXT` listing what was fetched and what to get by hand. Build the stick from that folder later with `--downloads "<folder>"`; nothing is downloaded twice.
 
 Games still owned by someone are not in the catalog, however "abandoned" they look. Buy them and use `mygames`.
 

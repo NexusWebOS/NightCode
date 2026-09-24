@@ -1,0 +1,56 @@
+FREE SPECIALS AND DEMOS GUIDE
+=============================
+Jazz Jackrabbit: Holiday Hare '95, Theme Hospital (demo), Heroes of
+Might and Magic II (demo), Spear of Destiny (demo: see WOLF3D.TXT).
+
+Jazz Jackrabbit: Holiday Hare '95
+---------------------------------
+  Epic gave this holiday special away for free.
+  Arrows move, Ctrl jump, Alt fire (check SETUP for your version).
+  * Jazz is fast: running makes jumps longer.
+  * Carrots restore health. Gems are points.
+  * Blaster ammo types: collect the colored ammo to switch; the normal
+    blaster never runs out.
+  * Find the level's signpost to finish it. Speed-run and explore:
+    hidden areas are full of gems.
+
+Theme Hospital (demo)
+---------------------
+  Bullfrog's funniest sim. Build a hospital, cure patients, make money.
+  Mouse only. The demo is one level.
+
+  Order that works
+  * Reception desk and a receptionist first; no receptionist, no
+    patients.
+  * GP's office, then a pharmacy and a nurse, then a general diagnosis
+    room and a ward.
+  * The Inflation room cures Bloaty Head; the Slack Tongue clinic cures
+    Slack Tongue.
+  * Benches, drinks machines, radiators and plants keep people happy.
+    Toilets matter.
+  * Hire a handyman early: vomit and litter drive patients away.
+  * Build staff rooms or doctors get tired and quit.
+  * Watch the queue at the GP's; a second GP's office is cheap and
+    doubles your throughput.
+
+Heroes of Might and Magic II (demo)
+-----------------------------------
+  One scenario (Broken Alliance) of New World Computing's best Heroes.
+  Mouse only.
+
+  * Every week your castle's dwellings produce new creatures: build
+    the dwellings early, recruit every week.
+  * Capture mines (gold, wood, ore, and the rare resources) as soon as
+    you can. Gold is king.
+  * Keep one strong main hero with the army and a cheap second hero to
+    flag mines and ferry creatures.
+  * A Mage Guild lets heroes learn spells. Knowledge and Spell Power
+    raise how often and how hard they cast.
+  * In battle: shooters behind, strongest melee in front, hit enemy
+    shooters first. Wait (W) lets a slow creature act last.
+  * Don't leave your castle empty; enemy heroes walk right in.
+
+Spear of Destiny (demo)
+-----------------------
+  Wolfenstein 3D's prequel on the same engine. Everything in WOLF3D.TXT
+  applies, including the M + L + I cheat.

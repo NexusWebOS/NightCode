@@ -45,6 +45,16 @@ Simulation
   TIE Fighter, X-Wing           Wing Commander 1-4
   Microprose flight sims (various bundles)
 
+The others people ask for
+  Diablo (with Hellfire)        Nox
+  Magic Carpet Plus / Magic Carpet 2 (DOS, runs in DOSBox)
+  Blake Stone: Aliens of Gold and Planet Strike (full versions)
+  Duke Nukem 1 and 2 (full versions), Commander Keen collections
+  MechWarrior 4: Mercenaries was released for free in 2010 (Windows).
+  MechWarrior 2 and 3 are neither sold nor free today: only your own
+  CDs will do (put them in mygames as ISO images, with a PLAY.TXT
+  such as:  IMGMOUNT E MW2.ISO -t iso  /  E:  /  MECH2 ).
+
 Free and legal, not DOS but worth having
   Beneath a Steel Sky, Flight of the Amazon Queen, Lure of the
   Temptress, Dreamweb, Drascula: free from the ScummVM website's Games

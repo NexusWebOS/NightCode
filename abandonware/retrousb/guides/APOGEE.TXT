@@ -1,0 +1,97 @@
+APOGEE CLASSICS GUIDE
+=====================
+Duke Nukem, Duke Nukem II, Commander Keen 1 and 4, Cosmo, Bio Menace,
+Blake Stone and Raptor.
+
+Apogee's shareware model: the first episode free, the rest by mail.
+Every game here is that free first episode, except Bio Menace, whose
+three episodes were made freeware in 2005.
+
+Most of them start with a short menu: press Enter or Space to begin,
+F1 for help (the in-game help lists every key), Esc for the menu.
+
+Duke Nukem (1991) - Shrapnel City
+---------------------------------
+  Arrows move, Ctrl jump, Alt fire, Up arrow uses doors and switches.
+  * Dr. Proton's robots are everywhere. Shoot them before they reach you.
+  * Collect D, U, K, E in that order for a big bonus.
+  * The boots let you jump higher, the claws let you hang from
+    ceilings, the robohand works some machines. Keep your eye out
+    for them: some levels can't be finished without them.
+  * Keys open the matching locked doors. Hint globes explain new things.
+  * Food and soda restore health. Shooting soda cans launches them.
+
+Duke Nukem II (1993)
+--------------------
+  Arrows move, Ctrl jump, Alt fire, Up arrow uses things.
+  * The Rigelatins kidnapped Duke. Find the level exit, sometimes after
+    destroying all the radar dishes (a message tells you).
+  * Weapon pickups (laser, rocket launcher, flame thrower) replace the
+    normal gun until their ammo runs out.
+  * Crouch (Down) under enemy fire. Many enemies can't shoot low.
+
+Commander Keen 1 (1990) - Marooned on Mars
+------------------------------------------
+  Arrows move, Ctrl jump, Alt pogo stick (after you find it),
+  Ctrl + Alt together fires the raygun.
+  * Billy Blaze's ship is missing four parts: a joystick, a battery,
+    a vacuum cleaner and a bottle of Everclear. Each is in a level on the
+    Mars map. Get all four and fly home.
+  * The pogo stick is found in one of the first levels: go and get it,
+    it makes every other level possible.
+  * Yorps (one-eyed) just push you. Gargs charge: shoot them or jump.
+    Vorticons take several shots.
+  * Collect raygun charges; you start with none.
+  * Cheat: hold C, T and Space together for keycards, pogo and ammo.
+
+Commander Keen 4 (1991) - Secret of the Oracle
+----------------------------------------------
+  Arrows move, Ctrl jump, Alt pogo, Space fires the neural stunner.
+  Up enters doors and switches. Down on the world map enters levels.
+  * Rescue the eight Council members hidden across the Shadowlands.
+  * Drops of lifewater: 100 give an extra life. Points too, every 20,000.
+  * Enemies are stunned, not killed: stunned Slugs and Mad Mushrooms don't
+    stay down forever. Most things can be jumped over.
+  * The Dopefish lives in the Well of Wishes. Don't let it eat you.
+  * Save at the world map before every level (F3 menu or Esc -> Save).
+  * Cheat: hold B, A and T together for all items, full ammo and keys.
+
+Cosmo's Cosmic Adventure (1992) - Forbidden Planet
+--------------------------------------------------
+  Arrows move, Ctrl jump, Alt drops a bomb, Up uses things.
+  * Cosmo climbs walls with his suction-cup hands: jump against a wall
+    and hold toward it.
+  * Jump on most enemies to kill them, or bomb them.
+  * Hint globes (shoot or touch them) explain every new trick.
+  * Stars are bonus points; hidden stars are everywhere.
+
+Bio Menace (1993, freeware) - three episodes
+--------------------------------------------
+  Arrows move, Ctrl jump, Alt fire, Space throws a grenade, Up uses.
+  * Snake Logan against Dr. Mangle's mutants in Metro City.
+  * Rescue the hostages: they often hold keycards or give hints.
+  * Super bullets and the machine gun are pickups; grenades blow up
+    walls and groups.
+  * Crystal shards unlock the level exits in some levels.
+
+Blake Stone: Aliens of Gold (1993)
+----------------------------------
+  Wolf3D engine: arrows, Ctrl fire, Space use, Alt strafe, Shift run.
+  * Blake Stone against Dr. Pyrus Goldfire's alien mutants.
+  * Scientists in lab coats are informants: walk up and press Space to
+    talk, don't shoot them. Some are armed traitors; they shoot first.
+  * Collect access cards: red, yellow, blue open the matching floors
+    and doors. The elevator only goes to floors you have the card for.
+  * The automap is one of the best of the era: use it.
+  * Food tokens buy snacks at vending machines.
+
+Raptor: Call of the Shadows (1994) - Bravo Sector
+-------------------------------------------------
+  Mouse or keyboard; the mouse is best. Fire with the left button,
+  change special weapons with the right button (Space on keys).
+  * Between missions you're in the hangar: buy weapons and shields,
+    sell what you don't use.
+  * Buy Mega bombs early; they clear the screen in an emergency.
+  * Destroy ground targets for money, but don't chase them into fire.
+  * Your shield (the bar) refills only by buying or picking up shield
+    power-ups. Energy shields stack.
