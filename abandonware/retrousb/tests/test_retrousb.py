@@ -202,12 +202,31 @@ class RetroUSBTest(unittest.TestCase):
         for g in catalog.GAMES:
             self.assertLessEqual(len(g["id"]), 8)
             self.assertTrue(os.path.isfile(os.path.join(builder.GUIDES_SRC, g["guide"])), g["guide"])
-            srcs = builder.sources(g)
+            srcs = builder.sources(g) + list(g.get("parts", []))
             self.assertTrue(any(x.get("urls") for x in srcs) or g.get("index") or g.get("manual"), g["id"])
             for x in srcs:
                 if x.get("md5"):
                     self.assertRegex(x["md5"], r"^[0-9a-f]{32}$")
                     self.assertIsInstance(x["size"], int)
+
+    def test_native_freedoom(self):
+        """Freedoom: Crispy Doom + the Freedoom data, unpacked with long names, launched without DOSBox."""
+        e = catalog.BY_ID["FREEDOOM"]
+        crispy = mkzip({"crispy-doom.exe": b"MZcrispy", "crispy-doom-setup.exe": b"MZ", "SDL2.dll": b"d"})
+        fd = mkzip({"freedoom-0.13.0/freedoom1.wad": b"IWAD1", "freedoom-0.13.0/freedoom2.wad": b"IWAD2", "freedoom-0.13.0/README.html": b"r"})
+        fake = Fake({"crispy-doom-7.1.0-win64.zip": crispy, "freedoom-0.13.0.zip": fd})
+        parts = [dict(p, md5=None, size=None) for p in e["parts"]]
+        with mock.patch.dict(e, {"parts": parts}):
+            res = builder.build(self.stick, ["FREEDOOM", "WOLF3D"], self.dl, self.my, offline=False, fetcher=fake)
+        self.assertEqual(res["games"][0]["mode"], "native")
+        self.assertEqual(self.read("GAMES/FREEDOOM/crispy-doom.exe"), b"MZcrispy")
+        self.assertEqual(self.read("GAMES/FREEDOOM/freedoom2.wad"), b"IWAD2")
+        start = self.read("START-HERE.bat").decode()
+        self.assertIn('start "" /d "%~dp0GAMES\\FREEDOOM" "%~dp0GAMES\\FREEDOOM\\crispy-doom.exe" -iwad freedoom1.wad', start)
+        self.assertIn("-iwad freedoom2.wad", start)
+        self.assertFalse(os.path.exists(os.path.join(self.stick, "DOSBOX", "CONF", "FREEDOOM.CONF")))
+        self.assertNotIn("FREEDOOM", self.read("GAMES/MENU.BAT").decode())
+        self.assertIn("crispy-doom", self.read("start-here.sh").decode())
 
     def test_two_known_versions(self):
         """Wolf3D: the Apogee and the 3D Realms zip differ; either MD5 passes, anything else fails."""

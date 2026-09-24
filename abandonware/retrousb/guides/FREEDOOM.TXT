@@ -1,0 +1,59 @@
+FREEDOOM GUIDE
+==============
+
+Freedoom is a complete, free game built for the DOOM engine: new maps,
+monsters, sounds and music, all under the BSD licence. It comes in two
+parts:
+
+  Phase 1   four episodes of 9 levels, in the style of the original DOOM
+  Phase 2   32 levels in one long campaign, in the style of DOOM II
+
+On this stick it runs with Crispy Doom, a Windows port of the original
+engine with higher resolution and quality-of-life options. No DOSBox.
+
+Starting
+--------
+  START-HERE.bat, then Freedoom: Phase 1 or Phase 2.
+  To change controls, video or sound, run GAMES\FREEDOOM\crispy-doom-
+  setup.exe (its settings stay on the stick, next to the game).
+
+Controls (Crispy Doom defaults; change them in the setup program)
+-----------------------------------------------------------------
+  Arrows / WASD with mouse look if you turn it on in setup
+  Ctrl or left mouse   fire          Space   open doors, press switches
+  Shift                run           Alt     strafe
+  1-7                  weapons       Tab     automap
+  F2 / F3              save / load   Esc     menu
+
+  In the menu, Crispness (under Options) has the extras: mouse look,
+  jumping, crosshair, higher resolution, widescreen.
+
+How it plays
+------------
+  Freedoom follows DOOM's rules exactly, so DOOM.TXT's tactics apply:
+  * strafe to dodge projectiles, run most of the time;
+  * let monsters hit each other;
+  * explosive barrels clear groups;
+  * the shotgun is your workhorse, rockets are for the big ones, never
+    at point-blank range.
+
+  The monsters are new designs, but each matches a DOOM monster's
+  strength: if something looks big and slow, treat it like a Baron of
+  Hell and use rockets from far away.
+
+Weapons (same slots as DOOM)
+----------------------------
+  1 fist / chainsaw   2 pistol   3 shotgun (and double shotgun in
+  Phase 2)   4 minigun   5 missile launcher   6 plasma weapon
+  7 the big one (the BFG slot)
+
+Cheats (type during play; same as DOOM II)
+------------------------------------------
+  IDDQD god mode      IDKFA everything
+  IDCLIP walk through walls (Phase 1: IDSPISPOPD)
+  IDCLEVxy / IDCLEVxx warp (Phase 1: episode x map y; Phase 2: map xx)
+
+Also works with
+---------------
+  Any DOOM source port (GZDoom, Chocolate Doom, PrBoom+, ...) on any
+  system: they all take freedoom1.wad and freedoom2.wad as IWADs.

@@ -254,6 +254,25 @@ GAMES = [
         "guide": "DEMOS.TXT",
     },
     {
+        "id": "FREEDOOM", "title": "Freedoom: Phase 1 and Phase 2", "year": 2019, "genre": "First-person shooter",
+        "blurb": "Two complete free DOOM-style games (BSD licence), played with the Crispy Doom port on Windows.",
+        "kind": "freeware",
+        # Windows-native: the Crispy Doom port plus the Freedoom data, both from their GitHub releases
+        "parts": [
+            {"file": "crispy-doom-7.1.0-win64.zip", "size": 10386993, "md5": "fe97826e51dbb464451d31c78dfcefcd",
+             "urls": ["https://github.com/fabiangreffrath/crispy-doom/releases/download/crispy-doom-7.1/crispy-doom-7.1.0-win64.zip"],
+             "contains": ["CRISPY-DOOM.EXE"], "match": [r"^crispy-doom.*win.*\.zip$"]},
+            {"file": "freedoom-0.13.0.zip", "size": 24143781, "md5": "e37731df12c3e3790b1f5b7d318c84ff",
+             "urls": ["https://github.com/freedoom/freedoom/releases/download/v0.13.0/freedoom-0.13.0.zip"],
+             "contains": ["FREEDOOM1.WAD", "FREEDOOM2.WAD"], "match": [r"^freedoom-[0-9.]+\.zip$"]},
+        ],
+        "launch": [
+            ("Freedoom: Phase 1 (Crispy Doom)", "crispy-doom.exe", "-iwad freedoom1.wad"),
+            ("Freedoom: Phase 2 (Crispy Doom)", "crispy-doom.exe", "-iwad freedoom2.wad"),
+        ],
+        "guide": "FREEDOOM.TXT",
+    },
+    {
         "id": "TYRIAN", "title": "Tyrian 2000", "year": 1999, "genre": "Vertical shoot-'em-up",
         "blurb": "The best DOS shmup: all five episodes, released as freeware by its authors.",
         "kind": "freeware",

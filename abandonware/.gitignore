@@ -1,4 +1,10 @@
 __pycache__/
 *.pyc
-retrousb/downloads/
 retrousb/mygames/
+retrousb/downloads/*
+!retrousb/downloads/README.txt
+!retrousb/downloads/crispy-doom-7.1.0-win64.zip
+!retrousb/downloads/freedoom-0.13.0.zip
+!retrousb/downloads/dosbox/
+retrousb/downloads/dosbox/*
+!retrousb/downloads/dosbox/dosbox-staging-windows-x64-v0.83.0.zip

@@ -422,6 +422,37 @@ def install_game(entry: dict, name: str, data: bytes, w: Writer) -> dict:
             "installer_folder": (inst[0].replace("/", "\\") if inst else "")}
 
 
+def part_entries(entry: dict) -> List[dict]:
+    """A native game is made of parts (engine zip, data zip), each fetched and checked like a game of its own."""
+    return [{"id": entry["id"], "title": f"{entry['title']} - {p['file']}", "sources": [p],
+             "contains": p.get("contains", []), "match": p.get("match", [])} for p in entry.get("parts", [])]
+
+
+def install_native(entry: dict, files: List[Tuple[str, bytes]], w: Writer) -> dict:
+    """Windows games (a source port plus its data): unpacked as they are, long names kept."""
+    gid = entry["id"]
+    w.remove_tree(f"GAMES/{gid}")
+    for name, data in files:
+        leaves, _first, problems = unpack(name, data)
+        for p in problems[:3]:
+            say(f"      note: {p}")
+        for it in _strip_common_folder(leaves):
+            w.write(f"GAMES/{gid}/{it['path']}", it["bytes"])
+    return {"mode": "native", "launch": entry["launch"]}
+
+
+def menu_items(games: List[dict]) -> List[dict]:
+    """What START-HERE lists: one line per DOSBox game, one per launch of a native game."""
+    out = []
+    for g in games:
+        if g.get("mode") == "native":
+            for title, exe, args in g["launch"]:
+                out.append({"id": g["id"], "title": title, "mode": "native", "exe": exe, "args": args})
+        else:
+            out.append(g)
+    return out
+
+
 # ------------------------------------------------------------------ your own games
 SKIP_MY = {"DOSBOX", "__SUPPORT", "__REDIST", "COMMONAPPDATA"}
 
@@ -696,7 +727,7 @@ KEYS = "123456789ABCDEFHIJKLMNOPQRTUVWYZ"  # no G (guides), S (setup) or X (exit
 
 def dos_menu(games: List[dict]) -> str:
     """C:\\MENU.BAT: the in-DOS game picker (only games on C:)."""
-    gs = [g for g in games if g["mode"] != "mine"][:len(KEYS)]
+    gs = [g for g in games if g["mode"] not in ("mine", "native")][:len(KEYS)]
     keys = KEYS[:len(gs)]
     t = ["@echo off", ":top", "cls", "echo  ======================================================",
          "echo   RETRO USB  -  pick a game", "echo  ======================================================", "echo."]
@@ -748,7 +779,11 @@ def win_start(games: List[dict], dosbox: Optional[str]) -> str:
           f"if /i \"%pick%\"==\"d\" start \"\" \"{exe}\" -conf DOSBOX\\RETRO.CONF -conf DOSBOX\\CONF\\MENU.CONF & goto menu",
           "if /i \"%pick%\"==\"g\" start \"\" \"GUIDES\\INDEX.HTM\" & goto menu"]
     for i, g in enumerate(games, 1):
-        t.append(f"if \"%pick%\"==\"{i}\" start \"\" \"{exe}\" -conf DOSBOX\\RETRO.CONF -conf DOSBOX\\CONF\\{g['id']}.CONF & goto menu")
+        if g.get("mode") == "native":
+            folder = f"%~dp0GAMES\\{g['id']}"
+            t.append(f"if \"%pick%\"==\"{i}\" start \"\" /d \"{folder}\" \"{folder}\\{g['exe']}\" {g['args']} & goto menu")
+        else:
+            t.append(f"if \"%pick%\"==\"{i}\" start \"\" \"{exe}\" -conf DOSBOX\\RETRO.CONF -conf DOSBOX\\CONF\\{g['id']}.CONF & goto menu")
     t += ["goto menu"]
     return "\n".join(t) + "\n"
 
@@ -764,7 +799,11 @@ def sh_start(games: List[dict]) -> str:
     t += ["  echo '   D  DOS menu'; echo '   Q  quit'", "  printf 'Pick a game: '; read -r pick || exit 0", "  case \"$pick\" in",
           "    q|Q) exit 0 ;;", "    d|D) \"$DB\" -conf DOSBOX/RETRO.CONF -conf DOSBOX/CONF/MENU.CONF ;;"]
     for i, g in enumerate(games, 1):
-        t.append(f"    {i}) \"$DB\" -conf DOSBOX/RETRO.CONF -conf DOSBOX/CONF/{g['id']}.CONF ;;")
+        if g.get("mode") == "native":  # the Windows port isn't usable here; the system's port with the same data is
+            port = g["exe"].rsplit(".", 1)[0]
+            t.append(f"    {i}) (cd GAMES/{g['id']} && \"$(command -v {port} || echo {port})\" {g['args']}) ;;")
+        else:
+            t.append(f"    {i}) \"$DB\" -conf DOSBOX/RETRO.CONF -conf DOSBOX/CONF/{g['id']}.CONF ;;")
     t += ["  esac", "done"]
     return "\n".join(t) + "\n"
 
@@ -846,6 +885,23 @@ def build(target: str, ids: Optional[List[str]] = None, downloads: str = DEFAULT
     missing: List[dict] = []
     for entry in wanted:
         say(f"  {entry['title']}")
+        if entry.get("parts"):
+            got = [obtain(p, downloads, offline, fetcher) for p in part_entries(entry)]
+            if all(d is not None for _n, d, _h in got):
+                for _n, _d, h in got:
+                    say(f"    {h}")
+                info = install_native(entry, [(n, d) for n, d, _h in got], w)
+                say("    installed (runs on Windows directly, no DOSBox)")
+                games.append(dict(info, id=entry["id"], title=entry["title"]))
+                continue
+            prev = old.get(entry["id"])
+            if prev and os.path.isdir(w.path(f"GAMES/{entry['id']}")):
+                say("    already on the stick - kept")
+                games.append(dict(prev, title=entry["title"], launch=entry["launch"]))
+                continue
+            say("    not installed: " + "; ".join(h for _n, d, h in got if d is None))
+            missing.append(entry)
+            continue
         name, data, how = obtain(entry, downloads, offline, fetcher)
         if data is None:
             prev = old.get(entry["id"])
@@ -853,8 +909,8 @@ def build(target: str, ids: Optional[List[str]] = None, downloads: str = DEFAULT
                 say("    already on the stick - kept")
                 games.append(dict(prev, title=entry["title"]))
                 continue
-            say("    not installed: " + ("save it into " + downloads + " from " + entry.get("page", entry["urls"][0] if entry.get("urls") else "?")
-                                        if how == "manual" else how))
+            where = entry.get("page") or next((u for src in sources(entry) for u in src.get("urls", [])), "its official page")
+            say("    not installed: " + (f"save it into {downloads} from {where}" if how == "manual" else how))
             missing.append(entry)
             continue
         say(f"    {how}")
@@ -874,6 +930,8 @@ def build(target: str, ids: Optional[List[str]] = None, downloads: str = DEFAULT
     base = ['mount C "GAMES"', 'mount D "GUIDES"']
     w.text("DOSBOX/CONF/MENU.CONF", game_conf(base + ["C:", "call MENU.BAT"]).replace("\nexit\n", "\n"))
     for g in games:
+        if g.get("mode") == "native":
+            continue
         entry = catalog.BY_ID[g["id"]]
         w.text(f"GAMES/MENU/{g['id']}.BAT", dos_runner(entry, g))
         s = dos_setup(entry, g) if g.get("mode") == "ready" else None
@@ -884,8 +942,8 @@ def build(target: str, ids: Optional[List[str]] = None, downloads: str = DEFAULT
         uses_d = any(re.match(r"(?i)^(img)?mount\s+d\b", l) for l in g["lines"])
         w.text(f"DOSBOX/CONF/{g['id']}.CONF", game_conf(([] if uses_d else ['mount D "GUIDES"']) + g["lines"]))
     w.text("GAMES/MENU.BAT", dos_menu(games))
-    w.text("START-HERE.bat", win_start(allg, dosbox.get("windows")))
-    w.write("start-here.sh", sh_start(allg).encode("ascii", "replace"))
+    w.text("START-HERE.bat", win_start(menu_items(allg), dosbox.get("windows")))
+    w.write("start-here.sh", sh_start(menu_items(allg)).encode("ascii", "replace"))
     try:
         os.chmod(w.path("start-here.sh"), 0o755)
     except OSError:
@@ -903,7 +961,7 @@ def build(target: str, ids: Optional[List[str]] = None, downloads: str = DEFAULT
 
     lines = [README]
     for g in allg:
-        tag = {"ready": "ready", "installer": "first run installs", "mine": "your game"}[g["mode"]]
+        tag = {"ready": "ready", "installer": "first run installs", "mine": "your game", "native": "Windows"}[g["mode"]]
         lines.append(f"  {g['id']:<9} {g['title']}  [{tag}]")
     if missing:
         lines.append("\nNot on the stick yet (see the builder's messages):")
@@ -936,6 +994,15 @@ def download_only(dest: str, ids: Optional[List[str]] = None, dosbox_platforms: 
         if ids and entry["id"] not in ids:
             continue
         say(f"  {entry['title']}")
+        if entry.get("parts"):
+            res = [obtain(p, dest, False, fetcher) for p in part_entries(entry)]
+            if all(d is not None for _n, d, _h in res):
+                got.append((entry, " + ".join(n for n, _d, _h in res)))
+                say("    " + "; ".join(h for _n, _d, h in res))
+            else:
+                failed.append(entry)
+                say("    " + "; ".join(h for _n, d, h in res if d is None))
+            continue
         name, data, how = obtain(entry, dest, False, fetcher)
         if data is not None:
             say(f"    {how}")

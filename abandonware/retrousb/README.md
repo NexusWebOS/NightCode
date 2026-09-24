@@ -26,6 +26,7 @@ It needs Python 3.8 or newer and nothing else.
   - Apogee's shareware: Duke Nukem 1 and 2, Commander Keen 1 and 4, Cosmo, Blake Stone, Raptor, and the freeware Bio Menace. Games without a known file name are found by scanning the Apogee mirror's file list;
   - the Spear of Destiny, Theme Hospital and Heroes of Might and Magic II demos, and Jazz Jackrabbit: Holiday Hare '95;
   - Tyrian 2000, released as freeware (Tyrian 2.1 as the fallback);
+  - Freedoom Phase 1 and 2 (BSD licence), played natively on Windows with the Crispy Doom port; both come from their GitHub releases;
   - DOSBox Staging, the latest Windows build from its GitHub releases.
 - **Freeware you download once yourself**, because their official pages have moved over the years:
   - One Must Fall 2097
