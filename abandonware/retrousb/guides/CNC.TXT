@@ -1,0 +1,63 @@
+COMMAND & CONQUER GUIDE
+======================
+
+GDI against the Brotherhood of Nod, fighting over tiberium. EA made the
+game free in 2007.
+
+Getting it onto the stick
+-------------------------
+  The free release is two disc images: GDI and Nod. Save them (ISO, or a
+  zip holding the ISO) into the builder's downloads folder and run the
+  builder again. The first run mounts the disc as E: and starts its
+  installer: install into C:\CNC. Keep the disc image on the stick; the
+  game wants it for movies and music.
+
+The basics
+----------
+  * Money comes from tiberium: harvesters collect it and bring it to
+    the refinery. A refinery comes with one harvester. Build a second
+    refinery or harvester early.
+  * Power: every building needs it. When power runs low, production
+    slows and defences stop. Build power plants ahead of need.
+  * Build order that works: Power plant, Barracks / Hand of Nod,
+    Refinery, second Power plant, War Factory / Airstrip, second
+    Refinery.
+  * Protect your harvesters. Losing them ends your income.
+  * Tiberium hurts infantry who walk through it.
+
+Controls
+--------
+  Left-click selects, left-click again moves or attacks. Drag a box to
+  select many. Ctrl+number stores a team, the number recalls it.
+  Right-click cancels. The sidebar builds things: click an icon, then
+  place the building next to your base.
+
+GDI
+---
+  Strengths: armour. Medium tank, then the Mammoth tank (slow, very
+  tough, heals itself a little). Orca helicopters, A-10 airstrikes, and
+  the Ion Cannon from the Advanced Communications Center.
+  * Mass medium tanks with a few rocket soldiers. Grenadiers for
+    infantry.
+  * Guard towers and advanced guard towers hold chokepoints.
+
+Nod
+---
+  Strengths: speed and tricks. Recon bikes, buggies, flame tanks,
+  stealth tanks, the Obelisk of Light and the nuke from the Temple of
+  Nod.
+  * Stealth tanks hunt harvesters and lone buildings.
+  * Flame tanks and flamethrower infantry melt GDI infantry.
+  * An Obelisk covering your base entrance stops most early attacks.
+
+Tricks
+------
+  * Engineers capture enemy buildings. Capture a refinery or the
+    Construction Yard to change a mission.
+  * Sandbags and walls funnel the enemy AI into your defences.
+  * Selling a building returns part of its cost in an emergency.
+  * The AI attacks along the same paths: defend those.
+  * Save at the start of each mission and mid-way.
+
+Also free: CnCNet offers the freeware C&C, Red Alert and more with
+online play on modern Windows.

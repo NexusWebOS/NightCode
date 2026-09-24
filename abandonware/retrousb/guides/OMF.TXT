@@ -1,0 +1,55 @@
+ONE MUST FALL: 2097 GUIDE
+=========================
+
+Pilots fight in giant robots (HARs) for the WAR corporation. Freeware
+since 1999.
+
+Getting it onto the stick
+-------------------------
+  Save the freeware zip from omf2097.com into the builder's downloads
+  folder and run the builder again. Run SETUP once for sound.
+
+The robots (HARs)
+-----------------
+  Jaguar     fast all-rounder with a leaping grab. Best first pick.
+  Shadow     uses shadow copies of itself; tricky
+  Thorn      spikes and a flying kick
+  Pyros      jets of fire, flies briefly
+  Electra    electric balls and a rolling charge
+  Katana     blade uppercuts, rising attacks
+  Shredder   flying head-butts and claws
+  Flail      swinging chains, long reach
+  Gargoyle   flies, dives, claws
+  Chronos    stasis and teleporting
+  Nova       the heavy: missiles and mines
+
+How to fight
+------------
+  * Hold back (away from the opponent) to block.
+  * Special moves are joystick-style motions + punch or kick, like other
+    fighting games: down, down-forward, forward + punch for example.
+    The in-game Help and the README list each robot's moves.
+  * When the opponent is dazed at the end of a round, a "scrap" or
+    "destruction" finishing move is possible; the listed moves in the
+    manual show them.
+  * Arenas have hazards (the power plant, the fire pit, the spikes):
+    throw opponents into them.
+
+Tournament mode
+---------------
+  Your pilot earns money per fight. Spend it on:
+    Arm power / Leg power   more damage
+    Arm speed / Leg speed   faster attacks
+    Armor                   less damage taken
+    Stun resistance         get dizzy later
+  Buy upgrades before a new robot; a fully trained cheap robot beats an
+  untrained expensive one. Save between tournament rounds.
+
+Tips
+----
+  * Start in 1 Player with Jaguar on the easiest difficulty and learn
+    the jump-in kick, sweep and throw first.
+  * Most special moves have recovery time: block them, then punish.
+  * Two players on one keyboard works: each side's keys are in SETUP.
+
+The open-source OpenOMF project also runs this data on modern systems.

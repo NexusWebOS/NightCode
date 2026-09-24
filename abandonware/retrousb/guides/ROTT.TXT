@@ -1,0 +1,69 @@
+RISE OF THE TRIAD - THE HUNT BEGINS (shareware episode) GUIDE
+============================================================
+
+A HUNT team is stranded on San Nicolas Island, facing the cult of El
+Oscuro. ROTT is fast, loud and full of traps: jump pads, moving
+platforms, fire jets, spinning blades and exploding walls.
+
+Controls (change them in SETUP)
+-------------------------------
+  Arrows move/turn, Ctrl fire, Space open/use, Shift run, Alt strafe,
+  1-4 weapons, Tab map, Esc menu. Look up / down and aim are in SETUP.
+
+Pick your hero (from the game's own character table)
+----------------------------------------------------
+                       health  speed
+  Taradino Cassatt      100    medium    the all-rounder
+  Thi Barrett            85    fast
+  Doug Wendt            150    slowest   tank; a good first pick
+  Lorelei Ni             70    fastest   fragile
+  Ian Paul Freeley      120    medium-   tough and still quick enough
+
+Weapons
+-------
+  Pistol, then dual pistols, then the MP40: unlimited-ish bullets.
+  Missile weapons (one at a time, limited shots, then gone):
+    Bazooka       straight rocket
+    Heat-seeker   homes in; best all-purpose missile
+    Drunk missile a spread of wobbly rockets; clears rooms
+    Firebomb      explodes in a cross of fire
+    Flamewall     a wall of fire along the floor
+  (Split missile, Dark Staff and the Excalibat are in the full game.)
+  Grabbing a new missile weapon replaces the one you carry.
+
+Power-ups
+---------
+  God mode       invulnerable, you throw energy balls. Enjoy it.
+  Mercury mode   fly (look up/down to steer)
+  Shrooms mode   the screen goes psychedelic; you're fine
+  Elasto mode    you bounce off walls
+  Bulletproof armor, Asbestos (fire) armor, Gas mask
+  Health: small and big food, monk meals, the first aid kit.
+
+Tactics
+-------
+  * Walls with cracks or a different look can be blown open.
+  * Jump pads (the round pads on the floor) are the way to high ledges.
+  * Enemies dodge, roll and play dead. Keep shooting until they gib.
+  * Some guards grab your weapon when they are close: don't let them.
+  * Save before every trap corridor.
+
+Cheats
+------
+  Type DIPSTICK during play first to turn cheats on. Then:
+    SIXTOYS   keys, armor, full health    TOOSAD   god mode power-up
+    FLYBOY    mercury mode                BADTRIP  shrooms mode
+    BOING     elasto mode                 GOOBERS  restart at level 1
+    SHOOTME   bulletproof armor           BURNME   fire armor
+    LUNGDUNG  gas mask                    HUNTPACK keys, armor, health,
+    JOHNWOO   dual pistols                         MP40, heat-seeker
+    PLUGME    MP40      VANILLA bazooka   HOTTIMES heat-seeker
+    BOOZE     drunk missile               FIREBOMB firebomb
+    BONES     flamewall                   SEEYA    God hand
+    CARTIER   map cheat                   GOARCH   end the level
+    SPEED     always run                  PANIC    back to normal
+  (Codes from the game's own source; the full game has a few more.)
+
+After the shareware
+-------------------
+  Rise of the Triad: Dark War is sold on Steam and GOG.

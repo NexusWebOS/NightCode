@@ -1,0 +1,53 @@
+THE ELDER SCROLLS: ARENA GUIDE
+==============================
+
+The first Elder Scrolls game: all of Tamriel in one game. Bethesda made
+it free in 2004.
+
+Getting it onto the stick
+-------------------------
+  Save Bethesda's free Arena zip (UESP links it) into the builder's
+  downloads folder and run the builder again. If the stick shows "first
+  run installs", let the installer put it in C:\ARENA.
+
+The story
+---------
+  The Imperial battlemage Jagar Tharn has imprisoned Emperor Uriel
+  Septim VII and taken his place. You start in the Imperial dungeons.
+  Ria Silmane, murdered by Tharn, speaks to you in dreams: find the
+  eight pieces of the Staff of Chaos, one per province, then face Tharn
+  in the Imperial Palace.
+
+  Each staff piece: ask around a city ("where is..." / rumors) to learn
+  which dungeon holds the clue, do a small quest for someone, get the
+  location of the piece's dungeon, clear it. Ria appears in your sleep
+  after each piece and tells you where to look next.
+
+Making your character
+---------------------
+  * Answer the questions or pick a class. Warrior classes are the
+    easiest start: Knight, Warrior, Barbarian.
+  * Stats are rolled: re-roll until you get high numbers in the stats
+    your class uses (strength and endurance for fighters).
+  * Race matters little later; pick what you like.
+
+Surviving the start
+-------------------
+  * The starting dungeon is hard at level 1. Fight in doorways, rest
+    (camp) often, and save a lot, in several slots.
+  * Buy better armour as soon as you reach a city.
+  * Inns: pay for a room to rest safely in cities. Resting outside at
+    night invites monsters.
+  * Spells: mages' guilds sell and make spells. A healing spell
+    changes the game even for a fighter.
+  * Fast travel: the world map. Travel takes game days; that's fine.
+  * Talking: ask "Where is" for places; the answers are directions
+    ("north of here"). The automap marks what you have seen.
+
+Controls
+--------
+  Arrow keys move, and the mouse works everything on screen: click the
+  icons at the bottom for the map, spells, logbook and status. You
+  attack with the right mouse button held while you move the mouse
+  across the screen, like swinging the weapon. The keyboard shortcuts
+  are in the game's README.

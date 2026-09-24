@@ -1,0 +1,82 @@
+DUKE NUKEM 3D - L.A. MELTDOWN (shareware episode) GUIDE
+======================================================
+
+Aliens have invaded Los Angeles. Duke is not amused.
+
+First: run SETUP (S in the DOS menu) and choose Sound Blaster for
+effects and music, then your controls.
+
+Controls (original defaults)
+----------------------------
+  Arrows      move / turn        Ctrl       fire
+  Space       open / use         Shift      run    CapsLock  auto-run
+  A           jump               Z          crouch
+  Alt         strafe             , and .    strafe left / right
+  PgUp/PgDn   look up / down     Home/End   aim up / down
+  1-0         weapons            ' and ;    next / previous weapon
+  [ ] Enter   pick / use inventory item
+  H holoduke  J jetpack  N night vision  M medkit  R steroids
+  `           quick kick         Backspace  turn around
+  Tab         map                F2/F3      save / load
+
+The levels
+----------
+  E1L1 Hollywood Holocaust    E1L4 Toxic Dump
+  E1L2 Red Light District     E1L5 The Abyss (boss: the Battlelord)
+  E1L3 Death Row              E1L6 Launch Facility (secret)
+
+Weapons
+-------
+  Mighty Foot   always available; quick kick (`) works with any gun
+  Pistol        accurate, fast reload
+  Shotgun       best close-range gun
+  Chaingun      burns ammo, shreds troopers
+  RPG           huge damage; never at close range
+  Pipe bombs    throw, then press fire again to detonate
+  Shrinker      shrink an enemy, then step on it
+  Devastator, laser tripbombs and the Freezethrower: later episodes
+  (freeze an enemy, then kick it to pieces)
+
+Items
+-----
+  Portable medkit (M)  heals on demand; saves you in boss fights
+  Steroids (R)   fast and strong for a while; also cures being shrunk
+  Holoduke (H)   a decoy Duke; enemies shoot it
+  Jetpack (J)    fly; Jump/Crouch go up/down
+  Night vision (N), Scuba gear (automatic underwater),
+  Protective boots (walk on toxic slime), Armor, Atomic health (+50,
+  up to 200)
+
+Enemies
+-------
+  Assault troopers   the pig-lizard grunts; some teleport
+  Pig cops           shotguns; hit hard at close range
+  Octabrains         float; their mind blast hurts. Kill at range
+  Enforcers / Assault captains (later), Sentry drones (explode)
+  Battlelord         E1L5 boss: chaingun and mortars. Stay far away,
+                     circle, use RPG and pipe bombs, medkit when low.
+
+Secrets and tactics
+-------------------
+  * Cracked walls blow open with pipe bombs or RPG rockets.
+  * Press Space on everything: light switches, toilets, posters, walls.
+  * Vents: kick or shoot the grate.
+  * Explosive canisters kill groups; keep your distance.
+  * Pipe bomb a doorway, wait for the enemy, detonate.
+  * Shrunk enemies grow back after a while: squash fast.
+
+Cheats (type during play; all start with DN)
+--------------------------------------------
+  DNKROZ / DNCORNHOLIO   god mode      DNSTUFF    everything
+  DNWEAPONS  weapons     DNITEMS   items     DNKEYS   keys
+  DNINVENTORY inventory  DNCLIP    walk through walls
+  DNSCOTTYel  warp to episode e, level l  (DNSCOTTY15 = The Abyss)
+  DNVIEW     third-person view            DNHYPER   steroids
+  DNSHOWMAP  full map    DNUNLOCK  open all doors
+  DNMONSTERS monsters on/off              DNSKILLn  restart on skill n
+  (From the game's own cheat table.)
+
+After the shareware
+-------------------
+  Duke Nukem 3D: 20th Anniversary World Tour and the Atomic Edition are
+  sold on Steam/GOG. Megaton/Atomic's DUKE3D.GRP runs with this setup.

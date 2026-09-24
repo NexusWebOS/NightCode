@@ -1,0 +1,53 @@
+THE BEST OF THE REST - DOS CLASSICS WORTH OWNING
+==============================================
+
+Most "abandonware" is not abandoned: somebody still owns it, and many of
+the best DOS games are sold today for a few dollars, usually already set
+up for DOSBox. Buy them on GOG (DRM-free, the files are yours to keep)
+or Steam, then put each game's folder in retrousb\mygames and run the
+builder again: they go onto the stick next to the free ones.
+
+What's sold changes, so check the store. At the time of writing these
+were available on GOG and/or Steam:
+
+Strategy
+  X-COM: UFO Defense and Terror from the Deep
+  Master of Orion 1 and 2        Master of Magic
+  Heroes of Might and Magic 1 and 2
+  Warcraft I and II              Dune II (look for the Dune bundles)
+  SimCity 2000                   Transport Tycoon Deluxe
+  Syndicate                      Theme Hospital, Dungeon Keeper
+  Jagged Alliance                Panzer General
+
+Role-playing
+  Ultima Underworld 1 and 2      Ultima VII
+  System Shock (Enhanced / Classic)
+  Fallout (DOS/Windows)          Darklands
+  Betrayal at Krondor            The Elder Scrolls: Arena, Daggerfall
+                                 (free, see ARENA.TXT / DAGGER.TXT)
+
+Action
+  DOOM, DOOM II, Final DOOM      Heretic, Hexen
+  Quake                          Duke Nukem 3D, Shadow Warrior
+  Wolfenstein 3D, Spear of Destiny   Rise of the Triad
+  Blood                          Descent 1 and 2
+  Commander Keen                 Prince of Persia (some editions)
+  One Must Fall (free, see OMF.TXT)
+
+Adventure (many run best in ScummVM, also free)
+  The Secret of Monkey Island, Monkey Island 2
+  Indiana Jones and the Fate of Atlantis
+  Day of the Tentacle, Sam & Max Hit the Road, Full Throttle
+  Gabriel Knight                 Quest for Glory series
+  King's Quest and Space Quest collections
+
+Simulation
+  TIE Fighter, X-Wing           Wing Commander 1-4
+  Microprose flight sims (various bundles)
+
+Free and legal, not DOS but worth having
+  Beneath a Steel Sky, Flight of the Amazon Queen, Lure of the
+  Temptress, Dreamweb, Drascula: free from the ScummVM website's Games
+  page, played in ScummVM.
+  Freedoom (free DOOM data), OpenTTD (Transport Tycoon), The Ur-Quan
+  Masters (Star Control 2), OpenTyrian, Daggerfall Unity, OpenOMF.

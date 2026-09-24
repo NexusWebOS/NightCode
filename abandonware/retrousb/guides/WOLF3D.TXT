@@ -1,0 +1,73 @@
+WOLFENSTEIN 3D - ESCAPE FROM WOLFENSTEIN (shareware episode) GUIDE
+=================================================================
+
+You are B.J. Blazkowicz, locked in Castle Wolfenstein. Nine floors
+stand between you and the way out, plus one secret floor.
+
+Controls (defaults; change under Customize in the menu)
+-------------------------------------------------------
+  Arrows    move / turn          Ctrl    fire
+  Alt       strafe (hold)        Shift   run (hold)
+  Space     open doors, push walls, press elevator switches
+  1-4       knife, pistol, machine gun, chain gun
+  Esc       menu (save, load, sound, controls)
+
+Floors
+------
+  Floors 1-8, then Hans Grosse on floor 9.
+  Floor 10 is the secret floor: its elevator is hidden behind a push
+  wall on floor 1. Push the walls as you go.
+
+Weapons
+-------
+  Knife        silent, only good for dogs and sleeping guards
+  Pistol       starting gun, ok for single guards
+  Machine gun  dropped by SS guards. Your main weapon
+  Chain gun    found in secret areas; eats ammo, shreds bosses
+  All guns share one ammo pool (max 99). Guards drop clips.
+
+Enemies
+-------
+  Guards (brown)   weak, slow to react. Pistol is enough.
+  Dogs             fast, bite. Knife or pistol at close range.
+  SS (blue)        tough, drop the machine gun. Hit them first.
+  Hans Grosse      floor 9 boss, dual chain guns, lots of health.
+                   Use the chain gun, fight from a doorway, step out,
+                   burst, step back.
+
+Health and points
+-----------------
+  Dog food +4    Plate of food +10    First aid kit +25
+  Blood puddles +1 (only when you are below 11 health)
+  One Up: full health, 25 ammo and an extra life
+  Treasure: cross 100, chalice 500, chest 1000, crown 5000 points
+  An extra life every 40,000 points.
+  The end of each floor scores kills, secrets and treasure %.
+
+Secrets: push walls
+-------------------
+  Walk up to walls and press Space. A wall that slides away is a push
+  wall. Good places to try:
+    * walls with a picture or a flag in the middle of a long corridor
+    * any wall that looks different from its neighbours
+    * dead ends that make no sense
+  Push walls hide treasure, food, the chain gun and the floor 10
+  elevator on floor 1.
+
+Tactics
+-------
+  * Gunfire alerts every guard in connected rooms. Expect a rush after
+    the first shot; back into a corridor and let them come one by one.
+  * Open a door, step aside, let the guards run into the doorway.
+  * Guards shoot less accurately at a distance and when you move.
+  * Don't waste the chain gun on guards; keep ammo for the SS and Hans.
+
+Cheat (hold the keys down together)
+-----------------------------------
+  M + L + I   full health, 99 ammo, both keys, all weapons.
+              Your score is reset to 0 for it.
+
+After the shareware
+-------------------
+  The full game (six episodes) and Spear of Destiny are sold on Steam and
+  GOG. Put your copy in mygames.

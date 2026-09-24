@@ -1,0 +1,64 @@
+SHADOW WARRIOR (shareware) GUIDE
+===============================
+
+Lo Wang, bodyguard turned ninja, against the Zilla corporation's
+demons. Build engine like Duke 3D, with swords, ninjas and very bad
+jokes.
+
+First: run SETUP (S in the DOS menu) for sound and controls.
+
+Controls (original defaults)
+----------------------------
+  Arrows move/turn, Ctrl fire, Space open, Shift run, CapsLock auto-run,
+  A jump, Z crouch, Alt strafe, , and . strafe left/right,
+  PgUp/PgDn look, Home/End aim, 1-0 weapons, ' and ; next/previous.
+  [ ] Enter  inventory
+  M medkit  S smoke bomb  N night vision  G gas bomb  F flash bomb
+  C caltrops  T message line (for cheats)  Tab map
+
+  Pressing a weapon's number again switches its alternate mode (for
+  example the rocket launcher's heat-seeker and nuke).
+
+The levels
+----------
+  1 Seppuku Station             3 Master Leep's Temple
+  2 Zilla Construction          4 Dark Woods of the Serpent
+
+Weapons
+-------
+  Fists and Katana (sword), Shurikens, Riot gun (shotgun), Uzi (two
+  if you find a second), Missile launcher, Grenade launcher, Sticky
+  bombs, Rail gun, Guardian head, Ripper heart.
+  The shareware has the first several; the rest are in the full game.
+
+  * The katana cuts most enemies in one or two swings.
+  * Riot gun with the TurboDrive upgrade fires four shells at once.
+  * Sticky bombs stick to walls and enemies: set traps at corners.
+
+Inventory
+---------
+  Portable medkit   heal 100 on demand
+  Smoke bomb        become nearly invisible for a while
+  Night vision, Gas bomb, Flash bomb (blinds enemies), Caltrops
+  (spikes on the floor behind you)
+  Fortune cookie: +50 health (over the maximum)
+  Armor vest +50, Kevlar +100, Medkit +20
+
+Enemies
+-------
+  Ninjas       brown ones are weak, red ones are fast; some crawl
+  Coolies      walk at you and explode; shoot them from far away
+  Coolie ghosts, Hornets (swarms; sword them), Guardians (fireballs),
+  Accursed, Ripper hearts, Serpent god... the later ones are nasty.
+
+Cheats (press T, type the code, press Enter)
+--------------------------------------------
+  SWCHAN    god mode             SWGIMME  all weapons and items
+  SWGHOST   walk through walls   SWTREKnn warp to level nn
+  SWGREED   god + everything     SWSTART  restart the level
+  SWLOC     position and frame rate    SWMAP  full map
+  (From the game's own cheat table.)
+
+After the shareware
+-------------------
+  Shadow Warrior Classic Redux / Classic Complete are on Steam and GOG.

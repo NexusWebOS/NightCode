@@ -1,0 +1,47 @@
+TYRIAN 2000 GUIDE
+=================
+
+A vertical shoot-'em-up with a real story, a shop between levels and
+five episodes: Escape, Treachery, Mission: Suicide, An End to Fate and
+Hazudra Fodder (the one added in Tyrian 2000).
+
+Controls
+--------
+  Arrows or mouse move, Space fire, Enter changes the rear weapon's
+  mode, Alt and Ctrl fire the left and right sidekicks. Esc pauses.
+  Setup lets you change all of it.
+
+Game modes
+----------
+  Full game    the story, with the shop and datacubes. Start here.
+  Arcade       power-ups drop during the level, no shop.
+  2 Player Arcade, and more modes that unlock later.
+
+The shop (Full game)
+--------------------
+  Front gun     your main weapon; upgrade its power level
+  Rear gun      covers the sides and back; several fire modes
+  Sidekicks     left and right helpers; some charge up, some fire
+                on their own
+  Generator     THE most important part. Every shot uses energy, and
+                the generator refills it. A weak generator means your
+                guns stop firing in long fights.
+  Shield        regenerates, powered by the generator too
+  Ship          better hulls carry more armor
+
+  Order that works: generator first, then the front gun's power, then
+  the shield. Sidekicks last.
+
+Tips
+----
+  * Shoot everything, including buildings and scenery. Hidden credits
+    and power-ups are everywhere.
+  * Datacubes tell the story. Read them in the shop menu.
+  * Some levels have secret branches: destroy special targets or fly
+    through odd places to open new routes on the map.
+  * Your armor does not refill between levels by itself; the shield
+    does during a level. Buy armor repairs when low.
+  * Bosses have patterns: learn them on Easy first.
+
+Also free: OpenTyrian is a modern open-source version that plays these
+same data files on Windows, Linux and phones.

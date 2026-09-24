@@ -1,0 +1,84 @@
+DOSBOX SURVIVAL GUIDE - START HERE
+==================================
+
+Starting a game
+---------------
+  Windows: double-click START-HERE.bat on the stick and type a number.
+  D in that menu opens one DOSBox with a DOS menu of all the catalog games.
+  Linux:   ./start-here.sh (DOSBox from the stick, or your system's).
+
+  Each game starts in its own DOSBox window and closes it when you quit
+  the game.
+
+Keys that work everywhere
+-------------------------
+  Alt+Enter     full screen on / off
+  Ctrl+F10      capture or release the mouse
+  Ctrl+F9       close DOSBox right now (last resort; saves are not made)
+
+  Speed: DOSBox Staging picks the speed on its own. Old games that run
+  far too fast (some 80s games) can be slowed with Ctrl+F11 in classic
+  DOSBox 0.74, or in Staging by typing this at the DOS prompt before
+  starting the game:
+      CONFIG -SET CPU CYCLES=3000
+
+DOS in two minutes
+------------------
+  DIR            list files          DIR /W   wide list
+  CD NAME        go into a folder    CD \     back to the top
+  C:  D:  E:     change drive
+  NAME           run NAME.EXE, NAME.COM or NAME.BAT
+  MORE D:\X.TXT  read a text file a page at a time
+  CLS            clear the screen
+  EXIT           close DOSBox
+  MENU           (in the DOS menu window) back to the game list
+
+  Drives: C: is the GAMES folder on the stick, D: is these guides,
+  E: is a CD image when a game has one.
+
+Sound and music setup
+---------------------
+  When a game's SETUP asks, these are the right answers for DOSBox:
+
+    Digital sound / effects   Sound Blaster 16 (or Sound Blaster)
+      port 220   IRQ 7   DMA 1   high DMA 5
+    Music                     General MIDI (port 330) or Sound Blaster /
+                              AdLib / OPL
+    If General MIDI is silent, pick AdLib or Sound Blaster music instead.
+
+  In the DOS menu press S to run a game's setup program.
+
+First-run installers
+--------------------
+  Some games could not be unpacked by the builder (they use old DOS
+  compressors), so their original INSTALL program runs the first time.
+  When it asks for a folder, type the one the screen tells you, e.g.
+  C:\DOOM. Next time the game starts directly.
+
+Saved games
+-----------
+  Saves live in each game's folder on the stick (GAMES\<NAME>). Copy that
+  folder to back them up. Don't pull the stick out while a game is saving:
+  close DOSBox first.
+
+Your own games
+--------------
+  Bought a DOS game on GOG or have old disks? Put each game in its own
+  folder inside retrousb\mygames on the PC and run Build-RetroUSB.cmd
+  again. GOG folders are understood as they are (their DOSBox settings are
+  read). For anything else, add PLAY.TXT to the folder with the DOS
+  commands that start it, for example:
+      CD FALLOUT
+      FALLOUT.EXE
+  The game folder is C: while it runs.
+
+When something goes wrong
+-------------------------
+  * Black screen or crash at start: run the game's SETUP and choose
+    "No sound", then add sound back once it runs.
+  * "Not enough memory": DOSBox gives 16 MB; that is plenty. Choose a
+    smaller screen mode or disable music in SETUP.
+  * Mouse drifts or is too fast: Ctrl+F10 to release it and click back
+    into the window.
+  * The stick is slow: copy the whole stick to a folder on the PC and run
+    START-HERE.bat from there. Everything uses relative paths.

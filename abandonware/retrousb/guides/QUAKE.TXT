@@ -1,0 +1,82 @@
+QUAKE - DIMENSION OF THE DOOMED (shareware episode) GUIDE
+========================================================
+
+Slipgates, Lovecraftian monsters and full 3D. The shareware is episode 1.
+
+Make the controls modern (do this first)
+----------------------------------------
+  Press ~ (the key left of 1) to open the console and type, one line at a
+  time, Enter after each:
+      bind w +forward
+      bind s +back
+      bind a +moveleft
+      bind d +moveright
+      bind space +jump
+      bind mouse1 +attack
+      +mlook
+  Add the same lines to ID1\AUTOEXEC.CFG so they stay. Options in the menu
+  also let you turn on "Mouse look" and "Always run".
+
+  Speed in DOSBox: Quake is heavy. Press - to shrink the view, or pick a
+  low video mode in Options. 320x200 plays fine.
+
+Choosing the skill
+------------------
+  The start map is a hub: walk through a hallway to pick Easy, Normal or
+  Hard, then the episode 1 gate. Nightmare is hidden in the start map.
+
+The levels
+----------
+  E1M1 The Slipgate Complex     E1M5 Gloom Keep
+  E1M2 Castle of the Damned     E1M6 The Door to Chthon
+  E1M3 The Necropolis           E1M7 The House of Chthon (boss)
+  E1M4 The Grisly Grotto        E1M8 Ziggurat Vertigo (secret)
+
+Weapons
+-------
+  1 Axe          2 Shotgun           3 Double-barrelled shotgun
+  4 Nailgun      5 Perforator        6 Grenade launcher
+  7 Rocket launcher                  8 Thunderbolt
+  * Grenades bounce: lob them around corners.
+  * Never fire the Thunderbolt under water: it discharges and kills you
+    (and everyone near).
+
+Enemies
+-------
+  Grunts, Rottweilers     easy; shotgun
+  Enforcers               lasers you can dodge
+  Knights / Death Knights sword charge; Death Knights throw fire
+  Ogres                   grenades and a chainsaw; fight close so the
+                          grenades miss, or snipe with nails
+  Zombies                 only die when gibbed: grenades or rockets.
+                          Bullets just knock them down for a while.
+  Scrags                  flying, spit; nailgun
+  Fiends                  leap across the room; sidestep, then shoot
+  Shamblers               600 health, lightning; explosives do half
+                          damage to them. Use cover and nails.
+  Rotfish                 in water; annoying, weak
+
+Power-ups
+---------
+  Quad Damage (x4 damage), Pentagram of Protection (invulnerable),
+  Ring of Shadows (nearly invisible), Biosuit (breathe underwater and in
+  slime). Armor: green 100, yellow 150, red 200. Megahealth +100.
+
+Chthon (E1M7)
+-------------
+  Your weapons do nothing to him. Around the lava lake are buttons:
+  press them to charge the electrodes and hit him with lightning. It
+  takes more than one strike. Keep moving; his lava balls hurt.
+
+Console commands (~)
+--------------------
+  god          god mode              give h 100   health
+  impulse 9    all weapons and ammo  impulse 255  Quad Damage
+  noclip       walk through walls    notarget     monsters ignore you
+  fly          fly                   map e1m8     go to a map
+  skill 3      Nightmare (then: map e1m1)
+
+After the shareware
+-------------------
+  Quake (all four episodes and both mission packs) is sold on Steam and
+  GOG.

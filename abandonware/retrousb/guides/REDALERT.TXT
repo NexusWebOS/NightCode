@@ -1,0 +1,56 @@
+COMMAND & CONQUER: RED ALERT GUIDE
+=================================
+
+Einstein removes Hitler from history and the Soviet Union marches on
+Europe. Allies against Soviets. EA made it free in 2008.
+
+Getting it onto the stick
+-------------------------
+  Two disc images: Allied and Soviet. Save them (ISO, or a zip holding
+  the ISO) into the builder's downloads folder and run the builder again.
+  The first run mounts the disc as E: and starts its installer: install
+  into C:\REDALERT.
+
+The basics
+----------
+  * Money: ore trucks mine ore (and gems, worth more) and bring it to
+    the refinery. More trucks and a second refinery early.
+  * Power: build power plants ahead of need; low power disables
+    defences and slows building.
+  * Build order: Power plant, Barracks, Ore refinery, Power plant,
+    War factory, second Refinery, Service depot.
+  * Naval yards exist on water maps: submarines, destroyers, gunboats.
+
+Allies
+------
+  Light and medium tanks, artillery, Rangers (jeeps), Tanya (commando,
+  destroys buildings with C4, shoots infantry in one shot), Spies (steal
+  money, see inside buildings), Engineers, Medics, Mechanics,
+  Gap Generator (hides your base), GPS satellite (reveals the map),
+  the Chronosphere (teleport units) and cruisers at sea.
+  * Medium tanks in numbers with a few rocket soldiers.
+  * Tanya plus a Chinook or APC ends many missions early.
+  * Cruisers wreck coastal bases from far out.
+
+Soviets
+-------
+  Heavy tanks, Mammoth tanks, V2 rockets, MiGs and Yaks, attack dogs
+  (kill infantry and sniff out spies), flamethrowers, Tesla coils and
+  Tesla tanks, the Iron Curtain (invulnerability) and nukes.
+  * Heavy tanks are cost-effective: mass them.
+  * Tesla coils are the best base defence in the game, if you have
+    the power for them.
+  * A few attack dogs in your base stop spies and Tanya.
+
+Tricks
+------
+  * Ctrl+number stores a team, the number recalls it. Alt forces a
+    move through anything; Ctrl forces fire on the ground or your own
+    units.
+  * Barrels explode: shoot them near enemies.
+  * Service depot repairs vehicles; a Mechanic (Allies) repairs in the
+    field.
+  * Save at the start of each mission.
+
+Also free: CnCNet offers the freeware Red Alert with online play on
+modern Windows.

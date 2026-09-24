@@ -1,0 +1,53 @@
+THE ELDER SCROLLS II: DAGGERFALL GUIDE
+======================================
+
+A huge game: the Iliac Bay is about the size of Great Britain, with
+thousands of towns and dungeons. Bethesda made it free in 2009.
+
+Getting it onto the stick
+-------------------------
+  Save Bethesda's free Daggerfall zip (UESP links it) into the builder's
+  downloads folder and run the builder again. The first run starts the
+  installer: install into C:\DAGGER and pick the largest install size.
+  Run SETUP for sound (Sound Blaster, 220 / 7 / 1).
+
+The story
+---------
+  The Emperor sends you to the city of Daggerfall to put the ghost of
+  King Lysandus to rest and to find a letter he wrote to Queen Mynisera.
+  It leads to the Mantella and the giant golem Numidium, and the
+  factions all want it. There are several endings; the main quest
+  advances in letters and messages that arrive as game time passes, so
+  do side quests between them.
+
+Making your character
+---------------------
+  The class builder is the best part. Make a custom class:
+  * Advantages that pay off everywhere: Rapid Healing, Regenerate
+    Health, Adrenaline Rush, Athleticism.
+  * Disadvantages that rarely hurt: forbidding a weapon type or an
+    armour type you won't use, or a rare material.
+  * Primary skills level fastest. Put what you'll use every minute
+    there: a weapon, Dodging, Running or Climbing, a magic school.
+  * A good first build: long blade + critical strike + dodging as
+    primary, with a little Restoration for healing.
+  * Answering the questions gives bonuses; picking skills yourself
+    gives control. Both work.
+
+Surviving
+---------
+  * Skills improve by use; you level up when skills improve enough.
+  * Dungeons are enormous 3D mazes. Carry a Recall spell (Mages Guild):
+    mark the entrance, recall when you're done or lost.
+  * Levitation spells and Climbing save you from dead ends.
+  * Rest (the camp icon) to heal; not near enemies.
+  * Quests have time limits in game days. Travel eats days: travel
+    "fast" and stay at inns to save time.
+  * Banks: deposit gold, get letters of credit. You can buy houses and
+    ships.
+  * Join guilds (Fighters, Mages, temples, and the secret ones) for
+    training, shopping and quests.
+  * Save often, in different slots. Some bugs of the time still exist.
+
+Also free: "Daggerfall Unity" is a modern engine for this same data
+(Windows, Linux, macOS). The DOS game in DOSBox is the original.

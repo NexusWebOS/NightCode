@@ -1,0 +1,90 @@
+DOOM - KNEE-DEEP IN THE DEAD (shareware episode) STRATEGY GUIDE
+==============================================================
+
+Controls (original defaults; change them in SETUP)
+--------------------------------------------------
+  Arrows    move / turn           Ctrl     fire
+  Alt       strafe (hold)         Shift    run (hold)
+  Space     open doors, press switches
+  1-7       weapons               Tab      automap
+  F2 / F3   save / load           F6 / F9  quick save / quick load
+  - / +     smaller / bigger view F5       detail level
+  Esc       menu
+
+  Tip: hold Shift most of the time. Speed wins fights in DOOM.
+
+The levels
+----------
+  E1M1 Hangar             E1M4 Command Control     E1M7 Computer Station
+  E1M2 Nuclear Plant      E1M5 Phobos Lab          E1M8 Phobos Anomaly
+  E1M3 Toxin Refinery     E1M6 Central Processing  E1M9 Military Base
+  E1M9 is the secret level: its exit is hidden in E1M3.
+
+Weapons (shareware has 1-5 plus the chainsaw)
+---------------------------------------------
+  1 Fist / Chainsaw   Chainsaw is great against demons: they can't bite
+                      back while it stuns them.
+  2 Pistol            Accurate on the first shot only. Use the chaingun.
+  3 Shotgun           Your main weapon. Point blank it kills imps in one.
+  4 Chaingun          Fast, accurate, good at range.
+  5 Rocket launcher   Huge damage, blast radius hurts you too. Never fire
+                      it at an enemy standing next to you.
+  (Plasma rifle and BFG 9000 are in the registered episodes.)
+
+Enemies of episode 1 (health)
+-----------------------------
+  Zombieman        20   drops a clip
+  Shotgun guy      30   drops a shotgun; kill these first, they hit hard
+  Imp              60   throws fireballs you can sidestep
+  Demon / Spectre 150   melee only; back off and shotgun. Spectres are
+                        the see-through ones.
+  Baron of Hell  1000   two guard E1M8. Rockets from far away.
+
+Items
+-----
+  Stimpack +10  Medikit +25  Health bonus +1 (can go past 100)
+  Green armor 100 (stops 1/3 of damage)  Blue armor 200 (stops 1/2)
+  Soulsphere +100 health (up to 200)     Backpack: double ammo capacity
+  Berserk: fist does ten times damage and health goes to 100
+  Radiation suit: walk on green slime and lava without damage
+  Invulnerability, Partial invisibility, Light goggles, Computer map
+
+Tactics that matter
+-------------------
+  * Strafe. Moving sideways dodges every projectile in the game.
+    Running while strafing is faster than running straight.
+  * Monsters fight each other. If an imp's fireball hits a zombie, they
+    turn on each other. Stand so they hit each other.
+  * Barrels explode. Shoot one near a crowd; chains of barrels clear
+    rooms.
+  * Doors are cover: fight from a doorway, step back to let it close.
+  * Sound wakes monsters in connected rooms. Punching is silent...
+    but your gun is not. Expect company after the first shot.
+  * Use the automap (Tab). Unexplored doors and odd wall textures show
+    secrets. Walls with a different texture, or a slight misalignment,
+    often open with Space.
+  * Save before every big room (F6 quick save).
+
+E1M8 Phobos Anomaly
+-------------------
+  Two Barons of Hell wait in the star-shaped arena. Keep far away, use
+  rockets or the chaingun, and circle so they don't both hit you. When the
+  walls drop and you teleport into the dark room, the episode ends as your
+  health runs down: that is the story, not a bug.
+
+Cheats (type during play, no Enter)
+-----------------------------------
+  IDDQD        god mode           IDKFA   all weapons, ammo, keys, armor
+  IDFA         weapons and ammo   IDSPISPOPD  walk through walls
+               (IDCLIP is the DOOM II spelling)
+  IDCLEV1x     warp to E1Mx (shareware: episode 1 only)
+  IDBEHOLDx    x = V invuln, S berserk, I invisible, R rad suit,
+               A map, L light goggles
+  IDDT         (on the automap) show the whole map, then the monsters
+  IDMYPOS      your coordinates
+
+After the shareware
+-------------------
+  The full DOOM (Ultimate DOOM) and DOOM II are sold on Steam and GOG; put
+  your copy's folder in mygames. Freedoom is a free replacement for the
+  data files, playable with the same program.

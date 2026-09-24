@@ -1,0 +1,83 @@
+HERETIC - CITY OF THE DAMNED (shareware episode) GUIDE
+=====================================================
+
+You are Corvus, the last Sidhe elf standing against D'Sparil and his
+Serpent Riders. Heretic plays like DOOM with magic, an inventory and
+the ability to look up and down.
+
+Controls (defaults; SETUP changes them)
+---------------------------------------
+  Arrows      move / turn          Ctrl    fire
+  Alt         strafe               Shift   run
+  Space       open / use           1-8     weapons
+  PgDn / Del  look up / down       End     look straight ahead again
+  [ and ]     pick an inventory item    Enter   use it
+  PgUp / Ins  fly up / down (with the Wings of Wrath); Home levels off
+  Tab         map                  F2/F3   save / load
+
+The levels
+----------
+  E1M1 The Docks        E1M4 The Guard Tower   E1M7 The Crypts
+  E1M2 The Dungeons     E1M5 The Citadel       E1M8 Hell's Maw
+  E1M3 The Gatehouse    E1M6 The Cathedral     E1M9 The Graveyard (secret)
+
+Weapons
+-------
+  Staff              melee, free
+  Gauntlets          melee, drain life when powered up
+  Elven Wand         infinite-ish crystal ammo, accurate
+  Ethereal Crossbow  three bolts in a spread. The workhorse
+  Dragon Claw        rapid ripping shots
+  Hellstaff, Phoenix Rod, Firemace come in the later episodes.
+  Every weapon changes when the Tome of Power is active (see below).
+
+Artifacts (your inventory)
+--------------------------
+  Quartz Flask        +25 health          Mystic Urn   full health
+  Tome of Power       ~40 s of powered-up weapons: Crossbow and Wand
+                      become deadly
+  Shadowsphere        near-invisibility: enemies mostly miss
+  Ring of Invincibility
+  Morph Ovum          turns monsters in front of you into chickens
+  Time Bomb of the Ancients   drop it and step away
+  Chaos Device        teleports you back to the start of the level
+  Torch               light in dark areas
+  Wings of Wrath      flight for a while (Home/End)
+  Map Scroll          whole level on the map
+
+  Artifacts are kept between levels. Don't hoard Quartz Flasks all the
+  way to the end: use them to keep the Tome pushes going.
+
+Enemies
+-------
+  Gargoyles        flying imps; the red ones shoot fire
+  Golems           slow mummies; the ghost kind (Nitrogolems) shoot
+  Undead Warriors  throw axes. The red axes hurt a lot
+  Disciples of D'Sparil   flying wizards, triple shots. Kill fast
+  Weredragons, Ophidians  later heavies
+  Iron Liches      the E1M8 bosses: ice storms and whirlwinds. Tome +
+                   Crossbow, keep moving, use cover pillars.
+  Ghost enemies (see-through) ignore some attacks; crossbow works.
+
+Tactics
+-------
+  * Tome of Power + Crossbow before any big fight is the Heretic combo.
+  * Morph Ovum against Undead Warriors and Disciples saves health.
+  * Look up and down: Gargoyles attack from above.
+  * Keys are yellow, green and blue. The key colour shows on door frames.
+
+Cheats (type during play)
+-------------------------
+  QUICKEN     god mode        RAMBO     all weapons and ammo
+  SKEL        all keys        KITTY     walk through walls
+  PONCE       full health     MASSACRE  kill every monster
+  RAVMAP      (on the map) reveal it
+  ENGAGEem    warp to episode e map m, e.g. ENGAGE15
+  GIMMExn     artifact x (a-j) times n (1-9)
+  COCKADOODLEDOO   become a chicken (and back)
+  IDDQD / IDKFA    try them. Raven's joke on DOOM players.
+
+After the shareware
+-------------------
+  Heretic: Shadow of the Serpent Riders (the full game) is sold on Steam
+  and GOG.

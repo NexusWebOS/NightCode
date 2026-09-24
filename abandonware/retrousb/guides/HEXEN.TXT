@@ -1,0 +1,79 @@
+HEXEN: BEYOND HERETIC (demo) GUIDE
+==================================
+
+Hexen is Heretic grown up: you pick a class, the world is made of hubs
+(groups of maps you travel between), and the way forward is often a
+switch or a puzzle item in another map. The demo has the opening maps of
+the first hub.
+
+Controls
+--------
+  As in Heretic: arrows, Ctrl fire, Space use, PgDn/Del look up/down,
+  End centre view, [ ] Enter inventory, PgUp/Ins fly, Tab map.
+  / (slash) jumps.
+
+The three classes
+-----------------
+  Fighter (Baratus)   most health and armor, strongest in melee.
+                      Spiked Gauntlets, Timon's Axe, Hammer of
+                      Retribution, Quietus.
+  Cleric (Parias)     middle of the road; good at range and close.
+                      Mace of Contrition, Serpent Staff (drains life at
+                      close range), Firestorm, Wraithverge.
+  Mage (Daedolon)     fragile, but kills from far away.
+                      Sapphire Wand (free), Frost Shards, Arcs of Death,
+                      Bloodscourge.
+  The fourth weapon of each class is built from three pieces spread
+  over the full game. Weapons 2 and 3 use blue and green mana.
+
+  First time: play the Fighter. He forgives mistakes.
+
+How the hubs work
+-----------------
+  * You go back and forth between the maps of a hub through portals.
+    Monsters you killed stay dead; switches you pressed stay pressed.
+  * Messages like "One third of the puzzle has been solved" mean a
+    switch changed something somewhere, maybe in another map. Go back
+    and look for what opened.
+  * Puzzle items (gems, skulls, books, gears) go into matching
+    sockets. They show at the bottom of the inventory.
+  * Read the automap (Tab); new openings show there.
+  * Save often, in different slots.
+
+Items
+-----
+  Quartz Flask +25     Mystic Urn: full health
+  Crystal Vial small health     Mystic Ambit Incant: helps everyone
+  Icon of the Defender  invulnerability (each class gets its own twist)
+  Porkalator            turns monsters into pigs
+  Banishment Device     teleports a monster away
+  Dark Servant          summons a minotaur on your side
+  Disc of Repulsion     pushes enemies and missiles away
+  Flechette             a throwable potion; different for each class
+  Boots of Speed, Krater of Might (mana), Dragonskin Bracers (armor),
+  Torch, Wings of Wrath, Chaos Device (back to the hub start)
+
+  Armor comes in four pieces (amulet, helmet, bracers, mesh armor) and
+  counts differently for each class.
+
+Enemies
+-------
+  Ettins     big two-headed maces; simple, but hit hard
+  Afrits     fire gargoyles, fast and flying
+  Centaurs   block with shields: attack when the shield is down
+  Serpents   in the water and slime; strike when they surface
+  Wendigos   ice creatures that freeze you
+  Dark Bishops, Reivers, Stalkers: later on
+
+Cheats (type during play; most work in the demo)
+------------------------------------------------
+  SATAN        god mode              NRA        weapons, mana, armor
+  INDIANA      items                 LOCKSMITH  all keys
+  CASPER       walk through walls    CLUBMED    full health
+  SHERLOCK     puzzle items          MAPSCO     full map
+  VISITxx      warp to map xx        BUTCHER    kill everything
+  SHADOWCASTERx   change class (0 Fighter, 1 Cleric, 2 Mage)
+
+After the demo
+--------------
+  Hexen and its Deathkings add-on are sold on Steam and GOG.

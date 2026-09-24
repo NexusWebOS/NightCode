@@ -1,0 +1,4 @@
+__pycache__/
+*.pyc
+retrousb/downloads/
+retrousb/mygames/
