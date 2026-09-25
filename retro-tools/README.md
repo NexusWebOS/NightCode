@@ -1,6 +1,6 @@
 # Retro Tools: Disk Dude + Netcon
 
-Two local Windows desktop utilities in the NightCode family. Download the Windows executables from the repository's releases when available, or use the `.ps1` launchers from source with Python 3.10+ and Pillow. No cloud account is needed to use local features. Rebuild the executables with `Build-Retro-Tools.ps1` (PyInstaller required).
+Two local Windows desktop utilities in the NightCode family. Double-click `dist/DiskDude.exe` or `dist/Netcon.exe`. The `.ps1` launchers run from source and require Python 3.10+ and Pillow. No cloud account is needed to use local features. Rebuild the executables with `Build-Retro-Tools.ps1` (PyInstaller required).
 
 ## Disk Dude
 
@@ -22,9 +22,6 @@ Both apps store preferences in `%LOCALAPPDATA%\RetroTools`. Do not put secrets i
 
 ## Artwork
 
-The two mascot PNGs in `assets/` were generated with the built-in image generation tool from these prompts:
+The mascots, logos, banners, and disc/badge/folder/lock/game icons are SpriteCook exports in `assets/spritecook/`. `make_assets.py` installs the approved exports into `assets/`, makes Windows icons, and updates `spritecook-assets.json` with source asset IDs and file hashes. Running it again does not regenerate or overwrite the images with placeholder art.
 
-- Disk Dude: 16-bit transparent pixel-art friendly hacker holding a CD-R in a jewel case; navy, teal, cyan, violet palette.
-- Netcon: 16-bit transparent pixel-art friendly tech specialist holding a blank badge and diagnostic circuit board; matching palette.
-
-The logo PNGs, banners, disc, badge, folder, lock, and game icons in `assets/` are built with `make_assets.py`. UI labels remain code-rendered so they stay sharp.
+Both apps use the dark SpriteCook banners, logos, characters, and extracted button frames. Text and interactive controls remain native for legibility. The `*-ui-concept.png` files are visual design references, not screenshots of currently implemented features. The complete extracted UI sheets are included for further expansion of the apps.

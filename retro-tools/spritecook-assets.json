@@ -1,0 +1,97 @@
+{
+  "project_id": "ff85dc4d-f21b-4a90-bba9-a39ac17cca1e",
+  "ui_kits": {
+    "disk-dude": "3f01ed6e-3ddd-4f8c-a75f-9ef985b89e14",
+    "netcon": "6b2daff6-b423-4866-9bec-aecc03733085"
+  },
+  "assets": {
+    "disk-dude-mascot.png": {
+      "asset_id": "8591acad-3ead-4527-8f6b-d513d1dae398",
+      "sha12": "3f71cb57d865"
+    },
+    "disk-dude-logo.png": {
+      "asset_id": "4054cffc-4add-43f7-81d4-32eb224fc98f",
+      "sha12": "1613948a385e"
+    },
+    "disk-dude-banner.png": {
+      "asset_id": "c4a3c64d-727c-4ff7-9884-56fd0dd8e67d",
+      "sha12": "46c1db93c2b3"
+    },
+    "netcon-mascot.png": {
+      "asset_id": "2ce97b2a-a29f-4bd5-8869-5239d5ff3ba2",
+      "sha12": "4ee6e5ce4534"
+    },
+    "netcon-logo.png": {
+      "asset_id": "b1d0767f-befa-4779-8223-721ffeefbcb5",
+      "sha12": "bbefa3e70782"
+    },
+    "netcon-banner.png": {
+      "asset_id": "0f5105ae-6560-44b0-a5f8-1e96c6f4fbe8",
+      "sha12": "c3bafcdaefa1"
+    },
+    "disc-icon.png": {
+      "asset_id": "a55b6600-1ec6-4a89-b27b-eec903ce8b74",
+      "sha12": "44db13b9919f"
+    },
+    "badge-icon.png": {
+      "asset_id": "a17ae90a-f998-4f44-be65-683aeca4e871",
+      "sha12": "a76bf7b07f2e"
+    },
+    "folder-icon.png": {
+      "asset_id": "fa178d09-11e4-4593-930d-d212a4189769",
+      "sha12": "59deae89216e"
+    },
+    "lock-icon.png": {
+      "asset_id": "301d4361-7828-4afc-8256-97d535f4f556",
+      "sha12": "3a573696347a"
+    },
+    "game-icon.png": {
+      "asset_id": "4f558a05-400e-4865-bc2a-7d1253a9cc0c",
+      "sha12": "b281b8bddeed"
+    },
+    "spritecook/disk-dude-ui-concept.png": {
+      "asset_id": "fdf19415-2c30-4eda-aa10-b57d342d1551",
+      "sha12": "450229025cc7"
+    },
+    "spritecook/disk-dude-ui-sheet.png": {
+      "asset_id": "0d4d9ae2-9eec-400b-a975-b93b65806d43",
+      "sha12": "22b108c2267f"
+    },
+    "spritecook/netcon-ui-concept.png": {
+      "asset_id": "6aec625b-7f20-487a-b0e8-d86fad7e74a1",
+      "sha12": "f6706688bbdb"
+    },
+    "spritecook/netcon-ui-sheet.png": {
+      "asset_id": "481a6068-a5dd-4d2b-b875-bf0066eca82c",
+      "sha12": "6d65f65a90ce"
+    },
+    "spritecook/disk-button-frame.png": {
+      "asset_id": "9c8fedc2-7a30-4107-b386-36ce7856a9b0",
+      "sha12": "b96995d87002"
+    },
+    "spritecook/disk-cyan-panel.png": {
+      "asset_id": "e8abefb5-d4f3-478a-a941-2ae046f3c6a9",
+      "sha12": "96f56c6283aa"
+    },
+    "spritecook/disk-burn-icon.png": {
+      "asset_id": "43f9b627-4e9f-4226-b014-f4fec62eac86",
+      "sha12": "94e9370d8f6f"
+    },
+    "spritecook/netcon-tab-frame.png": {
+      "asset_id": "56e024b3-4a81-45eb-b3a3-05cd9f2f8bc8",
+      "sha12": "06de9cb1de0f"
+    },
+    "spritecook/netcon-button-frame.png": {
+      "asset_id": "c9b1479b-0f60-4b5a-a1f7-97f3e46d6d61",
+      "sha12": "6031f620d71f"
+    },
+    "spritecook/netcon-card-panel.png": {
+      "asset_id": "8da927da-c2d0-4450-96d5-867250c0e5bf",
+      "sha12": "48623b07d73c"
+    },
+    "spritecook/disk-dude-button-frame.png": {
+      "asset_id": "9c8fedc2-7a30-4107-b386-36ce7856a9b0",
+      "sha12": "b96995d87002"
+    }
+  }
+}

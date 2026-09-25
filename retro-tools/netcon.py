@@ -1,16 +1,19 @@
 from __future__ import annotations
 
 import json
+from functools import partial
 import os
 import sys
 from pathlib import Path
 import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
 from PIL import Image, ImageDraw, ImageFont, ImageTk
+from retro_skin import BG, PANEL, ACCENT, TEXT, MUTED, RetroButton, RetroHeader, configure_style
 
 BASE = Path(getattr(sys, '_MEIPASS', Path(__file__).resolve().parent))
+ASSETS = BASE / 'assets'
+NetButton = partial(RetroButton, asset_root=ASSETS, app_name='netcon')
 DATA = Path(os.getenv('LOCALAPPDATA', str(Path.home()))) / 'RetroTools' / 'netcon.json'
-BG, PANEL, ACCENT, TEXT, MUTED = '#0a1020', '#16223b', '#31d7e8', '#e9f6ff', '#9bb4c5'
 
 
 def load_data():
@@ -35,22 +38,10 @@ class Netcon(tk.Tk):
         self._build()
 
     def _style(self):
-        style = ttk.Style(self); style.theme_use('clam')
-        style.configure('TFrame', background=BG)
-        style.configure('TLabel', background=BG, foreground=TEXT, font=('Consolas', 10))
-        style.configure('TButton', font=('Consolas', 10), padding=7)
-        style.configure('TNotebook', background=BG)
-        style.configure('TNotebook.Tab', padding=(16, 8), font=('Consolas', 10, 'bold'))
+        configure_style(self)
 
     def _build(self):
-        header = tk.Frame(self, bg=BG); header.pack(fill='x', padx=22, pady=18)
-        art = Image.open(BASE / 'assets' / 'netcon-mascot.png').convert('RGBA')
-        art.thumbnail((110, 110), Image.Resampling.NEAREST)
-        self.mascot = ImageTk.PhotoImage(art)
-        tk.Label(header, image=self.mascot, bg=BG).pack(side='left')
-        block = tk.Frame(header, bg=BG); block.pack(side='left', padx=18)
-        tk.Label(block, text='NETCON', bg=BG, fg=ACCENT, font=('Consolas', 30, 'bold')).pack(anchor='w')
-        tk.Label(block, text='BADGES // ASSET INVENTORY // REPAIR LOG // GAME CATALOG', bg=BG, fg=MUTED, font=('Consolas', 10)).pack(anchor='w')
+        RetroHeader(self, ASSETS, 'netcon').pack(fill='x', padx=22, pady=(18, 10))
         self.tabs = ttk.Notebook(self); self.tabs.pack(fill='both', expand=True, padx=22, pady=10)
         self.badge, self.tags, self.locks, self.games = [ttk.Frame(self.tabs) for _ in range(4)]
         for frame, label in [(self.badge, 'BADGE MAKER'), (self.tags, 'RFID INVENTORY'),
@@ -70,7 +61,7 @@ class Netcon(tk.Tk):
         self.badge_name, self.badge_role, self.badge_org, self.badge_id = [tk.StringVar() for _ in range(4)]
         for label, var in [('Name', self.badge_name), ('Role', self.badge_role), ('Organization', self.badge_org), ('ID / number', self.badge_id)]:
             self.field(frame, label, var)
-        ttk.Button(frame, text='Export sample badge PNG…', command=self.export_badge).pack(anchor='w', pady=16)
+        NetButton(frame, text='Export sample badge PNG…', command=self.export_badge).pack(anchor='w', pady=16)
         self.badge_preview = tk.Canvas(frame, width=550, height=220, bg=PANEL, highlightthickness=0)
         self.badge_preview.pack(anchor='w')
         for var in [self.badge_name, self.badge_role, self.badge_org, self.badge_id]:
@@ -79,29 +70,31 @@ class Netcon(tk.Tk):
 
     def draw_badge(self):
         c = self.badge_preview; c.delete('all')
-        c.create_rectangle(14, 14, 536, 206, fill='#dceef4', outline=ACCENT, width=3)
-        c.create_rectangle(14, 14, 536, 58, fill='#16223b', outline='')
-        c.create_text(30, 36, text=(self.badge_org.get() or 'ORGANIZATION')[:26], anchor='w', fill='white', font=('Consolas', 17, 'bold'))
-        c.create_text(34, 92, text=(self.badge_name.get() or 'YOUR NAME')[:30], anchor='w', fill='#14233d', font=('Consolas', 20, 'bold'))
-        c.create_text(34, 128, text=(self.badge_role.get() or 'ROLE')[:36], anchor='w', fill='#285875', font=('Consolas', 13))
-        c.create_text(34, 174, text='ID: ' + (self.badge_id.get() or '0000')[:28], anchor='w', fill='#285875', font=('Consolas', 12))
+        c.create_rectangle(14, 14, 536, 206, fill='#132633', outline=ACCENT, width=3)
+        c.create_rectangle(19, 19, 531, 58, fill='#09151f', outline='')
+        c.create_rectangle(24, 67, 30, 193, fill='#9966a2', outline='')
+        c.create_text(38, 38, text=(self.badge_org.get() or 'ORGANIZATION')[:26], anchor='w', fill=ACCENT, font=('Consolas', 17, 'bold'))
+        c.create_text(44, 95, text=(self.badge_name.get() or 'YOUR NAME')[:30], anchor='w', fill=TEXT, font=('Consolas', 20, 'bold'))
+        c.create_text(44, 132, text=(self.badge_role.get() or 'ROLE')[:36], anchor='w', fill=MUTED, font=('Consolas', 13))
+        c.create_text(44, 176, text='ID: ' + (self.badge_id.get() or '0000')[:28], anchor='w', fill=ACCENT, font=('Consolas', 12))
         c.create_text(440, 160, text='SAMPLE', fill='#d86d75', font=('Consolas', 17, 'bold'))
 
     def export_badge(self):
         target = filedialog.asksaveasfilename(defaultextension='.png', filetypes=[('PNG image', '*.png')])
         if not target: return
-        image = Image.new('RGB', (1050, 390), '#dceef4'); draw = ImageDraw.Draw(image)
-        draw.rectangle((0, 0, 1049, 389), outline='#31d7e8', width=6)
-        draw.rectangle((0, 0, 1049, 88), fill='#16223b')
+        image = Image.new('RGB', (1050, 390), '#132633'); draw = ImageDraw.Draw(image)
+        draw.rectangle((0, 0, 1049, 389), outline=ACCENT, width=6)
+        draw.rectangle((8, 8, 1041, 88), fill='#09151f')
+        draw.rectangle((22, 104, 33, 371), fill='#9966a2')
         font_path = 'C:/Windows/Fonts/consola.ttf'
         bold_path = 'C:/Windows/Fonts/consolab.ttf'
         def font(size, bold=False):
             try: return ImageFont.truetype(bold_path if bold else font_path, size)
             except OSError: return ImageFont.load_default()
-        draw.text((36, 22), (self.badge_org.get() or 'ORGANIZATION')[:32], fill='white', font=font(46, True))
-        draw.text((40, 130), (self.badge_name.get() or 'YOUR NAME')[:32], fill='#14233d', font=font(50, True))
-        draw.text((40, 210), (self.badge_role.get() or 'ROLE')[:40], fill='#285875', font=font(34))
-        draw.text((40, 310), 'ID: ' + (self.badge_id.get() or '0000')[:30], fill='#285875', font=font(28))
+        draw.text((46, 22), (self.badge_org.get() or 'ORGANIZATION')[:32], fill=ACCENT, font=font(46, True))
+        draw.text((50, 130), (self.badge_name.get() or 'YOUR NAME')[:32], fill=TEXT, font=font(50, True))
+        draw.text((50, 210), (self.badge_role.get() or 'ROLE')[:40], fill=MUTED, font=font(34))
+        draw.text((50, 310), 'ID: ' + (self.badge_id.get() or '0000')[:30], fill=ACCENT, font=font(28))
         draw.text((720, 302), 'SAMPLE', fill='#d86d75', font=font(56, True))
         image.save(target)
         messagebox.showinfo('Netcon', f'Badge saved: {target}')
@@ -112,7 +105,7 @@ class Netcon(tk.Tk):
         ttk.Label(frame, text='Record printed IDs, device types, owners, and notes for credentials you manage. No radio transmission or credential cloning.', wraplength=850).pack(anchor='w', pady=8)
         self.tag_id, self.tag_type, self.tag_owner = [tk.StringVar() for _ in range(3)]
         for label, var in [('Printed tag ID', self.tag_id), ('Tag type / frequency', self.tag_type), ('Assigned owner', self.tag_owner)]: self.field(frame, label, var)
-        ttk.Button(frame, text='Add inventory record', command=self.add_tag).pack(anchor='w', pady=8)
+        NetButton(frame, text='Add inventory record', command=self.add_tag).pack(anchor='w', pady=8)
         self.tag_list = tk.Listbox(frame, bg=PANEL, fg=TEXT, font=('Consolas', 10), border=0)
         self.tag_list.pack(fill='both', expand=True)
         for item in self.data['tags']: self.tag_list.insert('end', self.tag_line(item))
@@ -132,14 +125,14 @@ class Netcon(tk.Tk):
         ttk.Label(frame, text='Log damaged or malfunctioning hardware for repair. A schematic 3D-style cylinder view helps identify parts during maintenance.', wraplength=850).pack(anchor='w', pady=8)
         self.lock_site, self.lock_type, self.lock_note = [tk.StringVar() for _ in range(3)]
         for label, var in [('Site / asset number', self.lock_site), ('Lock type / model', self.lock_type), ('Damage / repair note', self.lock_note)]: self.field(frame, label, var)
-        ttk.Button(frame, text='Save service note', command=self.add_lock).pack(anchor='w', pady=8)
+        NetButton(frame, text='Save service note', command=self.add_lock).pack(anchor='w', pady=8)
         self.lock_canvas = tk.Canvas(frame, width=500, height=190, bg=PANEL, highlightthickness=0)
         self.lock_canvas.pack(anchor='w', pady=8)
         c = self.lock_canvas
-        c.create_polygon(65, 52, 355, 52, 435, 82, 145, 82, fill='#324c67', outline=ACCENT, width=2)
-        c.create_rectangle(65, 52, 355, 143, fill='#4d6985', outline=ACCENT, width=2)
-        c.create_polygon(355, 52, 435, 82, 435, 171, 355, 143, fill='#233951', outline=ACCENT, width=2)
-        c.create_oval(70, 69, 156, 152, fill='#a1bac5', outline=ACCENT, width=3)
+        c.create_polygon(65, 52, 355, 52, 435, 82, 145, 82, fill='#213c49', outline=ACCENT, width=2)
+        c.create_rectangle(65, 52, 355, 143, fill='#294652', outline=ACCENT, width=2)
+        c.create_polygon(355, 52, 435, 82, 435, 171, 355, 143, fill='#162e3c', outline=ACCENT, width=2)
+        c.create_oval(70, 69, 156, 152, fill='#7596a0', outline=ACCENT, width=3)
         c.create_oval(93, 91, 133, 131, fill='#13283d', outline='#d7eff2', width=2)
         c.create_text(247, 98, text='CYLINDER / HOUSING', fill=TEXT, font=('Consolas', 12, 'bold'))
         self.lock_list = tk.Listbox(frame, bg=PANEL, fg=TEXT, font=('Consolas', 10), border=0)
@@ -161,7 +154,7 @@ class Netcon(tk.Tk):
         ttk.Label(frame, text='Keep an inventory of your discs and legitimate keys. Store only a short key hint; do not type full product keys here.', wraplength=850).pack(anchor='w', pady=8)
         self.game_name, self.game_platform, self.game_key_hint, self.game_note = [tk.StringVar() for _ in range(4)]
         for label, var in [('Game title', self.game_name), ('Platform / year', self.game_platform), ('Key hint (last 4 only)', self.game_key_hint), ('Compatibility note', self.game_note)]: self.field(frame, label, var)
-        ttk.Button(frame, text='Add game', command=self.add_game).pack(anchor='w', pady=8)
+        NetButton(frame, text='Add game', command=self.add_game).pack(anchor='w', pady=8)
         self.game_list = tk.Listbox(frame, bg=PANEL, fg=TEXT, font=('Consolas', 10), border=0)
         self.game_list.pack(fill='both', expand=True)
         for item in self.data['games']: self.game_list.insert('end', self.game_line(item))

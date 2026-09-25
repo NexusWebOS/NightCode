@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import ctypes
+from functools import partial
 import os
 from pathlib import Path
 import queue
@@ -14,9 +15,11 @@ import urllib.request
 
 from PIL import Image, ImageTk
 from core import MEDIA_SUFFIXES, copy_disc, optical_drives, run_gh_upload, safe_source, scan, zip_folder
+from retro_skin import BG, PANEL, ACCENT, TEXT, MUTED, RetroButton, RetroHeader, configure_style
 
 BASE = Path(getattr(sys, '_MEIPASS', Path(__file__).resolve().parent))
-BG, PANEL, ACCENT, TEXT, MUTED = '#0a1020', '#16223b', '#31d7e8', '#e9f6ff', '#9bb4c5'
+ASSETS = BASE / 'assets'
+DiskButton = partial(RetroButton, asset_root=ASSETS, app_name='disk-dude')
 APPDATA = Path(os.getenv('LOCALAPPDATA', str(Path.home()))) / 'RetroTools'
 
 
@@ -50,40 +53,20 @@ class DiskDude(tk.Tk):
         self.protocol('WM_DELETE_WINDOW', self.close)
 
     def _build(self):
-        style = ttk.Style(self)
-        style.theme_use('clam')
-        style.configure('TFrame', background=BG)
-        style.configure('Panel.TFrame', background=PANEL)
-        style.configure('TLabel', background=BG, foreground=TEXT, font=('Consolas', 10))
-        style.configure('Panel.TLabel', background=PANEL, foreground=TEXT, font=('Consolas', 10))
-        style.configure('TButton', font=('Consolas', 10), padding=7)
-        style.map('TButton', background=[('active', ACCENT)])
-        style.configure('TNotebook', background=BG, borderwidth=0)
-        style.configure('TNotebook.Tab', padding=(16, 8), font=('Consolas', 10, 'bold'))
-
-        header = tk.Frame(self, bg=BG)
-        header.pack(fill='x', padx=22, pady=(18, 8))
-        art = Image.open(BASE / 'assets' / 'disk-dude-mascot.png').convert('RGBA')
-        art.thumbnail((115, 115), Image.Resampling.NEAREST)
-        self.mascot = ImageTk.PhotoImage(art)
-        tk.Label(header, image=self.mascot, bg=BG).pack(side='left')
-        title = tk.Frame(header, bg=BG)
-        title.pack(side='left', padx=18)
-        tk.Label(title, text='DISK DUDE', bg=BG, fg=ACCENT, font=('Consolas', 30, 'bold')).pack(anchor='w')
-        tk.Label(title, text='OPTICAL MEDIA // ARCHIVE // PLAY // SHARE', bg=BG, fg=MUTED,
-                 font=('Consolas', 10)).pack(anchor='w')
+        configure_style(self)
+        RetroHeader(self, ASSETS, 'disk-dude').pack(fill='x', padx=22, pady=(18, 3))
         self.status = tk.StringVar(value='Ready. Insert a disc, then scan.')
-        tk.Label(header, textvariable=self.status, bg=BG, fg=TEXT, wraplength=440,
-                 justify='right', font=('Consolas', 10)).pack(side='right')
+        tk.Label(self, textvariable=self.status, bg=BG, fg=MUTED,
+                 anchor='w', font=('Consolas', 10)).pack(fill='x', padx=23)
 
         toolbar = tk.Frame(self, bg=BG)
         toolbar.pack(fill='x', padx=22, pady=8)
         self.drive = ttk.Combobox(toolbar, width=14, state='readonly')
         self.drive.pack(side='left')
-        ttk.Button(toolbar, text='Refresh drives', command=self.refresh_drives).pack(side='left', padx=5)
-        ttk.Button(toolbar, text='Scan disc', command=self.scan_drive).pack(side='left', padx=5)
-        ttk.Button(toolbar, text='Preview folder…', command=self.scan_folder).pack(side='left', padx=5)
-        ttk.Button(toolbar, text='Open in Explorer', command=self.open_source).pack(side='right')
+        RetroButton(toolbar, text='Refresh drives', command=self.refresh_drives, asset_root=ASSETS, app_name='disk-dude').pack(side='left', padx=5)
+        RetroButton(toolbar, text='Scan disc', command=self.scan_drive, asset_root=ASSETS, app_name='disk-dude').pack(side='left', padx=5)
+        RetroButton(toolbar, text='Preview folder…', command=self.scan_folder, asset_root=ASSETS, app_name='disk-dude').pack(side='left', padx=5)
+        RetroButton(toolbar, text='Open in Explorer', command=self.open_source, asset_root=ASSETS, app_name='disk-dude').pack(side='right')
 
         self.tabs = ttk.Notebook(self)
         self.tabs.pack(fill='both', expand=True, padx=22, pady=10)
@@ -123,7 +106,7 @@ class DiskDude(tk.Tk):
         scroll.pack(side='right', fill='y')
         self.file_list.configure(yscrollcommand=scroll.set)
         self.file_list.bind('<Double-Button-1>', lambda _: self.open_selected())
-        ttk.Button(self.disc_tab, text='Open selected file', command=self.open_selected).pack(anchor='e', pady=8)
+        DiskButton(self.disc_tab, text='Open selected file', command=self.open_selected).pack(anchor='e', pady=8)
 
     def _archive_ui(self):
         frame = ttk.Frame(self.archive_tab)
@@ -132,18 +115,18 @@ class DiskDude(tk.Tk):
         ttk.Label(frame, text='Copies readable files to a folder and writes a SHA-256 manifest. Audio CD tracks and hidden/raw sectors require a specialist ripper.', wraplength=820).pack(anchor='w', pady=10)
         row = ttk.Frame(frame)
         row.pack(fill='x', pady=8)
-        ttk.Button(row, text='Copy disc to folder…', command=self.copy).pack(side='left')
-        ttk.Button(row, text='Copy & ZIP…', command=self.copy_zip).pack(side='left', padx=8)
-        ttk.Button(row, text='ZIP copied folder…', command=self.zip_existing).pack(side='left')
+        DiskButton(row, text='Copy disc to folder…', command=self.copy).pack(side='left')
+        DiskButton(row, text='Copy & ZIP…', command=self.copy_zip).pack(side='left', padx=8)
+        DiskButton(row, text='ZIP copied folder…', command=self.zip_existing).pack(side='left')
         ttk.Separator(frame).pack(fill='x', pady=20)
         ttk.Label(frame, text='BURN A DATA DISC', font=('Consolas', 17, 'bold')).pack(anchor='w')
         ttk.Label(frame, text='Stage the files in a local folder, then burn to a blank CD-R/CD-RW with Windows IMAPI2. This is data-disc authoring only.', wraplength=820).pack(anchor='w', pady=10)
         row2 = ttk.Frame(frame)
         row2.pack(fill='x', pady=8)
-        ttk.Button(row2, text='Choose burn folder…', command=self.choose_burn_folder).pack(side='left')
+        DiskButton(row2, text='Choose burn folder…', command=self.choose_burn_folder).pack(side='left')
         self.burn_folder = tk.StringVar(value='No burn folder selected')
         ttk.Label(row2, textvariable=self.burn_folder, wraplength=560).pack(side='left', padx=12)
-        ttk.Button(frame, text='Burn to selected optical drive…', command=self.burn).pack(anchor='w', pady=14)
+        DiskButton(frame, text='Burn to selected optical drive…', command=self.burn).pack(anchor='w', pady=14)
 
     def _player_ui(self):
         frame = ttk.Frame(self.player_tab)
@@ -153,14 +136,14 @@ class DiskDude(tk.Tk):
         row = ttk.Frame(frame)
         row.pack(anchor='w', pady=10)
         for label, method in [('Play Audio CD', self.play_cd), ('Pause', self.pause_cd), ('Stop', self.stop_cd)]:
-            ttk.Button(row, text=label, command=method).pack(side='left', padx=(0, 8))
+            DiskButton(row, text=label, command=method).pack(side='left', padx=(0, 8))
         ttk.Separator(frame).pack(fill='x', pady=20)
         ttk.Label(frame, text='EMULATOR PATH (OPTIONAL)', font=('Consolas', 14, 'bold')).pack(anchor='w')
         ttk.Label(frame, text='Select an emulator executable and launch it with the current drive path. Emulators differ in command-line support.', wraplength=820).pack(anchor='w', pady=8)
         self.emulator = tk.StringVar()
         ttk.Entry(frame, textvariable=self.emulator, width=75).pack(anchor='w', pady=5)
-        ttk.Button(frame, text='Browse emulator…', command=self.browse_emulator).pack(anchor='w', pady=5)
-        ttk.Button(frame, text='Launch emulator with disc path', command=self.launch_emulator).pack(anchor='w', pady=10)
+        DiskButton(frame, text='Browse emulator…', command=self.browse_emulator).pack(anchor='w', pady=5)
+        DiskButton(frame, text='Launch emulator with disc path', command=self.launch_emulator).pack(anchor='w', pady=10)
 
     def _cloud_ui(self):
         frame = ttk.Frame(self.cloud_tab)
@@ -169,21 +152,21 @@ class DiskDude(tk.Tk):
         ttk.Label(frame, text='Uploads use the ZIP archive you made. Review its contents before sharing. No automatic sync.', wraplength=840).pack(anchor='w', pady=7)
         self.cloud_file = tk.StringVar(value='No ZIP selected')
         ttk.Label(frame, textvariable=self.cloud_file, wraplength=850).pack(anchor='w', pady=5)
-        ttk.Button(frame, text='Select ZIP…', command=self.choose_zip).pack(anchor='w')
+        DiskButton(frame, text='Select ZIP…', command=self.choose_zip).pack(anchor='w')
         ttk.Separator(frame).pack(fill='x', pady=14)
         self.repo = tk.StringVar()
         self.tag = tk.StringVar()
         self._entry(frame, 'GitHub repository (owner/name)', self.repo)
         self._entry(frame, 'Existing release tag', self.tag)
         row = ttk.Frame(frame); row.pack(anchor='w', pady=7)
-        ttk.Button(row, text='Upload ZIP to release', command=self.github_upload).pack(side='left')
-        ttk.Button(row, text='Download release asset…', command=self.github_download).pack(side='left', padx=8)
+        DiskButton(row, text='Upload ZIP to release', command=self.github_upload).pack(side='left')
+        DiskButton(row, text='Download release asset…', command=self.github_download).pack(side='left', padx=8)
         ttk.Separator(frame).pack(fill='x', pady=14)
         self.supa_url, self.supa_bucket, self.supa_token = tk.StringVar(), tk.StringVar(), tk.StringVar()
         self._entry(frame, 'Supabase project URL', self.supa_url)
         self._entry(frame, 'Storage bucket', self.supa_bucket)
         self._entry(frame, 'Your access token (not saved)', self.supa_token, show='•')
-        ttk.Button(frame, text='Upload ZIP to Supabase Storage', command=self.supabase_upload).pack(anchor='w', pady=8)
+        DiskButton(frame, text='Upload ZIP to Supabase Storage', command=self.supabase_upload).pack(anchor='w', pady=8)
 
     def _entry(self, parent, label, variable, show=None):
         line = ttk.Frame(parent); line.pack(fill='x', pady=3)
