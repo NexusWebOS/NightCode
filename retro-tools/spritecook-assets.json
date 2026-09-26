@@ -30,14 +30,6 @@
       "asset_id": "ab0173b8-4104-4e60-b1bd-79e0458204ed",
       "sha12": "6968bdaadefb"
     },
-    "netcon-logo.png": {
-      "asset_id": "b1d0767f-befa-4779-8223-721ffeefbcb5",
-      "sha12": "bbefa3e70782"
-    },
-    "netcon-banner.png": {
-      "asset_id": "0f5105ae-6560-44b0-a5f8-1e96c6f4fbe8",
-      "sha12": "c3bafcdaefa1"
-    },
     "disc-icon.png": {
       "asset_id": "a55b6600-1ec6-4a89-b27b-eec903ce8b74",
       "sha12": "44db13b9919f"
@@ -117,6 +109,16 @@
     "spritecook/disk-dude-button-frame.png": {
       "asset_id": "9c8fedc2-7a30-4107-b386-36ce7856a9b0",
       "sha12": "b96995d87002"
+    }
+  },
+  "user_assets": {
+    "netcon-logo.png": {
+      "source": "user-provided/netcon-logo.png",
+      "sha12": "ef4e0e336f4b"
+    },
+    "netcon-banner.png": {
+      "source": "user-provided/netcon-marquee.png",
+      "sha12": "af03ff43abb5"
     }
   }
 }

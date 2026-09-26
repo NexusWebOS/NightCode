@@ -12,7 +12,7 @@ from uuid import uuid4
 from PIL import Image, ImageTk
 
 from badge_templates import TEMPLATES, render, save, validate
-from retro_skin import BG, PANEL, TEXT, MUTED
+from netcon_skin import BG, CYAN, EDGE, MUTED, PANEL, SILVER as TEXT
 
 
 class BadgeEditor(ttk.Frame):
@@ -37,44 +37,54 @@ class BadgeEditor(ttk.Frame):
                   wraplength=950).pack(anchor='w', pady=(3, 12))
         body = ttk.Frame(self)
         body.pack(fill='both', expand=True)
-        left = ttk.Frame(body)
-        left.pack(side='left', fill='both', expand=True, padx=(0, 14))
-        right = ttk.Frame(body)
-        right.pack(side='right', fill='both', expand=True)
+        left_border = tk.Frame(body, bg=CYAN, padx=1, pady=1)
+        left_border.pack(side='left', fill='both', expand=True, padx=(0, 14))
+        left = ttk.Frame(left_border, style='Panel.TFrame', padding=11)
+        left.pack(fill='both', expand=True)
+        right_border = tk.Frame(body, bg=EDGE, padx=1, pady=1)
+        right_border.pack(side='right', fill='both', expand=True)
+        right = ttk.Frame(right_border, style='Panel.TFrame', padding=11)
+        right.pack(fill='both', expand=True)
 
-        row = ttk.Frame(left); row.pack(fill='x', pady=3)
-        ttk.Label(row, text='Template', width=17).pack(side='left')
+        row = ttk.Frame(left, style='Panel.TFrame'); row.pack(fill='x', pady=3)
+        ttk.Label(row, text='Template', width=17, style='Panel.TLabel').pack(side='left')
         self.template_box = ttk.Combobox(row, textvariable=self.values['template'],
                                          values=TEMPLATES, state='readonly', width=28)
         self.template_box.pack(side='left', fill='x', expand=True)
         self.template_box.bind('<<ComboboxSelected>>', lambda _event: self._apply_template())
-        for key, label in [('name', 'Cardholder name'), ('role', 'Role / title'),
-                           ('department', 'Department'), ('site', 'Site / node'),
-                           ('employee_id', 'Employee / card ID'), ('issuer', 'Issued by'),
-                           ('issued', 'Issue date'), ('expires', 'Expiry date')]:
-            row = ttk.Frame(left); row.pack(fill='x', pady=3)
-            ttk.Label(row, text=label, width=17).pack(side='left')
-            ttk.Entry(row, textvariable=self.values[key], width=29).pack(side='left', fill='x', expand=True)
+        fields = ttk.Frame(left, style='Panel.TFrame')
+        fields.pack(fill='x', pady=(2, 0))
+        fields.columnconfigure(0, weight=1)
+        fields.columnconfigure(1, weight=1)
+        for index, (key, label) in enumerate([
+                ('name', 'Cardholder name'), ('role', 'Role / title'),
+                ('department', 'Department'), ('site', 'Site / node'),
+                ('employee_id', 'Employee / card ID'), ('issuer', 'Issued by'),
+                ('issued', 'Issue date'), ('expires', 'Expiry date')]):
+            cell = ttk.Frame(fields, style='Panel.TFrame')
+            cell.grid(row=index // 2, column=index % 2, sticky='ew', padx=(0, 6), pady=(1, 2))
+            ttk.Label(cell, text=label, style='Panel.TLabel').pack(anchor='w')
+            ttk.Entry(cell, textvariable=self.values[key], width=22).pack(fill='x')
 
-        photo_row = ttk.Frame(left); photo_row.pack(fill='x', pady=(5, 2))
+        photo_row = ttk.Frame(left, style='Panel.TFrame'); photo_row.pack(fill='x', pady=(5, 2))
         self.button(photo_row, text='Choose photo…', command=self.choose_photo).pack(side='left')
-        self.photo_label = ttk.Label(photo_row, text='No photo selected', wraplength=260)
+        self.photo_label = ttk.Label(photo_row, text='No photo selected', wraplength=260, style='Panel.TLabel')
         self.photo_label.pack(side='left', padx=8)
-        actions = ttk.Frame(left); actions.pack(fill='x', pady=(8, 5))
+        actions = ttk.Frame(left, style='Panel.TFrame'); actions.pack(fill='x', pady=(8, 5))
         self.button(actions, text='Save record', command=self.save_record).pack(side='left')
         self.button(actions, text='Export PNG / PDF…', command=self.export_badge).pack(side='left', padx=5)
         self.button(actions, text='New', command=self.new_record).pack(side='left')
-        ttk.Label(left, text='Local badge records', foreground=MUTED).pack(anchor='w', pady=(6, 2))
-        self.record_list = tk.Listbox(left, height=4, bg=PANEL, fg=TEXT,
+        ttk.Label(left, text='LOCAL BADGE RECORDS', foreground=CYAN, style='Panel.TLabel').pack(anchor='w', pady=(6, 2))
+        self.record_list = tk.Listbox(left, height=3, bg=PANEL, fg=TEXT,
                                       selectbackground='#275261', font=('Consolas', 9), border=0)
         self.record_list.pack(fill='both', expand=True)
         self.record_list.bind('<<ListboxSelect>>', self.load_selected)
         self._refresh_list()
 
-        ttk.Label(right, text='300 DPI CARD PREVIEW', foreground=MUTED).pack(anchor='w')
+        ttk.Label(right, text='◈  300 DPI CARD PREVIEW', foreground=CYAN, style='Panel.TLabel').pack(anchor='w')
         self.preview = tk.Label(right, bg=PANEL)
         self.preview.pack(anchor='w', pady=(5, 7))
-        self.note = ttk.Label(right, text='', wraplength=455)
+        self.note = ttk.Label(right, text='', wraplength=455, style='Panel.TLabel')
         self.note.pack(anchor='w')
 
     def _record(self):

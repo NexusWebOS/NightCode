@@ -1,4 +1,4 @@
-"""Install the approved SpriteCook exports and record their source asset IDs."""
+"""Install SpriteCook art and the user-supplied Netcon marks."""
 import hashlib
 import json
 from pathlib import Path
@@ -8,6 +8,7 @@ from PIL import Image
 HERE = Path(__file__).resolve().parent
 ASSETS = HERE / 'assets'
 SOURCE = ASSETS / 'spritecook'
+USER_SOURCE = ASSETS / 'user-provided'
 EXPORTS = {
     'disk-dude-mascot.png': ('disk-dude-genesis-sprite.png', 'ea019cfa-72cc-497e-a3bb-ff0549b91a04'),
     'disk-dude-portrait.png': ('disk-dude-genesis-portrait.png', 'ce7392a2-9cb8-491b-b6c1-621aeebe565e'),
@@ -15,8 +16,6 @@ EXPORTS = {
     'disk-dude-banner.png': ('disk-dude-banner-v2.png', 'c4a3c64d-727c-4ff7-9884-56fd0dd8e67d'),
     'netcon-mascot.png': ('netcon-genesis-sprite.png', '8dfb022e-f264-44ae-ab33-012b2104ab30'),
     'netcon-portrait.png': ('netcon-genesis-portrait.png', 'ab0173b8-4104-4e60-b1bd-79e0458204ed'),
-    'netcon-logo.png': ('netcon-logo-v2.png', 'b1d0767f-befa-4779-8223-721ffeefbcb5'),
-    'netcon-banner.png': ('netcon-banner-v2.png', '0f5105ae-6560-44b0-a5f8-1e96c6f4fbe8'),
     'disc-icon.png': ('disc-icon.png', 'a55b6600-1ec6-4a89-b27b-eec903ce8b74'),
     'badge-icon.png': ('badge-icon.png', 'a17ae90a-f998-4f44-be65-683aeca4e871'),
     'folder-icon.png': ('folder-icon.png', 'fa178d09-11e4-4593-930d-d212a4189769'),
@@ -50,12 +49,21 @@ def main():
                     'netcon': '6b2daff6-b423-4866-9bec-aecc03733085'},
         'style_reference_asset_id': 'd246f434-fc36-4b77-ab93-7b2ce1ce7e50',
         'assets': {},
+        'user_assets': {},
     }
     for name, (source, asset_id) in EXPORTS.items():
         target = ASSETS / name
         shutil.copyfile(SOURCE / source, target)
         manifest['assets'][name] = record(target, asset_id)
-    for app, icon in [('disk-dude', 'disc-icon.png'), ('netcon', 'badge-icon.png')]:
+    for name, source in [('netcon-logo.png', 'netcon-logo.png'),
+                         ('netcon-banner.png', 'netcon-marquee.png')]:
+        target = ASSETS / name
+        shutil.copyfile(USER_SOURCE / source, target)
+        manifest['user_assets'][name] = {
+            'source': f'user-provided/{source}',
+            'sha12': hashlib.sha256(target.read_bytes()).hexdigest()[:12],
+        }
+    for app, icon in [('disk-dude', 'disc-icon.png'), ('netcon', 'netcon-logo.png')]:
         Image.open(ASSETS / icon).convert('RGBA').save(ASSETS / f'{app}.ico',
             sizes=[(16, 16), (32, 32), (48, 48), (64, 64)])
     shutil.copyfile(SOURCE / 'disk-button-frame.png', SOURCE / 'disk-dude-button-frame.png')
@@ -63,7 +71,7 @@ def main():
     for name, asset_id in KIT_ASSETS.items():
         manifest['assets'][f'spritecook/{name}'] = record(SOURCE / name, asset_id)
     (HERE / 'spritecook-assets.json').write_text(json.dumps(manifest, indent=2) + '\n', encoding='utf-8')
-    print(f'Installed {len(EXPORTS)} SpriteCook exports and documented {len(manifest["assets"])} sources')
+    print(f'Installed {len(EXPORTS)} SpriteCook exports, 2 supplied Netcon marks, and documented {len(manifest["assets"])} SpriteCook sources')
 
 if __name__ == '__main__':
     main()
