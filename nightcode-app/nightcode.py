@@ -9,7 +9,7 @@ import sys
 import urllib.parse
 
 from PySide6.QtCore import QDir, QObject, Qt, QUrl, Signal
-from PySide6.QtGui import QAction, QPixmap
+from PySide6.QtGui import QColor, QFont, QPainter, QPixmap
 from PySide6.QtWidgets import (
     QApplication, QDialog, QDialogButtonBox, QFileDialog, QFileSystemModel,
     QFormLayout, QHBoxLayout, QLabel, QLineEdit, QMainWindow, QMessageBox,
@@ -21,11 +21,12 @@ from PySide6.QtWebEngineWidgets import QWebEngineView
 
 from operations import copy_items, download_url, duplicate_items, github_download, github_upload, supabase_upload
 
+ASSETS = Path(getattr(sys, '_MEIPASS', Path(__file__).resolve().parent)) / 'assets'
+
 
 STYLE = """
 QWidget { background:#061326; color:#bdefff; font: 11pt Consolas; }
 QMainWindow, QDialog { background:#030b1a; }
-QLabel#masthead { color:#43eaff; font: bold 25pt Consolas; padding:6px; }
 QLabel#subtitle { color:#9b7df4; font: bold 10pt Consolas; }
 QPushButton { color:#c7f8ff; background:#0d2743; border:1px solid #3194b9;
               padding:7px 10px; }
@@ -48,6 +49,31 @@ QSplitter::handle { background:#174c69; }
 class JobSignals(QObject):
     done = Signal(str)
     failed = Signal(str)
+
+
+class NightcodeBanner(QWidget):
+    """Live title over GPT-generated NightCode marquee art."""
+    def __init__(self):
+        super().__init__()
+        self.setFixedHeight(190)
+        self.art = QPixmap(str(ASSETS / 'nightcode-marquee-gpt-v2.png'))
+
+    def paintEvent(self, event):
+        super().paintEvent(event)
+        painter = QPainter(self)
+        if not self.art.isNull():
+            source_height = min(self.art.height(), round(self.art.width() * self.height() / self.width()))
+            source_y = max(0, (self.art.height() - source_height) // 2)
+            painter.drawPixmap(self.rect(), self.art, self.art.rect().adjusted(
+                0, source_y, 0, -(self.art.height() - source_y - source_height)))
+        painter.setPen(QColor('#e8fcff'))
+        painter.setFont(QFont('Consolas', 30, QFont.Weight.Bold))
+        painter.drawText(350, 87, 'NIGHTCODE')
+        painter.setPen(QColor('#67e6fa'))
+        painter.setFont(QFont('Consolas', 11, QFont.Weight.Bold))
+        painter.drawText(354, 119, 'DATA TRANSFER  /  DUPLICATOR  /  WEB')
+        painter.setPen(QColor('#a393ed'))
+        painter.drawText(max(350, self.width() - 205), 42, '● LOCAL NODE')
 
 
 class BrowserView(QWebEngineView):
@@ -101,14 +127,7 @@ class NightCode(QMainWindow):
         self.setCentralWidget(root)
         layout = QVBoxLayout(root)
         layout.setContentsMargins(12, 8, 12, 8)
-        title = QHBoxLayout()
-        brand = QLabel('☠ NIGHTCODE')
-        brand.setObjectName('masthead')
-        title.addWidget(brand)
-        title.addWidget(QLabel('NC:/  DATA TRANSFER / DUPLICATOR / WEB', objectName='subtitle'))
-        title.addStretch()
-        title.addWidget(QLabel('● LOCAL NODE', objectName='subtitle'))
-        layout.addLayout(title)
+        layout.addWidget(NightcodeBanner())
 
         controls = QHBoxLayout()
         self.path_entry = QLineEdit()

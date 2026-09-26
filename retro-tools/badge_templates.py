@@ -107,73 +107,40 @@ def _aus_card(data: dict, assets: Path) -> Image.Image:
     return image
 
 
-def _nightcode_card(data: dict) -> Image.Image:
-    """Draw at half resolution so every graphic edge lands on a 2-pixel grid."""
-    image = Image.new('RGB', (506, 319), '#040d1c')
-    d = ImageDraw.Draw(image)
-    # Staggered circuit traces and a hard, stepped chrome border.
-    for y in range(49, 273, 18):
-        d.line((275, y, 495, y), fill='#0a2039', width=1)
-        d.rectangle((474 - (y % 35), y - 1, 476 - (y % 35), y + 1), fill='#123960')
-    d.rectangle((3, 3, 502, 315), outline='#0a568a', width=3)
-    d.rectangle((7, 7, 498, 311), outline='#3ce3ff', width=1)
-    d.rectangle((12, 12, 493, 58), fill='#091e3b')
-    d.rectangle((12, 59, 493, 62), fill='#125cad')
-    d.rectangle((12, 62, 493, 64), fill='#8d42ca')
-    for x in range(16, 486, 8):
-        d.rectangle((x, 69, x + 2, 70), fill='#18416a')
-    # NightCode's pixel skull and crossed traces, echoing the site mark.
-    mark = [(7, 0, 29, 4), (3, 4, 33, 8), (0, 9, 36, 24),
-            (4, 24, 32, 30), (9, 30, 27, 34)]
-    ox, oy = 22, 18
-    for x0, y0, x1, y1 in mark:
-        d.rectangle((ox + x0, oy + y0, ox + x1, oy + y1), fill='#42e6ff')
-    d.rectangle((ox + 8, oy + 16, ox + 14, oy + 22), fill='#06182d')
-    d.rectangle((ox + 22, oy + 16, ox + 28, oy + 22), fill='#06182d')
-    d.rectangle((ox + 17, oy + 24, ox + 20, oy + 28), fill='#06182d')
-    d.line((ox + 3, oy + 37, ox + 32, oy + 45), fill='#299bff', width=3)
-    d.line((ox + 32, oy + 37, ox + 3, oy + 45), fill='#299bff', width=3)
-    d.text((70, 19), 'NIGHTCODE', font=font(29, True), fill='#ebfaff')
-    d.text((308, 38), 'NODE ID // 16-BIT', font=font(10, True), fill='#a172e8')
-    # Recessed portrait panel with pixel corners.
-    d.rectangle((19, 79, 157, 274), fill='#08182e', outline='#34cfff', width=2)
-    d.rectangle((24, 84, 152, 269), outline='#15568e', width=1)
+def _nightcode_card(data: dict, assets: Path) -> Image.Image:
+    """Layer editable badge data over GPT-generated 16-bit card artwork."""
+    with Image.open(assets / 'nightcode-badge-gpt-v2.png') as source:
+        image = source.convert('RGB').resize(SIZE, Image.Resampling.NEAREST)
     if data['photo'] and Path(data['photo']).is_file():
         try:
-            with Image.open(data['photo']) as src:
-                portrait = ImageOps.fit(src.convert('RGB'), (124, 181),
+            with Image.open(data['photo']) as source:
+                portrait = ImageOps.fit(source.convert('RGB'), (231, 308),
                                         method=Image.Resampling.LANCZOS, centering=(0.5, 0.3))
-            portrait = portrait.resize((62, 91), Image.Resampling.BOX).resize((124, 182), Image.Resampling.NEAREST)
-            image.paste(portrait.crop((0, 0, 124, 181)), (26, 86))
+            portrait = portrait.resize((116, 154), Image.Resampling.BOX).resize(
+                (232, 308), Image.Resampling.NEAREST)
+            image.paste(portrait.crop((0, 0, 231, 308)), (47, 188))
         except (OSError, ValueError):
             pass
-    else:
-        d.rectangle((28, 88, 148, 263), fill='#0b2441')
-        # Blocky silhouette, intentionally unlike the stock round avatar.
-        d.rectangle((67, 111, 112, 148), fill='#23618b')
-        d.rectangle((73, 103, 105, 115), fill='#367ba5')
-        d.rectangle((54, 154, 124, 246), fill='#174566')
-        d.polygon([(54, 166), (67, 148), (112, 148), (124, 166)], fill='#2a6288')
-        d.rectangle((73, 181, 105, 188), fill='#287cbd')
-    d.rectangle((19, 255, 157, 274), fill='#092844')
-    d.text((26, 259), 'PORTRAIT / 01', font=font(9, True), fill='#53ddf1')
-    # Legible operator data in a clear grid.
-    x = 172
-    d.text((x, 83), 'OPERATIVE RECORD', font=font(11, True), fill='#36d5f0')
-    d.rectangle((x, 102, 486, 104), fill='#2d6ea5')
-    _text(d, (x, 111), data['name'].upper(), size=23, fill='#f1f7ff', bold=True, max_width=312)
-    d.text((x, 151), (data['role'] or 'OPERATIVE').upper(), font=font(13, True), fill='#ab7aef')
-    d.text((x, 184), 'NODE', font=font(10, True), fill='#54abc4')
-    _text(d, (x + 75, 180), data['site'] or 'LOCAL', size=13, fill='#d7e9f9', max_width=236)
-    d.text((x, 208), 'DIVISION', font=font(10, True), fill='#54abc4')
-    _text(d, (x + 75, 204), data['department'] or 'FIELD', size=13, fill='#d7e9f9', max_width=236)
-    d.text((x, 236), 'ACCESS KEY', font=font(10, True), fill='#54abc4')
-    _text(d, (x + 96, 232), data['employee_id'], size=13, fill='#f0f8ff', bold=True, max_width=218)
-    d.rectangle((12, 281, 493, 305), fill='#0a2440')
-    d.rectangle((12, 281, 493, 282), fill='#3759a9')
-    _text(d, (24, 288), f"ISSUED {data['issued'] or '--'}", size=10, fill='#85daf2')
-    _text(d, (262, 288), f"EXPIRES {data['expires'] or '--'}", size=10, fill='#85daf2')
-    return image.resize(SIZE, Image.Resampling.NEAREST)
+    # Text stays live so names and dates remain editable in Netcon.
+    layer = Image.new('RGBA', (506, 319))
+    d = ImageDraw.Draw(layer)
+    d.text((192, 38), 'NIGHTCODE', font=font(29, True), fill='#e5fbff')
+    d.text((193, 64), 'NODE ID  //  16-BIT', font=font(10, True), fill='#8ae9fb')
+    d.text((171, 94), 'OPERATIVE RECORD', font=font(10, True), fill='#58e4fb')
+    _text(d, (171, 114), data['name'].upper(), size=23, fill='#ffffff', bold=True, max_width=300)
+    _text(d, (171, 146), (data['role'] or 'OPERATIVE').upper(), size=13,
+          fill='#b993ff', bold=True, max_width=285)
+    d.text((171, 181), 'NODE', font=font(10, True), fill='#69d9f0')
+    _text(d, (248, 178), data['site'] or 'LOCAL', size=13, fill='#e5faff', max_width=235)
+    d.text((171, 207), 'DIVISION', font=font(10, True), fill='#69d9f0')
+    _text(d, (248, 204), data['department'] or 'FIELD', size=13, fill='#e5faff', max_width=235)
+    d.text((171, 233), 'ID', font=font(10, True), fill='#69d9f0')
+    _text(d, (248, 230), data['employee_id'], size=13, fill='#ffffff', bold=True, max_width=235)
+    d.text((49, 241), 'PORTRAIT', font=font(9, True), fill='#79dfee')
+    _text(d, (56, 278), f"ISSUED {data['issued'] or '--'}", size=10, fill='#c7f7ff')
+    _text(d, (280, 278), f"EXPIRES {data['expires'] or '--'}", size=10, fill='#c7f7ff')
+    overlay = layer.resize(SIZE, Image.Resampling.NEAREST)
+    return Image.alpha_composite(image.convert('RGBA'), overlay).convert('RGB')
 
 
 def _photo(canvas: Image.Image, photo_path: str, box: tuple[int, int, int, int], fill: str):
@@ -209,7 +176,7 @@ def render(record: dict, assets: Path) -> Image.Image:
     if template == 'Allied Universal staff':
         image = _aus_card(data, assets)
     elif template == 'NightCode in-world':
-        image = _nightcode_card(data)
+        image = _nightcode_card(data, assets)
     else:
         image = Image.new('RGB', SIZE, '#ecf0e8')
         d = ImageDraw.Draw(image)

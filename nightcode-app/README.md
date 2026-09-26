@@ -2,6 +2,8 @@
 
 NightCode is a Windows desktop file workstation with a DOS-style command shell, a file preview window, and a live embedded internet browser. The browser uses Qt WebEngine, so typed addresses open inside NightCode and web page downloads use a Save dialog.
 
+The `assets/nightcode-marquee-gpt-v2.png` header is GPT-generated 16-bit pixel artwork. NightCode paints its live title and status over that art. `previews/nightcode-banner-runtime.png` shows the header as it appears in the app.
+
 ## Run
 
 Install Python 3.10+ and `pip install -r requirements.txt`, then run `Launch-NightCode.ps1` or `py -3 nightcode.py`. To make a Windows folder build, install PyInstaller and run `Build-NightCode.ps1`; launch `dist/NightCode/NightCode.exe`. Keep the built folder together because Qt WebEngine has runtime files.
