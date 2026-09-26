@@ -13,7 +13,7 @@ Two local Windows desktop utilities in the NightCode family. Double-click `dist/
 
 ## Netcon
 
-- Creates three badge layouts: fictional NightCode IDs, Allied Universal staff cards, and visibly nonvalid **DEMO STATE / SPECIMEN** design studies. The staff layout takes a cardholder photo, role, department, site, employee ID, and issue/expiry dates. It saves local records and exports 300 DPI CR80-sized PNG or PDF files; no badge printer is required.
+- Creates three badge layouts: a blue/cyan 16-bit NightCode ID with a pixel skull mark, an Allied Universal staff card modeled on the supplied white/blue landscape badge, and visibly nonvalid **DEMO STATE / SPECIMEN** design studies. The staff layout takes a cardholder photo, name, title, height, weight, eye color, date of hire, department, site, and employee ID. It saves local records and exports 300 DPI CR80-sized PNG or PDF files; no badge printer is required.
 - The Allied Universal layout uses the logo from the [official Allied Universal newsroom resource library](https://ausnewsroom.aus.com/resources/9xno8-dpke5-f75db-7y3vs-7jsed). Employer/site approval is still required for issuance or access activation. Netcon does not encode RFID credentials or grant door access.
 - Keeps an inventory of RFID/NFC tag identifiers that you enter yourself; does not read, clone, jam, or emulate credentials.
 - Records lock hardware, damage, and maintenance notes, with a simple 3D cylinder illustration for documentation. It does not produce picking or bypass instructions.

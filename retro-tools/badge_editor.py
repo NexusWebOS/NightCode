@@ -23,7 +23,8 @@ class BadgeEditor(ttk.Frame):
         self.current_uid = None
         self._preview_job = None
         self.values = {key: tk.StringVar() for key in
-                       ('template', 'name', 'role', 'department', 'site', 'employee_id', 'issuer', 'issued', 'expires', 'photo')}
+                       ('template', 'name', 'role', 'department', 'site', 'employee_id', 'issuer',
+                        'issued', 'expires', 'photo', 'height', 'weight', 'eyes', 'hire_date')}
         self.values['template'].set(TEMPLATES[0])
         self.values['issued'].set(date.today().isoformat())
         self._build()
@@ -62,6 +63,17 @@ class BadgeEditor(ttk.Frame):
                 ('employee_id', 'Employee / card ID'), ('issuer', 'Issued by'),
                 ('issued', 'Issue date'), ('expires', 'Expiry date')]):
             cell = ttk.Frame(fields, style='Panel.TFrame')
+            cell.grid(row=index // 2, column=index % 2, sticky='ew', padx=(0, 6), pady=(1, 2))
+            ttk.Label(cell, text=label, style='Panel.TLabel').pack(anchor='w')
+            ttk.Entry(cell, textvariable=self.values[key], width=22).pack(fill='x')
+
+        self.aus_details = ttk.Frame(left, style='Panel.TFrame')
+        self.aus_details.columnconfigure(0, weight=1)
+        self.aus_details.columnconfigure(1, weight=1)
+        for index, (key, label) in enumerate([
+                ('height', 'Height'), ('eyes', 'Eye color'),
+                ('weight', 'Weight'), ('hire_date', 'Date of hire')]):
+            cell = ttk.Frame(self.aus_details, style='Panel.TFrame')
             cell.grid(row=index // 2, column=index % 2, sticky='ew', padx=(0, 6), pady=(1, 2))
             ttk.Label(cell, text=label, style='Panel.TLabel').pack(anchor='w')
             ttk.Entry(cell, textvariable=self.values[key], width=22).pack(fill='x')
@@ -110,6 +122,10 @@ class BadgeEditor(ttk.Frame):
 
     def _apply_template(self):
         choice = self.values['template'].get()
+        if choice == 'Allied Universal staff':
+            self.aus_details.pack(fill='x', pady=(2, 0), after=self.aus_details.master.winfo_children()[1])
+        else:
+            self.aus_details.pack_forget()
         defaults = {
             'NightCode in-world': ('OPERATIVE', 'FIELD', 'LOCAL NODE', 'NC-0001'),
             'Allied Universal staff': ('Security Professional', 'Security', '', ''),
@@ -188,7 +204,7 @@ class BadgeEditor(ttk.Frame):
 
     def new_record(self):
         self.current_uid = None
-        for key in ('name', 'photo', 'expires', 'issuer'):
+        for key in ('name', 'photo', 'expires', 'issuer', 'height', 'weight', 'eyes', 'hire_date'):
             self.values[key].set('')
         self.values['issued'].set(date.today().isoformat())
         self.photo_label.configure(text='No photo selected')
