@@ -145,24 +145,6 @@ def _nightcode_card(data: dict, assets: Path) -> Image.Image:
     return Image.alpha_composite(image.convert('RGBA'), overlay).convert('RGB')
 
 
-def _photo(canvas: Image.Image, photo_path: str, box: tuple[int, int, int, int], fill: str):
-    draw = ImageDraw.Draw(canvas)
-    draw.rectangle(box, fill=fill, outline='#58a5b2', width=3)
-    if photo_path and Path(photo_path).is_file():
-        try:
-            with Image.open(photo_path) as src:
-                fitted = ImageOps.fit(src.convert('RGB'), (box[2] - box[0] - 8, box[3] - box[1] - 8),
-                                      method=Image.Resampling.LANCZOS, centering=(0.5, 0.3))
-            canvas.paste(fitted, (box[0] + 4, box[1] + 4))
-            return
-        except (OSError, ValueError):
-            pass
-    cx = (box[0] + box[2]) // 2
-    draw.ellipse((cx - 38, box[1] + 42, cx + 38, box[1] + 118), fill='#4c6977')
-    draw.rounded_rectangle((cx - 78, box[1] + 128, cx + 78, box[3] - 28), radius=42, fill='#4c6977')
-    draw.text((box[0] + 18, box[3] - 23), 'PHOTO', fill='#b1cbd3', font=font(17, True))
-
-
 def _text(draw, xy, value, *, size, fill, bold=False, max_width=None):
     value = str(value)
     face = font(size, bold)
@@ -180,22 +162,27 @@ def render(record: dict, assets: Path) -> Image.Image:
     elif template == 'NightCode in-world':
         image = _nightcode_card(data, assets)
     else:
-        image = Image.new('RGB', SIZE, '#ecf0e8')
+        with Image.open(assets / 'demo-state-gpt-v2.png') as source:
+            image = source.convert('RGB').resize(SIZE, Image.Resampling.NEAREST)
+        if data['photo'] and Path(data['photo']).is_file():
+            try:
+                with Image.open(data['photo']) as source:
+                    portrait = ImageOps.fit(source.convert('RGB'), (264, 316),
+                                            method=Image.Resampling.LANCZOS, centering=(0.5, 0.3))
+                image.paste(portrait, (40, 168))
+            except (OSError, ValueError):
+                pass
         d = ImageDraw.Draw(image)
-        d.rectangle((0, 0, 1012, 102), fill='#354c56')
-        d.rectangle((0, 102, 1012, 115), fill='#bb8b50')
         _text(d, (35, 24), 'DEMO STATE', size=54, fill='#ffffff', bold=True)
         _text(d, (662, 47), 'ID DESIGN STUDY', size=24, fill='#e7eee9', bold=True)
-        _photo(image, data['photo'], (40, 143, 289, 516), '#cfdad6')
-        _text(d, (326, 157), 'NAME', size=19, fill='#50656a', bold=True)
-        _text(d, (326, 188), data['name'].upper(), size=42, fill='#1d363f', bold=True, max_width=637)
-        _text(d, (326, 273), 'DESIGN REFERENCE', size=19, fill='#50656a', bold=True)
-        _text(d, (326, 304), data['employee_id'], size=30, fill='#1d363f', bold=True)
-        _text(d, (326, 386), f"ISSUED {data['issued'] or '—'}", size=23, fill='#29434a')
-        _text(d, (326, 428), f"EXPIRES {data['expires'] or '—'}", size=23, fill='#29434a')
-        d.rectangle((17, 541, 995, 623), fill='#492f38')
-        _text(d, (96, 560), 'SPECIMEN · NOT VALID FOR IDENTIFICATION',
-              size=32, fill='#ffffff', bold=True)
+        _text(d, (334, 168), 'NAME', size=19, fill='#50656a', bold=True)
+        _text(d, (334, 198), data['name'].upper(), size=40, fill='#1d363f', bold=True, max_width=620)
+        _text(d, (334, 274), 'DESIGN REFERENCE', size=19, fill='#50656a', bold=True)
+        _text(d, (334, 304), data['employee_id'], size=30, fill='#1d363f', bold=True)
+        _text(d, (334, 383), f"ISSUED {data['issued'] or '—'}", size=23, fill='#29434a')
+        _text(d, (334, 425), f"EXPIRES {data['expires'] or '—'}", size=23, fill='#29434a')
+        _text(d, (83, 558), 'SPECIMEN · NOT VALID FOR IDENTIFICATION',
+              size=31, fill='#ffffff', bold=True)
         overlay = Image.new('RGBA', SIZE)
         mark = ImageDraw.Draw(overlay)
         mark.text((190, 260), 'SPECIMEN', fill=(157, 44, 54, 83), font=font(103, True))
