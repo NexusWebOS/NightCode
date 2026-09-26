@@ -1,0 +1,25 @@
+{
+  "generator": "Built-in GPT image_gen",
+  "assets": [
+    {
+      "file": "ny-specimen-16bit-front-gpt.png",
+      "source": "exec-cf000d19-70b9-41ed-a70c-60ad7eda81b2.png",
+      "prompt": "Convert this original fictional 16-bit New York specimen concept into a reusable Netcon FRONT artwork plate. Preserve the detailed pixel-art border, blue/gold palette, mountains, skyline, NEW YORK title, DRIVER CARD / DESIGN STUDY subtitle, FRONT label, and full NOT VALID FOR IDENTIFICATION banner. Keep a prominent SPECIMEN marking. Replace the fictional woman's portrait with a quiet empty pale-blue portrait well. Remove ALEX RIVERS, DEMO-NY-0000, CLASS: GAME, NIGHTCODE COLLECTION and their divider lines from the right main data region; make that region a calm ivory field for software to place editable text. Keep scenic details on outer edges. Do not add other words. Keep original dimensions and entire flat card composition. No real official seals, signatures, REAL ID star or codes. This is a visibly invalid prop template. The specimen and NOT VALID markings must remain permanently present in the artwork."
+    },
+    {
+      "file": "ny-specimen-16bit-back-gpt.png",
+      "source": "exec-14a72273-20f6-4288-afd8-e6177c3e9bfc.png",
+      "prompt": "Convert this original fictional 16-bit New York specimen BACK concept into a reusable Netcon artwork plate. Preserve the ornate gold frame, detailed pixel landscapes, NEW YORK / DESIGN STUDY title, BACK label, circuit-trace decoration and exact NO MACHINE-READABLE DATA text, diagonal SPECIMEN watermark and full NOT VALID FOR IDENTIFICATION footer. Replace the small woman portrait inside the left medallion with a blank pale-blue well; keep the medallion frame. Remove NIGHTCODE COLLECTION, DEMO-NY-0000 and FICTIONAL PROP from the central data area, leaving a calm ivory area for editable software text. Preserve all other scenery and crisp 16-bit pixel-art appearance. Do not add text. Keep permanent specimen markings and the full layout. No real ID barcode, QR, official seal, signature or encoded data."
+    },
+    {
+      "file": "ny-specimen-polished-front-gpt.png",
+      "source": "exec-a8cf46b5-f1ba-48e7-9e8a-663c45bfd8e7.png",
+      "prompt": "Convert this original fictional New York polished specimen concept into a reusable Netcon FRONT artwork plate. Preserve the formal navy serif NEW YORK STATE title, DRIVER LICENSE — DESIGN SAMPLE subtitle, FRONT label, blue/ivory/gold palette, engraved mountains and skyline, border, full NOT VALID FOR IDENTIFICATION banner, and prominent diagonal SPECIMEN watermark. Replace the fictional woman's portrait with a quiet empty pale-blue portrait well of exactly the same size. Remove all sample personal data and field labels from the center data area: ALEX RIVERS, LICENSE NO, DEMO-NY-0000, CLASS, CLASS SAMPLE, ENDORSEMENTS, NIGHTCODE NETCON, SEX, HEIGHT, EYES and their values. Remove the data divider rules. Keep a calm ivory center for software to add editable text. Do not add other text. Preserve the original composition and the nonvalid markings. No government seal, DMV insignia, REAL ID star, codes or signature. Flat illustration of a visibly invalid prop template, all card edges visible."
+    },
+    {
+      "file": "ny-specimen-polished-back-gpt.png",
+      "source": "exec-456425a8-dcfb-4a5f-af90-31767a1dc0ff.png",
+      "prompt": "Convert this original polished fictional New York specimen BACK into a reusable Netcon artwork plate. Preserve NEW YORK STATE and DESIGN SAMPLE / BACK titles, the pale-blue circuit decoration with exact NO MACHINE-READABLE DATA label, engraved landscape/skyline, border, diagonal SPECIMEN watermark and full NOT VALID FOR IDENTIFICATION footer. Replace the small woman's portrait on left with an empty pale-blue portrait well of the same shape. Remove NIGHTCODE / NETCON, DEMO-NY-0000 and FICTIONAL DESIGN STUDY from the center data region, leaving quiet ivory space for software to add editable text. Keep the overall original blue/ivory/gold formal graphic design composition and all permanent nonvalid markings. No new text, real DMV seals, official signatures or codes. Flat full-frame specimen plate, all edges visible."
+    }
+  ]
+}

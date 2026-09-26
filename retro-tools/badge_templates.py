@@ -4,10 +4,15 @@ from __future__ import annotations
 
 from datetime import date
 from pathlib import Path
-from PIL import Image, ImageDraw, ImageFont, ImageOps
+from PIL import Image, ImageChops, ImageDraw, ImageFont, ImageOps
 
 SIZE = (1012, 638)  # CR80 card at 300 DPI (approximately 3.37 x 2.13 in)
-TEMPLATES = ('NightCode in-world', 'Allied Universal staff', 'State ID specimen')
+NY_TEMPLATES = ('New York specimen · 16-bit', 'New York specimen · polished')
+TEMPLATES = ('NightCode in-world', 'Allied Universal staff', 'State ID specimen') + NY_TEMPLATES
+
+
+def is_specimen(template: str) -> bool:
+    return template == 'State ID specimen' or template in NY_TEMPLATES
 
 
 def font(size: int, bold: bool = False):
@@ -29,12 +34,12 @@ def sans_font(size: int, bold: bool = False):
 def validate(record: dict) -> dict:
     result = {key: str(record.get(key, '')).strip() for key in
               ('template', 'name', 'role', 'department', 'site', 'employee_id', 'issuer',
-               'issued', 'expires', 'photo', 'height', 'weight', 'eyes', 'hire_date')}
+               'issued', 'expires', 'photo', 'height', 'weight', 'eyes', 'hire_date', 'dob', 'side')}
     if result['template'] not in TEMPLATES:
         raise ValueError('Select a badge template.')
     if not result['name']:
         raise ValueError('Enter the cardholder name.')
-    if result['template'] != 'State ID specimen' and not result['employee_id']:
+    if not is_specimen(result['template']) and not result['employee_id']:
         raise ValueError('Enter an employee or NightCode ID.')
     if result['issued'] or result['expires']:
         try:
@@ -46,6 +51,17 @@ def validate(record: dict) -> dict:
             raise ValueError('Expiry must be on or after issue date.')
     if result['template'] == 'State ID specimen':
         result['employee_id'] = 'DEMO-' + (result['employee_id'].removeprefix('DEMO-') or '0000')[:12]
+    if result['template'] in NY_TEMPLATES:
+        value = result['employee_id'].removeprefix('DEMO-NY-').removeprefix('DEMO-')
+        result['employee_id'] = 'DEMO-NY-' + (value or '0000')[:12]
+        if result['dob']:
+            try:
+                date.fromisoformat(result['dob'])
+            except ValueError as exc:
+                raise ValueError('Birth date must use YYYY-MM-DD.') from exc
+    result['side'] = result['side'] or 'Front'
+    if result['side'] not in ('Front', 'Back'):
+        raise ValueError('Select Front or Back.')
     return result
 
 
@@ -145,6 +161,82 @@ def _nightcode_card(data: dict, assets: Path) -> Image.Image:
     return Image.alpha_composite(image.convert('RGBA'), overlay).convert('RGB')
 
 
+def _ny_card(data: dict, assets: Path) -> Image.Image:
+    pixel = data['template'] == NY_TEMPLATES[0]
+    style = '16bit' if pixel else 'polished'
+    side = data['side'].lower()
+    with Image.open(assets / f'ny-specimen-{style}-{side}-gpt.png') as source:
+        image = source.convert('RGB').resize(
+            SIZE, Image.Resampling.NEAREST if pixel else Image.Resampling.LANCZOS)
+    boxes = {
+        ('16bit', 'front'): (36, 211, 332, 530),
+        ('16bit', 'back'): (101, 245, 236, 376),
+        ('polished', 'front'): (38, 142, 326, 532),
+        ('polished', 'back'): (40, 273, 218, 489),
+    }
+    if data['photo']:
+        box = boxes[(style, side)]
+        size = (box[2] - box[0], box[3] - box[1])
+        try:
+            with Image.open(data['photo']) as source:
+                portrait = ImageOps.fit(source.convert('RGB'), size,
+                                        method=Image.Resampling.LANCZOS, centering=(0.5, 0.3))
+        except (OSError, ValueError) as exc:
+            raise ValueError('The saved portrait could not be opened. Choose the photo again.') from exc
+        if pixel:
+            portrait = portrait.resize((size[0] // 2, size[1] // 2), Image.Resampling.BOX).resize(
+                size, Image.Resampling.NEAREST)
+        else:
+            portrait = ImageOps.grayscale(portrait).convert('RGB')
+        original = image.crop(box)
+        if pixel and side == 'back':
+            mask = Image.new('L', size)
+            ImageDraw.Draw(mask).ellipse((0, 0, size[0] - 1, size[1] - 1), fill=255)
+            image.paste(portrait, box[:2], mask)
+        else:
+            image.paste(portrait, box[:2])
+        # Retain the generated burgundy specimen lettering above an inserted photo.
+        red, green, blue = original.split()
+        mark = ImageChops.multiply(
+            ImageChops.subtract(red, green).point(lambda v: 255 if v > 35 else 0),
+            ImageChops.subtract(red, blue).point(lambda v: 255 if v > 20 else 0))
+        image.paste(original, box[:2], mark)
+
+    scale = 2 if pixel else 1
+    layer = Image.new('RGBA', (SIZE[0] // scale, SIZE[1] // scale))
+    draw = ImageDraw.Draw(layer)
+
+    def write(x, y, value, size=23, width=590, bold=False):
+        face = (font if pixel else sans_font)(max(10, size // scale), bold)
+        value = str(value)
+        if draw.textlength(value, font=face) > width / scale:
+            while value and draw.textlength(value + '…', font=face) > width / scale:
+                value = value[:-1]
+            value += '…'
+        draw.text((x // scale, y // scale), value, font=face, fill='#09243f',
+                  stroke_width=1, stroke_fill='#fff9e8')
+
+    if side == 'front':
+        x, y = (365, 222) if pixel else (356, 151)
+        write(x, y, data['name'].upper(), 34, bold=True)
+        write(x, y + 48, data['employee_id'], 25, bold=True)
+        write(x, y + 89, 'ROLE / CLASS  ' + (data['role'] or 'SAMPLE'), 22)
+        write(x, y + 127, 'LOCATION  ' + (data['site'] or 'DEMO LOCATION'), 21)
+        write(x, y + 165, data['department'] or 'NIGHTCODE / NETCON', 21)
+        write(x, y + 203, f"DOB {data['dob'] or '--'}  HT {data['height'] or '--'}  EYES {data['eyes'] or '--'}", 18)
+        write(x, y + 242, f"ISS {data['issued'] or '--'}   EXP {data['expires'] or '--'}", 18)
+    else:
+        x, y = (280, 240) if pixel else (245, 268)
+        write(x, y, data['name'].upper(), 30, width=670, bold=True)
+        write(x, y + 42, data['employee_id'], 24, width=670, bold=True)
+        write(x, y + 80, data['department'] or 'NIGHTCODE / NETCON', 21, width=670)
+        write(x, y + 114, 'DESIGNER  ' + (data['issuer'] or 'LOCAL STUDIO'), 20, width=670)
+        write(x, y + 149, f"ISS {data['issued'] or '--'}   EXP {data['expires'] or '--'}", 18, width=670)
+    if scale != 1:
+        layer = layer.resize(SIZE, Image.Resampling.NEAREST)
+    return Image.alpha_composite(image.convert('RGBA'), layer).convert('RGB')
+
+
 def _text(draw, xy, value, *, size, fill, bold=False, max_width=None):
     value = str(value)
     face = font(size, bold)
@@ -161,6 +253,8 @@ def render(record: dict, assets: Path) -> Image.Image:
         image = _aus_card(data, assets)
     elif template == 'NightCode in-world':
         image = _nightcode_card(data, assets)
+    elif template in NY_TEMPLATES:
+        image = _ny_card(data, assets)
     else:
         with Image.open(assets / 'demo-state-gpt-v2.png') as source:
             image = source.convert('RGB').resize(SIZE, Image.Resampling.NEAREST)
@@ -195,3 +289,14 @@ def save(image: Image.Image, target: Path):
         image.save(target, 'PDF', resolution=300.0)
     else:
         image.save(target, 'PNG', dpi=(300, 300))
+
+
+def save_pair(record: dict, assets: Path, target: Path):
+    """Export a New York specimen's front and back as two PDF pages."""
+    if record.get('template') not in NY_TEMPLATES:
+        raise ValueError('Choose a New York specimen template for a front/back export.')
+    if target.suffix.lower() != '.pdf':
+        raise ValueError('Front/back export requires a PDF filename.')
+    front = render(dict(record, side='Front'), assets)
+    back = render(dict(record, side='Back'), assets)
+    front.save(target, 'PDF', resolution=300.0, save_all=True, append_images=[back])
