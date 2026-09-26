@@ -8,5 +8,5 @@ foreach ($asset in (Get-ChildItem -LiteralPath 'assets' -File -Filter '*.png')) 
 $assetArgs += @('--add-data', 'assets/spritecook/disk-dude-button-frame.png;assets/spritecook')
 $assetArgs += @('--add-data', 'assets/spritecook/netcon-button-frame.png;assets/spritecook')
 py -3 -m PyInstaller --noconfirm --clean --onefile --windowed --name DiskDude --icon assets/disk-dude.ico @assetArgs --add-data 'burn-data-disc.ps1;.' disk_dude.py
-py -3 -m PyInstaller --noconfirm --clean --onefile --windowed --name Netcon --icon assets/netcon.ico @assetArgs netcon.py
+py -3 -m PyInstaller --noconfirm --clean --onefile --windowed --name Netcon --icon assets/netcon.ico @assetArgs --add-data 'assets/netcon-kit;assets/netcon-kit' netcon.py
 Write-Host 'Built dist\DiskDude.exe and dist\Netcon.exe'

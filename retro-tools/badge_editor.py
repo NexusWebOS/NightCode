@@ -39,13 +39,13 @@ class BadgeEditor(ttk.Frame):
                   wraplength=950).pack(anchor='w', pady=(3, 12))
         body = ttk.Frame(self)
         body.pack(fill='both', expand=True)
-        left_border = tk.Frame(body, bg=CYAN, padx=1, pady=1)
+        left_border = ttk.Frame(body, style='Chrome.Panel.TFrame', padding=22)
         left_border.pack(side='left', fill='both', expand=True, padx=(0, 14))
-        left = ttk.Frame(left_border, style='Panel.TFrame', padding=11)
+        left = ttk.Frame(left_border, style='Panel.TFrame', padding=3)
         left.pack(fill='both', expand=True)
-        right_border = tk.Frame(body, bg=EDGE, padx=1, pady=1)
+        right_border = ttk.Frame(body, style='Focus.Panel.TFrame', padding=22)
         right_border.pack(side='right', fill='both', expand=True)
-        right = ttk.Frame(right_border, style='Panel.TFrame', padding=11)
+        right = ttk.Frame(right_border, style='Panel.TFrame', padding=3)
         right.pack(fill='both', expand=True)
 
         row = ttk.Frame(left, style='Panel.TFrame'); row.pack(fill='x', pady=3)
@@ -186,8 +186,8 @@ class BadgeEditor(ttk.Frame):
             'NightCode in-world': 'Fictional NightCode identity card for your in-world roster.',
             'Allied Universal staff': 'Work badge design. Your employer or site must approve issuance and activate any access system.',
             'State ID specimen': 'Design specimen only. Uses DEMO STATE and prominent SPECIMEN markings; never valid identification.',
-            NY_TEMPLATES[0]: 'New York design specimen with editable fields and pixel-art portraits. Switch sides or export a two-page PDF. Permanent specimen markings appear on both sides.',
-            NY_TEMPLATES[1]: 'New York design specimen with formal typography and grayscale portraits. Switch sides or export a two-page PDF. Permanent specimen markings appear on both sides.',
+            NY_TEMPLATES[0]: 'New York specimen with pixel-art portraits. Preview either side or export both as a PDF.',
+            NY_TEMPLATES[1]: 'New York specimen with grayscale portraits. Preview either side or export both as a PDF.',
         }[choice])
         self._schedule_preview()
 

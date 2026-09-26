@@ -8,13 +8,13 @@ from pathlib import Path
 import tkinter as tk
 from tkinter import messagebox, ttk
 from badge_editor import BadgeEditor
-from retro_skin import RetroButton
 from netcon_skin import (AMBER, BG, CYAN as ACCENT, EDGE, MUTED, PANEL,
-                         SILVER as TEXT, NetconHeader, configure_netcon_style)
+                         SILVER as TEXT, NetconHeader, NetconButton,
+                         configure_netcon_style, apply_netcon_cursors)
 
 BASE = Path(getattr(sys, '_MEIPASS', Path(__file__).resolve().parent))
 ASSETS = BASE / 'assets'
-NetButton = partial(RetroButton, asset_root=ASSETS, app_name='netcon')
+NetButton = partial(NetconButton, asset_root=ASSETS)
 DATA = Path(os.getenv('LOCALAPPDATA', str(Path.home()))) / 'RetroTools' / 'netcon.json'
 
 
@@ -37,18 +37,19 @@ class Netcon(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title('NETCON  |  Retro Tools')
-        self.geometry('1160x820')
-        self.minsize(1060, 820)
+        self.geometry('1280x960')
+        self.minsize(1160, 940)
         self.configure(bg=BG)
         self.data = load_data()
         self._style()
         self._build()
+        apply_netcon_cursors(self, ASSETS)
 
     def _style(self):
-        configure_netcon_style(self)
+        configure_netcon_style(self, ASSETS)
 
     def _build(self):
-        NetconHeader(self, ASSETS).pack(fill='x', padx=18, pady=(14, 8))
+        NetconHeader(self, ASSETS).pack(fill='x', padx=18, pady=(10, 4))
         footer = tk.Frame(self, bg='#091624', highlightbackground=EDGE, highlightthickness=1)
         footer.pack(side='bottom', fill='x', padx=18, pady=(3, 12))
         tk.Label(footer, text='◆  NETCON // LOCAL NODE', bg='#091624', fg=ACCENT,
@@ -74,16 +75,16 @@ class Netcon(tk.Tk):
 
     def _badge_ui(self):
         BadgeEditor(self.badge, self.data, save_data, ASSETS, NetButton).pack(
-            fill='both', expand=True, padx=16, pady=14)
+            fill='both', expand=True, padx=16, pady=10)
 
     def _tags_ui(self):
-        frame = ttk.Frame(self.tags, style='Framed.Panel.TFrame', padding=16); frame.pack(fill='both', expand=True, padx=16, pady=16)
+        frame = ttk.Frame(self.tags, style='Framed.Panel.TFrame', padding=24); frame.pack(fill='both', expand=True, padx=16, pady=16)
         ttk.Label(frame, text='RFID / NFC ASSET INVENTORY', font=('Consolas', 17, 'bold'), style='Panel.TLabel').pack(anchor='w')
         ttk.Label(frame, text='Record printed IDs, device types, owners, and notes for credentials you manage. No radio transmission or credential cloning.', wraplength=850, style='Panel.TLabel').pack(anchor='w', pady=8)
         self.tag_id, self.tag_type, self.tag_owner = [tk.StringVar() for _ in range(3)]
         for label, var in [('Printed tag ID', self.tag_id), ('Tag type / frequency', self.tag_type), ('Assigned owner', self.tag_owner)]: self.field(frame, label, var)
         NetButton(frame, text='Add inventory record', command=self.add_tag).pack(anchor='w', pady=8)
-        self.tag_list = tk.Listbox(frame, bg=PANEL, fg=TEXT, selectbackground='#18445b',
+        self.tag_list = tk.Listbox(frame, height=6, bg=PANEL, fg=TEXT, selectbackground='#18445b',
                                    font=('Consolas', 10), border=0)
         self.tag_list.pack(fill='both', expand=True)
         for item in self.data['tags']: self.tag_list.insert('end', self.tag_line(item))
@@ -98,7 +99,7 @@ class Netcon(tk.Tk):
         self.tag_id.set(''); self.tag_type.set(''); self.tag_owner.set('')
 
     def _locks_ui(self):
-        frame = ttk.Frame(self.locks, style='Framed.Panel.TFrame', padding=16); frame.pack(fill='both', expand=True, padx=16, pady=16)
+        frame = ttk.Frame(self.locks, style='Framed.Panel.TFrame', padding=24); frame.pack(fill='both', expand=True, padx=16, pady=16)
         ttk.Label(frame, text='LOCK SERVICE / DAMAGE DOCUMENTATION', font=('Consolas', 17, 'bold'), style='Panel.TLabel').pack(anchor='w')
         ttk.Label(frame, text='Log damaged or malfunctioning hardware for repair. A schematic 3D-style cylinder view helps identify parts during maintenance.', wraplength=850, style='Panel.TLabel').pack(anchor='w', pady=8)
         self.lock_site, self.lock_type, self.lock_note = [tk.StringVar() for _ in range(3)]
@@ -115,7 +116,7 @@ class Netcon(tk.Tk):
         c.create_text(247, 98, text='CYLINDER / HOUSING', fill=TEXT, font=('Consolas', 12, 'bold'))
         c.create_rectangle(388, 127, 411, 142, fill=AMBER, outline='#f7d48d', width=1)
         c.create_line(55, 172, 449, 172, fill='#7c4da1', width=2)
-        self.lock_list = tk.Listbox(frame, bg=PANEL, fg=TEXT, selectbackground='#18445b',
+        self.lock_list = tk.Listbox(frame, height=3, bg=PANEL, fg=TEXT, selectbackground='#18445b',
                                     font=('Consolas', 10), border=0)
         self.lock_list.pack(fill='both', expand=True)
         for item in self.data['locks']: self.lock_list.insert('end', self.lock_line(item))
@@ -130,13 +131,13 @@ class Netcon(tk.Tk):
         self.lock_site.set(''); self.lock_type.set(''); self.lock_note.set('')
 
     def _games_ui(self):
-        frame = ttk.Frame(self.games, style='Framed.Panel.TFrame', padding=16); frame.pack(fill='both', expand=True, padx=16, pady=16)
+        frame = ttk.Frame(self.games, style='Framed.Panel.TFrame', padding=24); frame.pack(fill='both', expand=True, padx=16, pady=16)
         ttk.Label(frame, text='PERSONAL GAME / LICENSE CATALOG', font=('Consolas', 17, 'bold'), style='Panel.TLabel').pack(anchor='w')
         ttk.Label(frame, text='Keep an inventory of your discs and legitimate keys. Store only a short key hint; do not type full product keys here.', wraplength=850, style='Panel.TLabel').pack(anchor='w', pady=8)
         self.game_name, self.game_platform, self.game_key_hint, self.game_note = [tk.StringVar() for _ in range(4)]
         for label, var in [('Game title', self.game_name), ('Platform / year', self.game_platform), ('Key hint (last 4 only)', self.game_key_hint), ('Compatibility note', self.game_note)]: self.field(frame, label, var)
         NetButton(frame, text='Add game', command=self.add_game).pack(anchor='w', pady=8)
-        self.game_list = tk.Listbox(frame, bg=PANEL, fg=TEXT, selectbackground='#18445b',
+        self.game_list = tk.Listbox(frame, height=6, bg=PANEL, fg=TEXT, selectbackground='#18445b',
                                     font=('Consolas', 10), border=0)
         self.game_list.pack(fill='both', expand=True)
         for item in self.data['games']: self.game_list.insert('end', self.game_line(item))
