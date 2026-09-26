@@ -51,11 +51,9 @@ def validate(record: dict) -> dict:
 
 def _aus_card(data: dict, assets: Path) -> Image.Image:
     """Landscape site badge based on the supplied white/blue clip-card layout."""
-    image = Image.new('RGB', SIZE, '#ffffff')
+    with Image.open(assets / 'allied-staff-gpt-v2.png') as source:
+        image = source.convert('RGB').resize(SIZE, Image.Resampling.NEAREST)
     d = ImageDraw.Draw(image)
-    d.rectangle((12, 12, 999, 625), outline='#3278cc', width=9)
-    d.rectangle((27, 27, 984, 610), outline='#9bc9ed', width=3)
-    d.rectangle((34, 34, 977, 43), fill='#3278cc')
     logo_path = assets / 'allied-universal-official-logo.png'
     if logo_path.is_file():
         with Image.open(logo_path) as src:
@@ -65,11 +63,17 @@ def _aus_card(data: dict, assets: Path) -> Image.Image:
             image.paste(logo, (478, 48), logo)
     else:
         d.text((505, 58), 'ALLIED UNIVERSAL', font=sans_font(42, True), fill='#006ca7')
-    _photo(image, data['photo'], (62, 101, 365, 477), '#edf4f7')
+    if data['photo'] and Path(data['photo']).is_file():
+        try:
+            with Image.open(data['photo']) as source:
+                portrait = ImageOps.fit(source.convert('RGB'), (276, 365),
+                                        method=Image.Resampling.LANCZOS, centering=(0.5, 0.3))
+            image.paste(portrait, (62, 102))
+        except (OSError, ValueError):
+            pass
     d = ImageDraw.Draw(image)
-    d.rectangle((62, 101, 365, 477), outline='#708997', width=3)
-    d.text((64, 490), 'Identification will void', font=sans_font(17), fill='#6d7880')
-    d.text((64, 513), 'if removed or altered.', font=sans_font(17), fill='#6d7880')
+    d.text((64, 518), 'Identification will void', font=sans_font(16), fill='#6d7880')
+    d.text((64, 539), 'if removed or altered.', font=sans_font(16), fill='#6d7880')
     x = 403
     words = data['name'].upper().split()
     lines = []
@@ -102,8 +106,6 @@ def _aus_card(data: dict, assets: Path) -> Image.Image:
     _text(d, (404, 480), f"ID  {data['employee_id']}", size=22, fill='#2e526f', bold=True, max_width=550)
     detail = ' / '.join(filter(None, (data['department'], data['site'])))
     _text(d, (404, 520), detail, size=19, fill='#4d6879', max_width=550)
-    d.text((191, 575), 'ALLIED UNIVERSAL EMPLOYEE IDENTIFICATION',
-           font=sans_font(19, True), fill='#6b7881')
     return image
 
 
