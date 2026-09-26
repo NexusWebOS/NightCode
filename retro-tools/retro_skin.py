@@ -76,6 +76,8 @@ class RetroHeader(tk.Canvas):
         self.logo = Image.open(asset_root / f'{app_name}-logo.png').convert('RGBA')
         self.logo = self.logo.crop(self.logo.getbbox())
         self.mascot = Image.open(asset_root / f'{app_name}-mascot.png').convert('RGBA')
+        portrait_path = asset_root / f'{app_name}-portrait.png'
+        self.portrait = Image.open(portrait_path).convert('RGBA') if portrait_path.is_file() else None
         self._image = None
         self._render_job = None
         self.bind('<Configure>', self._on_resize)
@@ -98,9 +100,15 @@ class RetroHeader(tk.Canvas):
         logo = self.logo.copy()
         logo.thumbnail((min(390, width - 170), 92), Image.Resampling.NEAREST)
         background.alpha_composite(logo, (26, (height - logo.height) // 2 - 3))
-        mascot = self.mascot.copy()
-        mascot.thumbnail((142, 142), Image.Resampling.NEAREST)
-        background.alpha_composite(mascot, (width - mascot.width - 10, height - mascot.height - 5))
+        if self.portrait:
+            draw = ImageDraw.Draw(background)
+            draw.rectangle((width - 148, 9, width - 9, 140), fill='#07131e', outline=ACCENT, width=2)
+            portrait = self.portrait.resize((118, 118), Image.Resampling.NEAREST)
+            background.alpha_composite(portrait, (width - 137, 16))
+        else:
+            mascot = self.mascot.copy()
+            mascot.thumbnail((142, 142), Image.Resampling.NEAREST)
+            background.alpha_composite(mascot, (width - mascot.width - 10, height - mascot.height - 5))
         self._image = ImageTk.PhotoImage(background)
         self.delete('all')
         self.create_image(0, 0, image=self._image, anchor='nw')

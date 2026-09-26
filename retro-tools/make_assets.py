@@ -9,10 +9,12 @@ HERE = Path(__file__).resolve().parent
 ASSETS = HERE / 'assets'
 SOURCE = ASSETS / 'spritecook'
 EXPORTS = {
-    'disk-dude-mascot.png': ('disk-dude-mascot-final.png', '8591acad-3ead-4527-8f6b-d513d1dae398'),
+    'disk-dude-mascot.png': ('disk-dude-genesis-sprite.png', 'ea019cfa-72cc-497e-a3bb-ff0549b91a04'),
+    'disk-dude-portrait.png': ('disk-dude-genesis-portrait.png', 'ce7392a2-9cb8-491b-b6c1-621aeebe565e'),
     'disk-dude-logo.png': ('disk-dude-logo-v2.png', '4054cffc-4add-43f7-81d4-32eb224fc98f'),
     'disk-dude-banner.png': ('disk-dude-banner-v2.png', 'c4a3c64d-727c-4ff7-9884-56fd0dd8e67d'),
-    'netcon-mascot.png': ('netcon-mascot-final.png', '2ce97b2a-a29f-4bd5-8869-5239d5ff3ba2'),
+    'netcon-mascot.png': ('netcon-genesis-sprite.png', '8dfb022e-f264-44ae-ab33-012b2104ab30'),
+    'netcon-portrait.png': ('netcon-genesis-portrait.png', 'ab0173b8-4104-4e60-b1bd-79e0458204ed'),
     'netcon-logo.png': ('netcon-logo-v2.png', 'b1d0767f-befa-4779-8223-721ffeefbcb5'),
     'netcon-banner.png': ('netcon-banner-v2.png', '0f5105ae-6560-44b0-a5f8-1e96c6f4fbe8'),
     'disc-icon.png': ('disc-icon.png', 'a55b6600-1ec6-4a89-b27b-eec903ce8b74'),
@@ -32,6 +34,10 @@ KIT_ASSETS = {
     'netcon-tab-frame.png': '56e024b3-4a81-45eb-b3a3-05cd9f2f8bc8',
     'netcon-button-frame.png': 'c9b1479b-0f60-4b5a-a1f7-97f3e46d6d61',
     'netcon-card-panel.png': '8da927da-c2d0-4450-96d5-867250c0e5bf',
+    'disk-dude-genesis-sprite.png': 'ea019cfa-72cc-497e-a3bb-ff0549b91a04',
+    'disk-dude-genesis-portrait.png': 'ce7392a2-9cb8-491b-b6c1-621aeebe565e',
+    'netcon-genesis-sprite.png': '8dfb022e-f264-44ae-ab33-012b2104ab30',
+    'netcon-genesis-portrait.png': 'ab0173b8-4104-4e60-b1bd-79e0458204ed',
 }
 
 def record(path, asset_id):
@@ -42,6 +48,7 @@ def main():
         'project_id': 'ff85dc4d-f21b-4a90-bba9-a39ac17cca1e',
         'ui_kits': {'disk-dude': '3f01ed6e-3ddd-4f8c-a75f-9ef985b89e14',
                     'netcon': '6b2daff6-b423-4866-9bec-aecc03733085'},
+        'style_reference_asset_id': 'd246f434-fc36-4b77-ab93-7b2ce1ce7e50',
         'assets': {},
     }
     for name, (source, asset_id) in EXPORTS.items():

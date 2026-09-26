@@ -4,10 +4,15 @@
     "disk-dude": "3f01ed6e-3ddd-4f8c-a75f-9ef985b89e14",
     "netcon": "6b2daff6-b423-4866-9bec-aecc03733085"
   },
+  "style_reference_asset_id": "d246f434-fc36-4b77-ab93-7b2ce1ce7e50",
   "assets": {
     "disk-dude-mascot.png": {
-      "asset_id": "8591acad-3ead-4527-8f6b-d513d1dae398",
-      "sha12": "3f71cb57d865"
+      "asset_id": "ea019cfa-72cc-497e-a3bb-ff0549b91a04",
+      "sha12": "e552d282298c"
+    },
+    "disk-dude-portrait.png": {
+      "asset_id": "ce7392a2-9cb8-491b-b6c1-621aeebe565e",
+      "sha12": "d67bfaa0f260"
     },
     "disk-dude-logo.png": {
       "asset_id": "4054cffc-4add-43f7-81d4-32eb224fc98f",
@@ -18,8 +23,12 @@
       "sha12": "46c1db93c2b3"
     },
     "netcon-mascot.png": {
-      "asset_id": "2ce97b2a-a29f-4bd5-8869-5239d5ff3ba2",
-      "sha12": "4ee6e5ce4534"
+      "asset_id": "8dfb022e-f264-44ae-ab33-012b2104ab30",
+      "sha12": "4d59133293f7"
+    },
+    "netcon-portrait.png": {
+      "asset_id": "ab0173b8-4104-4e60-b1bd-79e0458204ed",
+      "sha12": "6968bdaadefb"
     },
     "netcon-logo.png": {
       "asset_id": "b1d0767f-befa-4779-8223-721ffeefbcb5",
@@ -88,6 +97,22 @@
     "spritecook/netcon-card-panel.png": {
       "asset_id": "8da927da-c2d0-4450-96d5-867250c0e5bf",
       "sha12": "48623b07d73c"
+    },
+    "spritecook/disk-dude-genesis-sprite.png": {
+      "asset_id": "ea019cfa-72cc-497e-a3bb-ff0549b91a04",
+      "sha12": "e552d282298c"
+    },
+    "spritecook/disk-dude-genesis-portrait.png": {
+      "asset_id": "ce7392a2-9cb8-491b-b6c1-621aeebe565e",
+      "sha12": "d67bfaa0f260"
+    },
+    "spritecook/netcon-genesis-sprite.png": {
+      "asset_id": "8dfb022e-f264-44ae-ab33-012b2104ab30",
+      "sha12": "4d59133293f7"
+    },
+    "spritecook/netcon-genesis-portrait.png": {
+      "asset_id": "ab0173b8-4104-4e60-b1bd-79e0458204ed",
+      "sha12": "6968bdaadefb"
     },
     "spritecook/disk-dude-button-frame.png": {
       "asset_id": "9c8fedc2-7a30-4107-b386-36ce7856a9b0",

@@ -13,7 +13,8 @@ Two local Windows desktop utilities in the NightCode family. Double-click `dist/
 
 ## Netcon
 
-- Makes printable, clearly marked **sample** ID badges for local design and event use.
+- Creates three badge layouts: fictional NightCode IDs, Allied Universal staff cards, and visibly nonvalid **DEMO STATE / SPECIMEN** design studies. The staff layout takes a cardholder photo, role, department, site, employee ID, and issue/expiry dates. It saves local records and exports 300 DPI CR80-sized PNG or PDF files; no badge printer is required.
+- The Allied Universal layout uses the logo from the [official Allied Universal newsroom resource library](https://ausnewsroom.aus.com/resources/9xno8-dpke5-f75db-7y3vs-7jsed). Employer/site approval is still required for issuance or access activation. Netcon does not encode RFID credentials or grant door access.
 - Keeps an inventory of RFID/NFC tag identifiers that you enter yourself; does not read, clone, jam, or emulate credentials.
 - Records lock hardware, damage, and maintenance notes, with a simple 3D cylinder illustration for documentation. It does not produce picking or bypass instructions.
 - Keeps a personal game ownership and compatibility catalog. It does not generate CD keys or remove copy protection.
@@ -22,6 +23,6 @@ Both apps store preferences in `%LOCALAPPDATA%\RetroTools`. Do not put secrets i
 
 ## Artwork
 
-The mascots, logos, banners, and disc/badge/folder/lock/game icons are SpriteCook exports in `assets/spritecook/`. `make_assets.py` installs the approved exports into `assets/`, makes Windows icons, and updates `spritecook-assets.json` with source asset IDs and file hashes. Running it again does not regenerate or overwrite the images with placeholder art.
+The mascots, Genesis-era character portraits, logos, banners, and disc/badge/folder/lock/game icons are SpriteCook exports in `assets/spritecook/`. `make_assets.py` installs the approved exports into `assets/`, makes Windows icons, and updates `spritecook-assets.json` with source asset IDs and file hashes. Running it again does not regenerate or overwrite the images with placeholder art.
 
 Both apps use the dark SpriteCook banners, logos, characters, and extracted button frames. Text and interactive controls remain native for legibility. The `*-ui-concept.png` files are visual design references, not screenshots of currently implemented features. The complete extracted UI sheets are included for further expansion of the apps.
