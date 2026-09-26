@@ -24,6 +24,8 @@ Both apps store preferences in `%LOCALAPPDATA%\RetroTools`. Do not put secrets i
 
 ## Artwork
 
+Printable previews: [NightCode badge](previews/nightcode-id.pdf), [AUS staff badge](previews/allied-staff.pdf), [Demo State specimen](previews/state-specimen.pdf), [New York 16-bit front/back](previews/ny-editor-0-pair.pdf), and [New York polished front/back](previews/ny-editor-1-pair.pdf).
+
 The [New York specimen collection](assets/new-york-specimens/README.md) includes the original front/back concept images and generation prompts. Four additional GPT-generated `assets/ny-specimen-*-gpt.png` plates power the editable New York templates in Badge Studio. Text, saved records, portraits, front/back selection, and two-page PDF exports are implemented in the app.
 
 The mascots, Genesis-era character portraits, Disk Dude branding, and disc/badge/folder/lock/game icons are SpriteCook exports in `assets/spritecook/`. All three badge plates, `assets/nightcode-badge-gpt-v2.png`, `assets/allied-staff-gpt-v2.png`, and `assets/demo-state-gpt-v2.png`, are GPT-generated 16-bit artwork; Netcon layers editable text, the official Allied Universal logo, and optional photos over them. The Netcon emblem and wide marquee are the user-supplied images in `assets/user-provided/`; they drive Netcon's window icon and live header. `make_assets.py` installs the approved SpriteCook and supplied files into `assets/`, makes Windows icons, and updates `spritecook-assets.json` with source IDs and hashes. Running it again preserves the badge plates and supplied Netcon branding.
