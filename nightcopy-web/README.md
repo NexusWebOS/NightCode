@@ -1,8 +1,9 @@
 # NightCopy v2 / ColeTech file console
 
-Hosted edition of the NightCopy archive station, with a dark DOS-inspired shell,
-two file panes, generated pixel-art branding and icons, a sequential transfer
-queue, real progress, file previews, keyboard commands and responsive navigation.
+Hosted edition of the NightCopy archive station, with a classic blue DOS file
+manager, a locally bundled IBM VGA font, double-line pane borders, clickable text
+menus and function keys, a black command prompt, a sequential transfer queue,
+real progress, file previews and responsive navigation.
 
 ## Run and build
 
@@ -22,9 +23,10 @@ earlier NightCode and NetCon tools; this app builds independently from this fold
 
 `cloud-config.example.json` is a generic template. Copy it to
 `public/runtime-config.json` and fill in your own public connection settings. The
-deployment runtime file is git-ignored. The production project uses the ColeTech
-Supabase connection and the requested archive account. No service-role key, OAuth
-client secret, refresh token or Netlify credential ships in the app.
+deployment runtime file is git-ignored. The deployed app ships generic defaults;
+configure your Supabase connection and Drive account in device settings.
+No service-role key, OAuth client secret, refresh token or Netlify credential
+ships in the app.
 
 Apply `supabase/20260927_nightcopy.sql` in the project owner's SQL editor. The
 private bucket scopes read/insert policies to the authenticated user's ID. Receipt
@@ -64,7 +66,15 @@ The detailed setup is at `public/SETUP.html`, with a downloadable SQL script.
 `help`, `dir`, `cd`, `use left|right`, `select "name"|*`, `copy`, `paste`,
 `transfer`, `upload`, `xcopy`, `duplicate`, `download`, `zip`, `view`, `mkdir`,
 `mount local|drive|supabase|staging`, `connect drive|vault`, `queue`, `stop`, `cls`, `ver`.
-Arrow keys recall commands, Tab completes names, F3 previews, F5 copies and F6 transfers.
+Arrow keys recall commands in the shell; Tab completes names. In the file panes,
+Up/Down focuses rows and Insert toggles a file selection or enters a directory.
+Click the function bar or press F1 Help, F2 Import, F3 View, F4 Drives, F5 Copy,
+F6 Transfer, F7 MkDir, F8 ZIP, F9 Queue or F10 Setup. Ctrl+backtick focuses the
+command prompt. Function keys apply while no modal dialog is open.
+
+The IBM VGA 8x16 font is from VileR's [Oldschool PC Font Pack](https://int10h.org/oldschool-pc-fonts/),
+licensed CC BY-SA 4.0. The unmodified font, attribution and full license are
+included in `public/assets/fonts/`.
 
 ## Verification
 
