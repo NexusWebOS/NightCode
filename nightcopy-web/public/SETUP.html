@@ -1,0 +1,31 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>NightCopy / Connection setup</title><style>body{font:15px/1.75 system-ui;background:#080c13;color:#bacbdf;max-width:850px;margin:40px auto;padding:0 22px}h1,h2{color:#50e3dc;font-weight:500}h2{margin-top:40px}a{color:#50e3dc}code,pre{font:12px/1.8 Consolas,monospace;background:#121d2b;padding:3px 6px;border-radius:3px}pre{padding:18px;overflow:auto}li{margin:10px 0}.note{padding:15px;border:1px solid #324558;border-radius:5px}button{font:inherit}</style></head><body>
+<a href="/">← Return to NightCopy</a><h1>Connect your archive station</h1>
+<p>NightCopy runs on Netlify at <b>nightcopy.coletechsystems.com</b>. Local file import, folder copy, duplication, downloads and ZIP packaging work in the browser. Cloud providers require your own sign-in and the setup below.</p>
+<h2>1 / Private Supabase vault</h2>
+<ol><li>Open the <a href="https://supabase.com/dashboard/project/yeqdoxqtevchtcbannwf/sql/new" target="_blank" rel="noopener">ColeTech Supabase SQL editor</a> as the project owner.</li><li><a href="/nightcopy-setup.sql" download>Download the NightCopy SQL setup</a>, paste it into the SQL editor and run it. It creates one private <code>nightcopy</code> bucket and a transfer receipt table. Existing ColeTech tables are unchanged. Each signed-in user can only read and create objects under their own user ID.</li><li>In NightCopy → Connections, sign in with an existing Supabase email/password account. Select <b>Supabase vault</b> in either pane. Successful listing changes the badge to <b>PRIVATE / READY</b>.</li></ol>
+<p>Connection defaults point to the ColeTech/Nexus project. Only its public publishable key ships in the app. Each account gets its own private file namespace; file transfers never use a service-role key.</p>
+<h2>2 / Google Drive: your archive Google account</h2>
+<ol><li>Sign into the <a href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noopener">Google Cloud credentials console</a> using the Google account that owns your project. Create or select a project and enable the <b>Google Drive API</b>.</li><li>Configure the Google OAuth consent screen. For a personal testing app, add <b>your archive Google account</b> as a test user. NightCopy requests the Drive scope for browsing, copying and transferring your Drive files.</li><li>Enter your archive email in NightCopy Connections. Create an OAuth client of type <b>Web application</b>. Add these authorized JavaScript origins:</li></ol>
+<pre>https://nightcopy.coletechsystems.com
+https://nightcopy-coletech.netlify.app</pre>
+<ol start="4"><li>Copy the client ID ending in <code>.apps.googleusercontent.com</code> into NightCopy → Connections → Google OAuth web client ID. Save settings.</li><li>Click <b>Connect Google Drive</b> and select <b>your archive Google account</b>. After Google grants access, NightCopy checks the actual Drive account before enabling file operations.</li></ol>
+<p>This direct Google sign-in uses a popup and does not require a client secret or redirect callback. Google tokens are kept in memory for this tab. If a token expires, reconnect from the button. The account connected to Codex is independent of NightCopy’s Google authorization.</p>
+<p>Alternatively, if you already enable the Google provider in Supabase, authorize <code>https://yeqdoxqtevchtcbannwf.supabase.co/auth/v1/callback</code> as its OAuth redirect and add <code>https://nightcopy.coletechsystems.com/</code> to the Supabase auth redirect allowlist. NightCopy can then use the Supabase Google PKCE login flow.</p>
+<h2>Using the shell</h2><pre>DIR
+SELECT "my archive.zip"
+COPY
+USE RIGHT
+PASTE
+UPLOAD
+TRANSFER
+DUPLICATE
+ZIP
+VIEW
+MKDIR "Archives"
+MOUNT DRIVE
+HELP</pre>
+<p>Copy stores the selected items in NightCopy’s clipboard. Paste targets the active pane. Transfer targets the opposite pane. Every queued write shows its destination for review. Stop cancels pending work; files already completed remain.</p>
+<h2>Browser and file limits</h2><div class="note">Use current desktop Chrome or Edge to mount writable local folders and USB drives. Other browsers can import files/folders and download the copies. Staged files stay in this tab’s memory and are cleared when it closes. ZIP creation and cloud-to-local buffering are limited to 256 MB. Standard Supabase uploads are limited to 50 MB per file. Google uploads use a resumable upload session, with progress from actual upload bytes; interrupted sessions currently need a fresh retry. Folder transfers include empty directories. A mounted folder and its contents remain subject to your browser’s permission choices.</div>
+<p>Google Docs and drawings export as PDF/PNG, sheets as XLSX; unsupported native Google formats report an error. Drive file duplication preserves supported native documents. Shortcuts are not followed. ZIP entries retain relative paths and include a manifest. Sources remain in place.</p>
+<h2>Provider documentation</h2><p><a href="https://developers.google.com/identity/oauth2/web/guides/use-token-model">Google authorization</a> · <a href="https://developers.google.com/workspace/drive/api/guides/manage-uploads">Drive uploads</a> · <a href="https://supabase.com/docs/guides/storage/security/access-control">Private Supabase storage policies</a></p>
+</body></html>

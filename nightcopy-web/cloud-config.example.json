@@ -1,0 +1,8 @@
+{
+  "supabaseUrl": "",
+  "supabaseKey": "",
+  "bucket": "nightcopy",
+  "driveAccount": "archive@example.com",
+  "googleClientId": "",
+  "maxBufferedBytes": 268435456
+}

@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.netlify/
+.env*
+!.env.example
+_shots/
+__pycache__/
+
+/cloud-config.json
+/public/runtime-config.json
